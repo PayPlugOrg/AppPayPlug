@@ -1,0 +1,77 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  
+  <ion-navbar>
+    <ion-navbar>
+      <ion-title>
+        Registre-se
+      </ion-title>
+    </ion-navbar>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form (submit)="doSignup()">
+      <ion-list radio-group>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-6>
+                  <ion-item>
+                      <ion-label>Física</ion-label>
+                      <ion-radio ngDefaultControl checked (tap)="changeLabel('CPF')"></ion-radio>
+                    </ion-item>
+              </ion-col>
+              <ion-col col-6>
+                  <ion-item>
+                      <ion-label>Jurídica</ion-label>
+                      <ion-radio ngDefaultControl (tap)="changeLabel('CNPJ')"></ion-radio>
+                    </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        
+        
+      </ion-list>
+      <ion-item>
+        <ion-label floating>Nome Completo</ion-label>
+        <ion-input [(ngModel)]="user.nome" name="username" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{user.tipo_documento}}</ion-label>
+        <ion-input [(ngModel)]="user.documento" name="documento" type="text" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Celular</ion-label>
+        <ion-input [(ngModel)]="user.celular" name="celular" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>E-mail</ion-label>
+        <ion-input [(ngModel)]="user.email" name="email" type="text"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Data de Nascimento</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" name="nascimento" [(ngModel)]="user.nascimento" doneText="Ok" cancelText="Cancelar"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Foi indicado?</ion-label>
+        <ion-checkbox (click)="viewType = !viewType"></ion-checkbox>
+      </ion-item>
+      <ion-item *ngIf="viewType">
+        <ion-label floating >Indicação</ion-label>
+        <ion-input [(ngModel)]="user.indicacao" name="indicacao" type="text"></ion-input>
+      </ion-item>
+      <button ion-button block type="submit">
+        Continuar
+      </button>
+    </form>
+
+</ion-content>
