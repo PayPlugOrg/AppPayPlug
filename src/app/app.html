@@ -1,13 +1,14 @@
 <ion-menu id="unauthenticated" [content]="content">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Bem vindo!</ion-title>
-    </ion-toolbar>
+      <ion-toolbar>
+        <ion-title>Home</ion-title>
+      </ion-toolbar>
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+    <ion-list no-lines>
+      <button menuClose ion-item *ngFor="let p of publicPages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon" item-end></ion-icon>
         {{p.title}}
       </button>
     </ion-list>
@@ -23,8 +24,9 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+    <ion-list no-lines>
+      <button menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon" item-end></ion-icon>
         {{p.title}}
       </button>
       
@@ -35,6 +37,7 @@
     <ion-toolbar>
       <button ion-button color="danger" block round (click)="logout()" menuToggle>
         Sair
+        <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-toolbar>
   </ion-footer>

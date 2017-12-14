@@ -7,6 +7,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login'
 import { ListPage } from '../pages/list/list';
+import { AboutPage } from '../pages/about/about';
+import { TransferPage } from '../pages/transfer/transfer';
+import { UserPage } from '../pages/user/user';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 
 @Component({
@@ -17,8 +20,8 @@ export class MyApp {
 
   rootPage: any = HomePage;
   loading: any;
-  pages: Array<{title: string, component: any}>;
-  nome: any = null;
+  publicPages: Array<{title: string, component: any, icon: string}>;
+  privatePages: Array<{title: string, component: any, icon: string}>;
 
   constructor(
     public platform: Platform, 
@@ -31,12 +34,17 @@ export class MyApp {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+    this.publicPages = [
+      { title: 'Home', component: HomePage, icon:'home' },
+      { title: 'Sobre', component: AboutPage, icon: 'information-circle' },
+      { title: 'Perguntas Frequentes', component: ListPage, icon: 'chatbubbles' }
     ];
-    console.log(this.authService.user['nome']);
-    this.nome = this.authService.user['nome'];
+    this.privatePages = [
+      { title: 'Home', component: HomePage, icon:'home' },
+      { title: 'Transferência', component: TransferPage, icon:'swap' },
+      { title: 'Minhas Informações', component: UserPage, icon:'contact' },
+      { title: 'Extratos', component: ListPage, icon:'trending-up' }
+    ];
   }
 
   public logout() {
@@ -68,6 +76,10 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.title == 'Home') {
+      this.nav.setRoot(page.component);
+    } else {
+      this.nav.push(page.component);
+    }
   }
 }

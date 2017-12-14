@@ -11,6 +11,7 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
+  user: any;
   loading: any;
   isLoggedIn: boolean = false;
 
@@ -28,6 +29,16 @@ export class HomePage {
       this.alertService.enableMenu(false, 'anauthenticated');
       this.isLoggedIn = true;
     }
+    this.printUserInfo();
+  }
+
+  printUserInfo() {
+    this.authService.getUserInfo().then((result) => {
+      this.user = result;
+      console.log(this.user.Nome);
+    },(err) => {
+      console.log(err);
+    });
   }
 
 }

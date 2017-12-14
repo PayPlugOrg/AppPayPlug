@@ -42,6 +42,8 @@ export class LoginPage {
       this.data = result;
       if(this.data) {
         localStorage.setItem('token', this.data.Token);
+        console.log("[user nome]" + this.user['nome']);
+        localStorage.setItem('identifier', this.user['nome']);
         this.navCtrl.setRoot(HomePage);
       }
     }, (err) => {

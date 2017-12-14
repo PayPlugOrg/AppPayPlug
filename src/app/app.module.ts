@@ -8,9 +8,14 @@ import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { ActivationPage } from '../pages/activation/activation';
+import { TransferPage } from '../pages/transfer/transfer';
+
+import { UserPage } from '../pages/user/user';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 
+//Páginas públicas
+import { AboutPage } from '../pages/about/about';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +29,10 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
     ListPage,
     LoginPage,
     RegisterPage,
-    ActivationPage
+    ActivationPage,
+    AboutPage,
+    TransferPage,
+    UserPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +47,10 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
     ListPage,
     LoginPage,
     RegisterPage,
-    ActivationPage
+    ActivationPage,
+    AboutPage,
+    TransferPage,
+    UserPage
   ],
   providers: [
     StatusBar,

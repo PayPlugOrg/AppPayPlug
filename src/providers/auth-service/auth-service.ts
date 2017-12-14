@@ -62,6 +62,21 @@ export class AuthServiceProvider {
     });
   }
 
+  getUserInfo() {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      var consulta = apiUrl + '/Users/Info?token=' + localStorage.getItem('token') + '&id=' + localStorage.getItem('identifier') + '&dataFormat=json';
+      this.http.post(consulta, null, {headers:headers})
+      .subscribe(res => {
+        resolve(res.json());
+      },(err) => {
+        console.error(err);
+        reject(err);
+      });
+    });
+  }
+
   register(user, operacao) {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
