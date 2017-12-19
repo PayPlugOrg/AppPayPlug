@@ -11,7 +11,9 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  user: any;
+  user: {};
+  nome: any;
+  saldo: any;
   loading: any;
   isLoggedIn: boolean = false;
 
@@ -20,6 +22,7 @@ export class HomePage {
     public authService: AuthServiceProvider,
     private alertService: AlertServiceProvider
   ) {
+    //Se não há token de sessão direciona para o Login
     if(!localStorage.getItem("token")) {
       navCtrl.setRoot(LoginPage);
       this.alertService.enableMenu(true, 'unauthenticated');
@@ -29,16 +32,20 @@ export class HomePage {
       this.alertService.enableMenu(false, 'anauthenticated');
       this.isLoggedIn = true;
     }
-    this.printUserInfo();
   }
 
-  printUserInfo() {
+  ionViewDidLoad() {
     this.authService.getUserInfo().then((result) => {
       this.user = result;
-      console.log(this.user.Nome);
+      this.nome = result['Nome'];
+      this.saldo = result['SaldoTotal'];
     },(err) => {
       console.log(err);
     });
+  }
+
+  openPage(page) {
+    this.navCtrl.push(page);
   }
 
 }

@@ -1,3 +1,4 @@
+<!--Sidemenu de usuário não autenticado no aplicativo-->
 <ion-menu id="unauthenticated" [content]="content">
   <ion-header>
       <ion-toolbar>
@@ -13,9 +14,9 @@
       </button>
     </ion-list>
   </ion-content>
-
 </ion-menu>
 
+<!--Sidemenu de usuário autenticado no aplicativo -->
 <ion-menu id="authenticated" [content]="content">
   <ion-header>
     <ion-toolbar>
@@ -29,21 +30,17 @@
         <ion-icon [name]="p.icon" item-end></ion-icon>
         {{p.title}}
       </button>
-      
     </ion-list>
   </ion-content>
 
   <ion-footer>
     <ion-toolbar>
       <button ion-button color="danger" block round (click)="logout()" menuToggle>
+        <ion-icon name="log-out" item-end></ion-icon>
         Sair
-        <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-toolbar>
   </ion-footer>
-      
-
-
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

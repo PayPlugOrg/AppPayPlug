@@ -22,6 +22,7 @@ export class LoginPage {
   loading: any;
   user = { name: '', senha: ''};
   data: any;
+  isLoggedIn: boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -29,6 +30,16 @@ export class LoginPage {
     public authService: AuthServiceProvider,
     private alertService: AlertServiceProvider
   ) {
+    //Se há token de sessão direciona para o Home do usuário
+    if(localStorage.getItem("token")) {
+      navCtrl.setRoot(HomePage);
+      this.alertService.enableMenu(true, 'authenticated');
+      this.alertService.enableMenu(false, 'unauthenticated');
+    } else {
+      this.alertService.enableMenu(true, 'anauthenticated');
+      this.alertService.enableMenu(false, 'authenticated');
+      this.isLoggedIn = true;
+    }
   }
 
   ionViewDidLoad() {
@@ -42,7 +53,6 @@ export class LoginPage {
       this.data = result;
       if(this.data) {
         localStorage.setItem('token', this.data.Token);
-        console.log("[user nome]" + this.user['nome']);
         localStorage.setItem('identifier', this.user['nome']);
         this.navCtrl.setRoot(HomePage);
       }

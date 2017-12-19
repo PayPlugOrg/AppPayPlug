@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { AlertServiceProvider } from '../alert-service/alert-service';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -17,8 +18,12 @@ export class AuthServiceProvider {
   token: string = '';
 
   user = {nome:'', nascimento:'', email:'', celular:'', indicacao:'', documento:'', tipo_documento:'CPF'}
+  userInfo: any;
   
-  constructor(public http: Http) {
+  constructor(
+    public http: Http,
+    public alertService: AlertServiceProvider
+  ) {
     console.log('Hello AuthServiceProvider Provider');
   }
 
@@ -68,8 +73,14 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
       var consulta = apiUrl + '/Users/Info?token=' + localStorage.getItem('token') + '&id=' + localStorage.getItem('identifier') + '&dataFormat=json';
       this.http.post(consulta, null, {headers:headers})
-      .subscribe(res => {
-        resolve(res.json());
+      .subscribe(res => { 
+        if(this.tokenExpired(res.json()['Message'])) {
+          this.alertService.presentToast('Sua sessão expirou');
+          console.log(res.json()['Message']);
+        } else {
+          this.userInfo = res.json();
+          resolve(res.json());
+        }
       },(err) => {
         console.error(err);
         reject(err);
@@ -77,12 +88,19 @@ export class AuthServiceProvider {
     });
   }
 
+  private tokenExpired(message): boolean {
+    if(message == 'Authentication failed.') {
+      this.logout();
+      return true;
+    }
+    return false;
+  }
+
   register(user, operacao) {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-          
-            
+
       var consulta = apiUrl + '/Users/Save?token=' + this.token + '&fullName=' + user['nome'] + '&cpfCnpj=' + user['documento'] + '&EmpresaCnpj=' + '&cellphone=' + user['celular'] + '&email=' + user['email'] + '&coin=1&dataNascimento=' + user['nascimento'] + '&cpfCnpjIndicacao=' + '&dataFormat=json';
       if(operacao == 'ativacao') {
         consulta = apiUrl + '/Users/AtivarUsuario?token=' + this.token + '&identifier=' + user['documento'] + '&codigo=' + user['codigo'] + '&senha=' + user['senha'] + '&dataFormat=json';

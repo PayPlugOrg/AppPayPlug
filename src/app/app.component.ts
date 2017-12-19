@@ -18,10 +18,11 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
   loading: any;
   publicPages: Array<{title: string, component: any, icon: string}>;
   privatePages: Array<{title: string, component: any, icon: string}>;
+  nome: any;
 
   constructor(
     public platform: Platform, 
@@ -35,7 +36,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.publicPages = [
-      { title: 'Home', component: HomePage, icon:'home' },
+      { title: 'Home', component: LoginPage, icon:'home' },
       { title: 'Sobre', component: AboutPage, icon: 'information-circle' },
       { title: 'Perguntas Frequentes', component: ListPage, icon: 'chatbubbles' }
     ];
