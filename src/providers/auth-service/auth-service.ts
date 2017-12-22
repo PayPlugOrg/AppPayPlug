@@ -32,8 +32,8 @@ export class AuthServiceProvider {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        console.log(user['nome']);
-        console.log(user['senha']);
+        //console.log(user['nome']);
+        //console.log(user['senha']);
         this.http.post(apiUrl+'/Tokens/New?email=' + user['nome'] + '&dataFormat=json&password=' + user['senha'], null, {headers: headers})
           .subscribe(res => {
             console.log(res.json());
@@ -43,6 +43,7 @@ export class AuthServiceProvider {
               reject("Erro ao fazer login. Usuário não encontrado ou senha incorreta");
             }
           }, (err) => {
+            console.log(err);
             reject(err);
           });
     });
@@ -94,6 +95,34 @@ export class AuthServiceProvider {
       return true;
     }
     return false;
+  }
+
+  getUserData() {
+    let user1 = {
+      Id: '',
+      Nome: '',
+      CpfCnpj: '',
+      Celular: '',
+      Email: '',
+      SaldoTotal: '',
+      SaldoDisponivelSaque: '',
+      NomeMoeda: '',
+      MoedaSimbolo: '',
+      NumeroCartao: '',
+      TitularCartao: '',
+      DataCartao: '',
+      Endereco: '',
+      DataNascimento: '',
+      IsBloqueado: false
+    }
+    this.getUserInfo().then((result) => {
+      console.log('[user name] ' + result['Nome']);
+      
+      for(let o in result) {
+        user1[o] = result[o];
+      }
+    });
+    return user1;
   }
 
   register(user, operacao) {

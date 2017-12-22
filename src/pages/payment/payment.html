@@ -15,4 +15,54 @@
 
 <ion-content padding>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>1 - Informe a senha de liberação para gerar a chave para esse Pagamento</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label stacked>Senha de Liberação</ion-label>
+          <ion-input type="password"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+      
+      
+      <ion-col col-12>
+        <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="primary" outline>
+          {{n.value}}
+        </button>
+      </ion-col>
+      
+      
+    
+    <ion-row>
+      <ion-col col-12>2 - Selecione a forma de pagamento</ion-col>
+    </ion-row>
+    <ion-row class="button-icons">
+      <ion-col col-6>
+        <button ion-button color=primary large full (click)=scan()>
+          <ion-icon name=qr-scanner></ion-icon>
+        </button>
+        QR Code
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button color=primary large full (click)=presentCardModal()>
+          <ion-icon name=card></ion-icon>
+        </button>
+        Cartão
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button full color="danger" round>Cancelar</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button full color="secondary" round>Limpar</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
