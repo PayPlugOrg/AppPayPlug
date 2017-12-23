@@ -24,7 +24,9 @@ export class CardPage {
     public navParams: NavParams,
     private authService:AuthServiceProvider
   ) {
-    this.user = this.authService.getUserInfo();
+    this.authService.getUserInfo();
+    this.user = this.authService.userInfo
+    console.log(this.user);
     this.createQR(this.user['NumeroCartao']);
   }
 
@@ -33,7 +35,7 @@ export class CardPage {
   }
 
   createQR(numeroCartao: String) {
-    console.log("NUmero cartao: " + numeroCartao);
+    console.log("Numero cartao: " + numeroCartao);
     this.createdCode = numeroCartao;
   }
 
