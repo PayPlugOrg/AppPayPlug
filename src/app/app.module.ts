@@ -1,30 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { MyApp } from './app.component';
+
+import { AboutPage } from '../pages/about/about';
+import { ActivationPage } from '../pages/activation/activation';
+import { CardPage } from '../pages/card/card';
 import { HomePage } from '../pages/home/home';
+import { KeyboardPage } from '../pages/keyboard/keyboard';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { ActivationPage } from '../pages/activation/activation';
 import { TransferPage } from '../pages/transfer/transfer';
-
 import { UserPage } from '../pages/user/user';
-import { HttpClientModule } from '@angular/common/http'; 
-import { HttpModule } from '@angular/http';
+import { AlertServiceProvider } from '../providers/alert-service/alert-service';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { MyApp } from './app.component';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import _ from 'string-mask';
 
 //Páginas públicas
-import { AboutPage } from '../pages/about/about';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import { AlertServiceProvider } from '../providers/alert-service/alert-service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { NgxQRCodeModule} from 'ngx-qrcode2';
-import { CardPage } from '../pages/card/card';
-
 @NgModule({
   declarations: [
     MyApp,
@@ -36,7 +36,8 @@ import { CardPage } from '../pages/card/card';
     AboutPage,
     TransferPage,
     UserPage, 
-    CardPage
+    CardPage,
+    KeyboardPage
   ],
   imports: [
     BrowserModule,
@@ -56,7 +57,8 @@ import { CardPage } from '../pages/card/card';
     AboutPage,
     TransferPage,
     UserPage, 
-    CardPage
+    CardPage,
+    KeyboardPage
   ],
   providers: [
     BarcodeScanner,

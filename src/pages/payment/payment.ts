@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
-import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { CardPage } from '../../pages/card/card';
 
 /**
@@ -19,7 +18,7 @@ import { CardPage } from '../../pages/card/card';
 })
 export class PaymentPage {
 
-  numbers: Array<{value:number}>;
+  private numbers: Array<{value:number}>;
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController, 

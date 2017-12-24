@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { KeyboardPage } from '../keyboard/keyboard'
 
 /**
  * Generated class for the BillingPage page.
@@ -15,11 +16,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BillingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private billingValue:string = "0,00";
+  private createdCode = null;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public modalCtrl: ModalController
+  ) {
+    this.displayKeyboard("0,00");
+    this.createQR("3");
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BillingPage');
+  }
+
+  createQR(numeroCartao: String) {
+    console.log("Numero cartao: " + numeroCartao);
+    this.createdCode = numeroCartao;
+  }
+
+  displayKeyboard(billingValue) {
+    let cardModal = this.modalCtrl.create(KeyboardPage, {billingValue: billingValue});
+    cardModal.present();
   }
 
 }

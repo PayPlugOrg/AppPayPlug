@@ -17,6 +17,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 export class CardPage {
 
   createdCode = null;
+  userName : String;
 
   user: any;
   constructor(
@@ -28,6 +29,7 @@ export class CardPage {
     this.user = this.authService.userInfo
     console.log(this.user);
     this.createQR(this.user['NumeroCartao']);
+    this.userName = this.user['Nome'];
   }
 
   ionViewDidLoad() {

@@ -15,4 +15,44 @@
 
 <ion-content padding>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <h1 (tap)=displayKeyboard(billingValue)>R$ {{billingValue}}</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-2></ion-col>
+      <ion-col col-8>
+        <ion-card *ngIf="createdCode">
+          <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
+          <ion-card-content>
+            <p>Value: {{ createdCode }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+    <ion-row class="button-icons">
+      <ion-col col-4>
+        <button ion-button color=primary large full (click)=scan()>
+          <ion-icon name=qr-scanner></ion-icon>
+        </button>
+        Leitor
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button color=primary large full (click)=presentCardModal()>
+          <ion-icon name=card></ion-icon>
+        </button>
+        Mensagem
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button color=primary large full (click)=presentCardModal()>
+          <ion-icon name=card></ion-icon>
+        </button>
+        CPF/CNPJ/Cel
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
