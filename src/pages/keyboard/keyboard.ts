@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { StringMask } from 'string-mask';
+import {  } from 'string-mask';
 
 /**
  * Generated class for the KeyboardPage page.
@@ -45,9 +45,8 @@ export class KeyboardPage {
   }
 
   pressedButton(buttonValue: string) {
-    var formatter = new StringMask('#.##0,00', {reverse: true});
-    var result = formatter.apply('100123456'); // 1.001.234,56 
-    console.log(result);
+    
+    console.log(buttonValue);
   }
 
 }
