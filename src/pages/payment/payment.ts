@@ -18,6 +18,7 @@ import { CardPage } from '../../pages/card/card';
 })
 export class PaymentPage {
 
+  private password: String = "";
   private numbers: Array<{value:number}>;
   constructor(
     public navCtrl: NavController,
@@ -38,6 +39,7 @@ export class PaymentPage {
       {value:8},
       {value:9}
     ];
+    this.clearPasswordInput();
   }
 
   ionViewDidLoad() {
@@ -55,6 +57,15 @@ export class PaymentPage {
   presentCardModal() {
     let cardModal = this.modalCtrl.create(CardPage);
     cardModal.present();
+  }
+
+  pressedButton(buttonValue: string) {
+    this.password = this.password.concat(buttonValue);
+  }
+
+  clearPasswordInput() {
+    this.password = "";
+    this.numbers.sort(() => Math.random() * 2 - 1);
   }
 
 }

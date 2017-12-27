@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { ViewController } from 'ionic-angular/navigation/view-controller';
 
 /**
  * Generated class for the CardPage page.
@@ -23,7 +24,8 @@ export class CardPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private authService:AuthServiceProvider
+    private authService:AuthServiceProvider,
+    private viewCtrl: ViewController
   ) {
     this.authService.getUserInfo();
     this.user = this.authService.userInfo
@@ -39,6 +41,10 @@ export class CardPage {
   createQR(numeroCartao: String) {
     console.log("Numero cartao: " + numeroCartao);
     this.createdCode = numeroCartao;
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 
 }

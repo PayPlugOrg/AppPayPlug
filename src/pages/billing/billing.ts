@@ -1,7 +1,9 @@
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { KeyboardPage } from '../keyboard/keyboard'
 import StringMask from 'string-mask';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 /**
  * Generated class for the BillingPage page.
@@ -25,7 +27,9 @@ export class BillingPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private barcodeScanner: BarcodeScanner,
+    public alertService: AlertServiceProvider
   ) {
     this.displayKeyboard(this.rawBillingValue);
   }
@@ -47,6 +51,12 @@ export class BillingPage {
       this.createQR(data);
     });
     keyboardModal.present();
+  }
+
+  scan() {
+    this.barcodeScanner.scan().then((barcodeData) => {
+      this.alertService.presentToast(barcodeData);
+    });
   }
 
 }
