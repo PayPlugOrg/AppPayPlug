@@ -18,12 +18,12 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12>
-        <h1>R$ {{billingValue}}</h1>
+        <h1>R$ {{showBillingValue}}</h1>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="primary" outline (tap)=pressedButton(n.value)>
+        <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="primary" outline (click)=pressedButton(n.value)>
             <ion-icon [name]="n.icon" item-start></ion-icon>
           {{n.value}}
         </button>
@@ -31,7 +31,7 @@
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <button ion-button block navPop>Ok</button>
+        <button ion-button block (click)=dismiss()>Ok</button>
       </ion-col>
     </ion-row>
 </ion-grid>

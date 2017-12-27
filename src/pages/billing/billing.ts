@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { KeyboardPage } from '../keyboard/keyboard'
+import StringMask from 'string-mask';
 
 /**
  * Generated class for the BillingPage page.
@@ -16,7 +17,9 @@ import { KeyboardPage } from '../keyboard/keyboard'
 })
 export class BillingPage {
 
-  private billingValue:string = "0,00";
+  private formatter = new StringMask('#.##0,00', {reverse: true});
+  private showBillingValue:string = "";
+  private rawBillingValue:string = "";
   private createdCode = null;
 
   constructor(
@@ -24,8 +27,7 @@ export class BillingPage {
     public navParams: NavParams,
     public modalCtrl: ModalController
   ) {
-    this.displayKeyboard("0,00");
-    this.createQR("3");
+    this.displayKeyboard(this.rawBillingValue);
   }
 
   ionViewDidLoad() {
@@ -37,9 +39,14 @@ export class BillingPage {
     this.createdCode = numeroCartao;
   }
 
-  displayKeyboard(billingValue) {
-    let cardModal = this.modalCtrl.create(KeyboardPage, {billingValue: billingValue});
-    cardModal.present();
+  displayKeyboard(rawBillingValue) {
+    let keyboardModal = this.modalCtrl.create(KeyboardPage, {billingValue: rawBillingValue});
+    keyboardModal.onDidDismiss(data => {
+      this.rawBillingValue = data;
+      this.showBillingValue = this.formatter.apply(data);
+      this.createQR(data);
+    });
+    keyboardModal.present();
   }
 
 }

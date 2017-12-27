@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {  } from 'string-mask';
+import StringMask from 'string-mask';
+import { ViewController } from 'ionic-angular/navigation/view-controller';
 
 /**
  * Generated class for the KeyboardPage page.
@@ -16,14 +17,20 @@ import {  } from 'string-mask';
 })
 export class KeyboardPage {
 
+  formatter = new StringMask('#.##0,00', {reverse: true});
   numbers: Array<{value:any, icon:string}>;
-  billingValue:string = "0,00";
+  showBillingValue:String = "";
+  rawBillingValue:String = "";
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams
+    public navParams: NavParams,
+    public viewCtrl:ViewController
   ) {
-    this.billingValue = navParams.get('billingValue');
+    this.showBillingValue = this.formatter.apply(navParams.get('billingValue'));
+    if(this.showBillingValue == "")
+      this.showBillingValue = "0,00"
+    this.rawBillingValue = navParams.get('billingValue');
     this.numbers = [
       {value:1, icon:""},
       {value:2, icon:""},
@@ -45,8 +52,24 @@ export class KeyboardPage {
   }
 
   pressedButton(buttonValue: string) {
-    
-    console.log(buttonValue);
+    if(buttonValue == "C") {
+      this.rawBillingValue = "";
+      this.showBillingValue = "0,00";
+      console.log(buttonValue);
+    } else if(buttonValue === "") {
+      this.rawBillingValue = this.rawBillingValue.substring(0, this.rawBillingValue.length - 1);
+      this.showBillingValue = this.formatter.apply(this.rawBillingValue);
+      console.log(buttonValue);
+    } else {
+      this.rawBillingValue = this.rawBillingValue.concat(buttonValue);
+      this.showBillingValue = this.formatter.apply(this.rawBillingValue);
+      console.log(this.rawBillingValue);
+    }
+  }
+
+  dismiss() {
+    let data = this.rawBillingValue;
+    this.viewCtrl.dismiss(data);
   }
 
 }
