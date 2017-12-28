@@ -4,5 +4,11 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "proxies": [
+    {
+      "path": "/v1",
+      "proxyUrl": "http://aplweb.tsemredes.com.br:83"
+    }
+  ]
 }
