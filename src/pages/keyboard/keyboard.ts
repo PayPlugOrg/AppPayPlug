@@ -55,15 +55,12 @@ export class KeyboardPage {
     if(buttonValue == "C") {
       this.rawBillingValue = "";
       this.showBillingValue = "0,00";
-      console.log(buttonValue);
     } else if(buttonValue === "") {
       this.rawBillingValue = this.rawBillingValue.substring(0, this.rawBillingValue.length - 1);
       this.showBillingValue = this.formatter.apply(this.rawBillingValue);
-      console.log(buttonValue);
     } else {
       this.rawBillingValue = this.rawBillingValue.concat(buttonValue);
       this.showBillingValue = this.formatter.apply(this.rawBillingValue);
-      console.log(this.rawBillingValue);
     }
   }
 

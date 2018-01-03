@@ -16,32 +16,32 @@
 <ion-content padding>
   <form (ngSubmit)="updateData()">
     
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>Nome</ion-label>
       <ion-input type="text" [(ngModel)]="user.Nome" name="nome" required="" ></ion-input>
     </ion-item>
     
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>Documento</ion-label>
       <ion-input type="text" [(ngModel)]="user.CpfCnpj" name="documento" required="" ></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>Celular</ion-label>
       <ion-input type="text" [(ngModel)]="user.Celular" name="celular" required="" ></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>E-mail</ion-label>
       <ion-input type="text" [(ngModel)]="user.Email" name="email" required="" ></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>Endereço</ion-label>
       <ion-input type="text" [(ngModel)]="user.Endereco" name="endereco" required="" ></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>Data de Nascimento</ion-label>
       <ion-input type="text" [(ngModel)]="user.DataNascimento" name="nascimento" required="" ></ion-input>
     </ion-item>

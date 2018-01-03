@@ -9,7 +9,7 @@
   <ion-navbar>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
-        <span ion-text color="primary" showWhen="ios">Cancelar</span>
+        <span ion-text color="payplug" showWhen="ios">Cancelar</span>
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
     </ion-buttons>
@@ -19,16 +19,16 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="bg-style">
   <ion-row>
     <ion-col col-12>
-      <h1>{{userName}}</h1>
+      <h1 text-center>{{userName}}</h1>
     </ion-col>
   </ion-row>
   <ion-card *ngIf="createdCode">
     <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
     <ion-card-content>
-      <p>Value: {{ createdCode }}</p>
+      <p text-center>{{ createdCode }}</p>
     </ion-card-content>
   </ion-card>
 

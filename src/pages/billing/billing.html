@@ -13,11 +13,11 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="bg-style">
 
   <ion-grid>
     <ion-row>
-      <ion-col col-12>
+      <ion-col col-12 text-center>
         <h1 (tap)=displayKeyboard(rawBillingValue)>R$ {{showBillingValue}}</h1>
       </ion-col>
     </ion-row>
@@ -26,31 +26,31 @@
       <ion-col col-8>
         <ion-card *ngIf="createdCode">
           <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
-          <ion-card-content>
+          <!--<ion-card-content>
             <p>Value: {{ createdCode }}</p>
-          </ion-card-content>
+          </ion-card-content>-->
         </ion-card>
       </ion-col>
       <ion-col col-2></ion-col>
     </ion-row>
     <ion-row class="button-icons">
       <ion-col col-4>
-        <button ion-button color=primary large full (click)=scan()>
+        <button ion-button color=primary full large (click)=scan()>
           <ion-icon name=qr-scanner></ion-icon>
         </button>
-        Leitor
+        <p>Leitor</p>
       </ion-col>
       <ion-col col-4>
-        <button ion-button color=primary large full (click)=presentCardModal()>
+        <button ion-button color=primary full large (click)=presentSmsModal()>
           <ion-icon name=card></ion-icon>
         </button>
-        Mensagem
+        <p>Mensagem</p>
       </ion-col>
       <ion-col col-4>
-        <button ion-button color=primary large full (click)=presentCardModal()>
+        <button ion-button color=primary full large (click)=presentCardModal()>
           <ion-icon name=card></ion-icon>
         </button>
-        CPF/CNPJ/Cel
+        <p>CPF/CNPJ/Cel</p>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="bg-style">
 
   <ion-grid>
     <ion-row>
@@ -21,7 +21,7 @@
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <ion-item>
+        <ion-item class="item-content">
           <ion-label stacked>Senha de Liberação</ion-label>
           <ion-input [(ngModel)]=password type=password  disabled></ion-input>
         </ion-item>
@@ -30,7 +30,7 @@
     
     <ion-row>
       <ion-col col-12>
-        <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="primary" outline (click)=pressedButton(n.value)>
+        <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="payplug" outline (click)=pressedButton(n.value)>
           {{n.value}}
         </button>
       </ion-col>
@@ -42,15 +42,15 @@
     <ion-row class="button-icons">
       <ion-col col-6>
         <button ion-button color=primary large full (click)=scan()>
-          <ion-icon name=qr-scanner></ion-icon>
+          <ion-icon name=barcode></ion-icon>
         </button>
-        QR Code
+        <p text-center>QR Code</p>
       </ion-col>
       <ion-col col-6>
         <button ion-button color=primary large full (click)=presentCardModal()>
           <ion-icon name=card></ion-icon>
         </button>
-        Cartão
+        <p text-center>Cartão</p>
       </ion-col>
     </ion-row>
     <ion-row>

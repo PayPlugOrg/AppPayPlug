@@ -8,25 +8,25 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="vertical-align-content bg-style">
   <form (submit)="doLogin()">
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>Nome</ion-label>
       <ion-input [(ngModel)]="user.nome" name="username" type="text"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item class="item-content">
       <ion-label floating>Senha</ion-label>
       <ion-input [(ngModel)]="user.senha" name="password" type="password"></ion-input>
     </ion-item>
-    <button ion-button block type="submit">
+    <button ion-button block type="submit" color="secondary">
       Login
     </button>
   </form>
-  Ainda não tem uma conta?
-  <button ion-button block clear (click)="register()">
+  <p text-center>Ainda não tem uma conta?</p>
+  <button ion-button block (click)="register()">
     Registre-se agora!
   </button>
-  <button ion-button block clear (click)="activation()">
+  <button ion-button block (click)="activation()">
     Ative sua conta!
   </button>
 </ion-content>

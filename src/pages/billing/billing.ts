@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { KeyboardPage } from '../keyboard/keyboard'
 import StringMask from 'string-mask';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { BillingSmsPage } from '../billing-sms/billing-sms';
 
 /**
  * Generated class for the BillingPage page.
@@ -39,7 +40,6 @@ export class BillingPage {
   }
 
   createQR(numeroCartao: String) {
-    console.log("Numero cartao: " + numeroCartao);
     this.createdCode = numeroCartao;
   }
 
@@ -57,6 +57,14 @@ export class BillingPage {
     this.barcodeScanner.scan().then((barcodeData) => {
       this.alertService.presentToast(barcodeData);
     });
+  }
+
+  presentSmsModal() {
+    let smsModal = this.modalCtrl.create(BillingSmsPage);
+    smsModal.onDidDismiss(data => {
+      console.log("Celular: " + data);
+    });
+    smsModal.present();
   }
 
 }

@@ -22,6 +22,8 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { MyApp } from './app.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { BillingSmsPage } from '../pages/billing-sms/billing-sms';
+import { Directive } from 'ionic3-input-mask';
 
 //Páginas públicas
 @NgModule({
@@ -36,7 +38,9 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     TransferPage,
     UserPage, 
     CardPage,
-    KeyboardPage
+    KeyboardPage,
+    BillingSmsPage,
+    Directive
   ],
   imports: [
     BrowserModule,
@@ -57,7 +61,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     TransferPage,
     UserPage, 
     CardPage,
-    KeyboardPage
+    KeyboardPage,
+    BillingSmsPage
   ],
   providers: [
     BarcodeScanner,
