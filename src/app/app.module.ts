@@ -24,6 +24,7 @@ import { MyApp } from './app.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BillingSmsPage } from '../pages/billing-sms/billing-sms';
 import { Directive } from 'ionic3-input-mask';
+import { BillingIdentificationPage } from '../pages/billing-identification/billing-identification';
 
 //Páginas públicas
 @NgModule({
@@ -40,7 +41,8 @@ import { Directive } from 'ionic3-input-mask';
     CardPage,
     KeyboardPage,
     BillingSmsPage,
-    Directive
+    Directive,
+    BillingIdentificationPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { Directive } from 'ionic3-input-mask';
     UserPage, 
     CardPage,
     KeyboardPage,
-    BillingSmsPage
+    BillingSmsPage,
+    BillingIdentificationPage
   ],
   providers: [
     BarcodeScanner,

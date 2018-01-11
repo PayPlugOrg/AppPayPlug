@@ -65,8 +65,9 @@ export class KeyboardPage {
   }
 
   dismiss() {
-    let data = this.rawBillingValue;
-    this.viewCtrl.dismiss(data);
+    let rawValue = this.rawBillingValue;
+    this.viewCtrl.dismiss(rawValue);
   }
+  
 
 }

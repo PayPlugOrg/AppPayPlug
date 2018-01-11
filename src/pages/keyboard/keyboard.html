@@ -7,6 +7,12 @@
 <ion-header>
 
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="payplug" showWhen="ios">Cancelar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Valor da Venda</ion-title>
   </ion-navbar>
 
@@ -31,7 +37,7 @@
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <button ion-button block (click)=dismiss() color=secondary>Ok</button>
+        <button ion-button block (click)=dismiss() color=secondary>Confirmar Valor</button>
       </ion-col>
     </ion-row>
 </ion-grid>

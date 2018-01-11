@@ -25,7 +25,7 @@
                 <ion-col>
                     <ion-item class=item-content>
                         <ion-label stacked>Número de celular</ion-label>
-                        <ion-input [textMask]="{mask: mask}" [(ngModel)]="celular" type="text"></ion-input>
+                        <ion-input [textMask]="{mask: mask, placeholderChar: placeholder}" [(ngModel)]="celular" type="number"></ion-input>
                       </ion-item>
                 </ion-col>
           </ion-row>

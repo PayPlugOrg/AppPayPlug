@@ -1,6 +1,7 @@
 import { LoadingController, MenuController, ToastController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 /*
   Generated class for the AlertServiceProvider provider.
@@ -17,7 +18,8 @@ export class AlertServiceProvider {
     public http: HttpClient,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    public alertCtrl: AlertController
   ) {
     console.log('Hello AlertServiceProvider Provider');
   }

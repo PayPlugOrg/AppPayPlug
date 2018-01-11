@@ -1,0 +1,64 @@
+<!--
+  Generated template for the BillingAuthorizationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Autorização <br> de Cobrança </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="bg-style">
+  <ion-grid>
+
+    <ion-row>
+      <ion-col col-4 text-center>
+        <h5>Parcelas</h5>
+        <button ion-button color="light" outline (click)=showRadio()>{{parcela}}</button>
+      </ion-col>
+      <ion-col col-8 text-center>
+        <h1>R$ {{showBillingValue}}</h1>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <h3 text-center>{{name}}</h3>
+        <h5 text-center >{{identification}}</h5>
+        <button ion-button block secondary (click)="displayIdentificationModal()">Alterar identificador</button>
+        <p text-center *ngIf=!name>Não foi encontrado nenhum usuário! Consulte por outro identificador ou verifique se este está correto.</p> 
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf=name>
+      <ion-col col-12>
+        <ion-item class="item-content">
+          <ion-label stacked>Senha de Liberação</ion-label>
+          <ion-input [(ngModel)]=password type=password  disabled></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf=name>
+      <ion-col col-12>
+        <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="payplug" outline (click)=pressedButton(n.value)>
+          {{n.value}}
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf=name>
+      <ion-col col-6>
+        <button ion-button full color="danger" round (click)=clearPasswordInput()>Limpar</button>
+      </ion-col>
+      <ion-col col-6>
+          <button ion-button full color="secondary" round>Concluir</button>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

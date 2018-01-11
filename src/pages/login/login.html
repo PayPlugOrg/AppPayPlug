@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Login</ion-title>
+    <ion-title>Entrar</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -19,12 +19,11 @@
       <ion-input [(ngModel)]="user.senha" name="password" type="password"></ion-input>
     </ion-item>
     <button ion-button block type="submit" color="secondary">
-      Login
+      Entrar
     </button>
   </form>
-  <p text-center>Ainda não tem uma conta?</p>
   <button ion-button block (click)="register()">
-    Registre-se agora!
+    Criar uma Conta
   </button>
   <button ion-button block (click)="activation()">
     Ative sua conta!

@@ -34,7 +34,7 @@ export class AuthServiceProvider {
         headers.append('Content-Type', 'application/json');
         //console.log(user['nome']);
         //console.log(user['senha']);
-        this.http.post(apiUrl+'/Tokens/New?email=' + user['nome'] + '&dataFormat=json&password=' + user['senha'], null, {headers: headers})
+        this.http.post(apiUrl+'/Tokens/New?email=' + user['nome'] + '&dataFormat=json&password=' + user['senha']+'&duration=200', null, {headers: headers})
           .subscribe(res => {
             console.log(res.json());
             if(res.json()) {
@@ -68,11 +68,11 @@ export class AuthServiceProvider {
     });
   }
 
-  getUserInfo() {
+  getUserInfo(userInfo = localStorage.getItem('identifier')) {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      var consulta = apiUrl + '/Users/Info?token=' + localStorage.getItem('token') + '&id=' + localStorage.getItem('identifier') + '&dataFormat=json';
+      var consulta = apiUrl + '/Users/Info?token=' + localStorage.getItem('token') + '&id=' + userInfo + '&dataFormat=json';
       this.http.post(consulta, null, {headers:headers})
       .subscribe(res => { 
         if(this.tokenExpired(res.json()['Message'])) {

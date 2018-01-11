@@ -46,9 +46,13 @@ export class BillingPage {
   displayKeyboard(rawBillingValue) {
     let keyboardModal = this.modalCtrl.create(KeyboardPage, {billingValue: rawBillingValue});
     keyboardModal.onDidDismiss(data => {
-      this.rawBillingValue = data;
-      this.showBillingValue = this.formatter.apply(data);
-      this.createQR(data);
+      if(data){ 
+        this.rawBillingValue = data;
+        this.showBillingValue = this.formatter.apply(data);
+        this.createQR(data);
+      } else {
+        this.navCtrl.pop();
+      }
     });
     keyboardModal.present();
   }
@@ -65,6 +69,10 @@ export class BillingPage {
       console.log("Celular: " + data);
     });
     smsModal.present();
+  }
+
+  openPage(page) {
+    this.navCtrl.push(page, {billingValue: this.showBillingValue});
   }
 
 }

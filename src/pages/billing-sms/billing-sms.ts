@@ -17,7 +17,8 @@ import { Directive } from 'ionic3-input-mask';
 })
 export class BillingSmsPage {
 
-  public mask = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  public mask = ['(',/\d/,/\d/,')', ' ',/\d/,/\d/,/\d/,/\d/,/\d/,'-',/\d/,/\d/,/\d/,/\d/];
+  public placeholder = '\u2000';
   celular: string = "";
   constructor(
     public navCtrl: NavController, 
