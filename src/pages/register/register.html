@@ -47,7 +47,7 @@
         <ion-label>Data de Nascimento</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" name="nascimento" [(ngModel)]="user.nascimento" doneText="Ok" cancelText="Cancelar"></ion-datetime>
       </ion-item>
-      <ion-item class="item-content">
+      <ion-item no-lines class="item-content">
         <ion-label>Foi indicado?</ion-label>
         <ion-checkbox (click)="viewType = !viewType"></ion-checkbox>
       </ion-item>

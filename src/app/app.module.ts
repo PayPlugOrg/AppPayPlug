@@ -25,6 +25,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BillingSmsPage } from '../pages/billing-sms/billing-sms';
 import { Directive } from 'ionic3-input-mask';
 import { BillingIdentificationPage } from '../pages/billing-identification/billing-identification';
+import { QRScanner } from '@ionic-native/qr-scanner';
 
 //Páginas públicas
 @NgModule({
@@ -73,7 +74,8 @@ import { BillingIdentificationPage } from '../pages/billing-identification/billi
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
-    AlertServiceProvider
+    AlertServiceProvider,
+    QRScanner
   ]
 })
 export class AppModule {}

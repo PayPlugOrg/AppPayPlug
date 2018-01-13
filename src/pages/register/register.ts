@@ -2,6 +2,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /**
  * Generated class for the RegisterPage page.
@@ -19,14 +20,25 @@ export class RegisterPage {
 
   loading: any;
   user = {nome:'', nascimento:'', email:'', celular:'', indicacao:'', documento:'', tipo_documento:'CPF'}
+  registerForm: FormGroup;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private authService: AuthServiceProvider,
-    private alertService: AlertServiceProvider
+    private alertService: AlertServiceProvider,
+    private formBuilder: FormBuilder
   ) {
     this.authService.getSessionToken();
+    this.registerForm = this.formBuilder.group({
+      nome: [],
+      nascimento: [],
+      email: [],
+      celular: [],
+      indicacao: [],
+      documento: [],
+      tipo_documento: []
+    });
   }
 
   ionViewDidLoad() {
