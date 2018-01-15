@@ -18,9 +18,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class RegisterPage {
 
-  loading: any;
-  user = {nome:'', nascimento:'', email:'', celular:'', indicacao:'', documento:'', tipo_documento:'CPF'}
-  registerForm: FormGroup;
+  private loading: any;
+  private user = {nome:'', nascimento:'', email:'', celular:'', indicacao:'', documento:'', tipo_documento:'CPF'}
+  private registerForm: FormGroup;
 
   constructor(
     public navCtrl: NavController, 
@@ -31,13 +31,13 @@ export class RegisterPage {
   ) {
     this.authService.getSessionToken();
     this.registerForm = this.formBuilder.group({
-      nome: [],
-      nascimento: [],
-      email: [],
-      celular: [],
-      indicacao: [],
-      documento: [],
-      tipo_documento: []
+      nome: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]+')])],
+      nascimento: ['', Validators.compose([])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')])],
+      celular: ['', Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(15), Validators.pattern('[0-9]+')])],
+      indicacao: ['', Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('[0-9]+')])],
+      documento: ['', Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(14), Validators.pattern('[0-9]+')])],
+      tipo_documento: ['', Validators.compose([Validators.required])]
     });
   }
 
@@ -46,6 +46,7 @@ export class RegisterPage {
   }
 
   changeLabel(value) {
+    this.registerForm.controls['tipo_documento'].setValue(value);
     this.user.tipo_documento = value;
   }
 

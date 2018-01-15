@@ -7,7 +7,7 @@
 
 <ion-content padding>
 
-    <form (submit)="doSignup()">
+    <form (submit)="doSignup()" [formGroup]="registerForm">
       <ion-list radio-group>
         <ion-grid>
           <ion-row>
@@ -28,24 +28,24 @@
       </ion-list>
       <ion-item class="item-content">
         <ion-label floating>Nome Completo</ion-label>
-        <ion-input [(ngModel)]="user.nome" name="username" type="text"></ion-input>
+        <ion-input name="nome" type="text" formControlName=nome></ion-input>
       </ion-item>
       <ion-item class="item-content">
         <ion-label floating>{{user.tipo_documento}}</ion-label>
-        <ion-input [(ngModel)]="user.documento" name="documento" type="text" required></ion-input>
+        <ion-input name="documento" type="text" formControlName=documento></ion-input>
       </ion-item>
       <ion-item class="item-content">
         <ion-label floating>Celular</ion-label>
-        <ion-input [(ngModel)]="user.celular" name="celular" type="text"></ion-input>
+        <ion-input name="celular" type="text" formControlName=celular></ion-input>
       </ion-item>
       <ion-item class="item-content">
         <ion-label floating>E-mail</ion-label>
-        <ion-input [(ngModel)]="user.email" name="email" type="text"></ion-input>
+        <ion-input name="email" type="text" formControlName=email></ion-input>
       </ion-item>
       
       <ion-item class="item-content">
         <ion-label>Data de Nascimento</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" name="nascimento" [(ngModel)]="user.nascimento" doneText="Ok" cancelText="Cancelar"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" name="nascimento" [(ngModel)]="user.nascimento" doneText="Ok" cancelText="Cancelar" formControlName=nascimento></ion-datetime>
       </ion-item>
       <ion-item no-lines class="item-content">
         <ion-label>Foi indicado?</ion-label>
@@ -53,7 +53,7 @@
       </ion-item>
       <ion-item class="item-content" *ngIf="viewType">
         <ion-label floating >Indicação</ion-label>
-        <ion-input [(ngModel)]="user.indicacao" name="indicacao" type="text"></ion-input>
+        <ion-input [(ngModel)]="user.indicacao" name="indicacao" type="text" formControlName=indicacao></ion-input>
       </ion-item>
       <button ion-button block type="submit">
         Continuar
