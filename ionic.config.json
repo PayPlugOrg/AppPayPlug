@@ -7,8 +7,8 @@
   },
   "proxies": [
     {
-      "path": "/v1",
-      "proxyUrl": "http://aplweb.tsemredes.com.br:83"
+      "path": "/api",
+      "proxyUrl": "http://aplweb.tsemredes.com.br:83/v1"
     }
   ]
 }

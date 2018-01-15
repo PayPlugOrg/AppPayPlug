@@ -10,7 +10,7 @@ import { AlertServiceProvider } from '../alert-service/alert-service';
   and Angular DI.
 */
 
-let apiUrl = 'http://aplweb.tsemredes.com.br:83/v1';
+let apiUrl = '/api';
 
 @Injectable()
 export class AuthServiceProvider {
