@@ -35,10 +35,10 @@
     </ion-row>
     <ion-row class="button-icons">
       <ion-col col-4>
-        <button ion-button color=primary full large (click)=scan()>
+        <button ion-button color=primary full large (click)="scan('BillingAuthorizationPage')">
           <ion-icon name=qr-scanner></ion-icon>
         </button>
-        <p>Leitor</p>
+        <p text-center>Leitor de Cartão</p>
       </ion-col>
       <ion-col col-4>
         <button ion-button color=primary full large (click)=presentSmsModal()>

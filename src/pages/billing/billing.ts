@@ -57,9 +57,14 @@ export class BillingPage {
     keyboardModal.present();
   }
 
-  scan() {
+  scan(page) {
     this.barcodeScanner.scan().then((barcodeData) => {
-      this.alertService.presentToast(barcodeData);
+      this.alertService.presentToast(barcodeData.text);
+      if(barcodeData.text.length == 16) {
+        this.navCtrl.push(page, {openModalIdentification: false, payplugCard:barcodeData.text, billingValue: this.showBillingValue});
+      } else {
+
+      }
     });
   }
 
@@ -72,7 +77,7 @@ export class BillingPage {
   }
 
   openPage(page) {
-    this.navCtrl.push(page, {billingValue: this.showBillingValue});
+    this.navCtrl.push(page, {openModalIdentification: true, billingValue: this.showBillingValue});
   }
 
 }

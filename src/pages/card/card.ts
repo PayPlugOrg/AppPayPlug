@@ -28,8 +28,7 @@ export class CardPage {
     private viewCtrl: ViewController
   ) {
     this.authService.getUserInfo();
-    this.user = this.authService.userInfo
-    console.log(this.user);
+    this.user = this.authService.userInfo;
     this.createQR(this.user['NumeroCartao']);
     this.userName = this.user['Nome'];
   }

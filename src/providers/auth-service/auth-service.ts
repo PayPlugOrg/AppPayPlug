@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AlertServiceProvider } from '../alert-service/alert-service';
+import { Header } from 'ionic-angular/components/toolbar/toolbar-header';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -36,7 +37,6 @@ export class AuthServiceProvider {
         //console.log(user['senha']);
         this.http.post(apiUrl+'/Tokens/New?email=' + user['nome'] + '&dataFormat=json&password=' + user['senha']+'&duration=200', null, {headers: headers})
           .subscribe(res => {
-            console.log(res.json());
             if(res.json()) {
               resolve(res.json());
             } else {
@@ -159,8 +159,42 @@ export class AuthServiceProvider {
 
   logout() {
     return new Promise((resolve, reject) => {
-      localStorage.clear();
+      //localStorage.clear();
+      localStorage.removeItem('token');
       resolve("logout");
+    });
+  }
+
+  getCards(identification) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = apiUrl + '/Users/GetCartoes?token=' + this.token + '&id=' + identification + '&dataFormat=json';
+
+      this.http.post(consulta, null, {headers:headers})
+        .subscribe(res => {
+          resolve(res.json());
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  doBilling(idCartao) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = apiUrl + '';
+      this.http.post(consulta, null, {headers: headers})
+        .subscribe(res => {
+          console.log(res.json());
+          resolve(res.json());
+        }, (err) =>{
+          console.log(err);
+          reject(err);
+        });
     });
   }
   

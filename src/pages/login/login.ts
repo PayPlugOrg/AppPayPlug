@@ -30,6 +30,7 @@ export class LoginPage {
     public authService: AuthServiceProvider,
     private alertService: AlertServiceProvider
   ) {
+    this.user.name = localStorage.getItem("identifier");
     //Se há token de sessão direciona para o Home do usuário
     if(localStorage.getItem("token")) {
       navCtrl.setRoot(HomePage);
@@ -43,6 +44,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
+    this.user.name = localStorage.getItem("identifier");
     console.log('ionViewDidLoad LoginPage');
   }
 
