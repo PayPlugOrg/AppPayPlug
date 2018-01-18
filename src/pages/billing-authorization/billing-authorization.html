@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content padding class="bg-style">
+<ion-content no-padding class="bg-style">
   <ion-grid>
 
     <ion-row>
@@ -40,7 +40,7 @@
       
       <ion-row>
 
-        <ion-slides pager (ionSlideReachEnd)="newCardModal()">
+        <ion-slides pager (ionSlideDidChange)="changePasswordLabel()" (ionSlideReachEnd)="newCardModal()">
           <ion-slide *ngFor="let card of cards">
             <img [src]="card['mediaUrl']">
             <p>{{card.bandeira}} {{card.numero}} <br> {{card.tipoCartao}}</p>
@@ -52,8 +52,8 @@
       <ion-row>
         <ion-col col-12>
           <ion-item class="item-content">
-            <ion-label stacked>{{labelSenha}}</ion-label>
-            <ion-input [(ngModel)]=password type=password  disabled></ion-input>
+            <ion-label text-center stacked>{{passwordLabel}}</ion-label>
+            <ion-input text-center [(ngModel)]=password type=password  disabled></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

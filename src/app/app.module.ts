@@ -26,6 +26,7 @@ import { BillingSmsPage } from '../pages/billing-sms/billing-sms';
 import { Directive } from 'ionic3-input-mask';
 import { BillingIdentificationPage } from '../pages/billing-identification/billing-identification';
 import { QRScanner } from '@ionic-native/qr-scanner';
+import { ReceiptPage } from '../pages/receipt/receipt';
 
 //Páginas públicas
 @NgModule({
@@ -42,12 +43,19 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     CardPage,
     KeyboardPage,
     BillingSmsPage,
+    ReceiptPage,
     Directive,
     BillingIdentificationPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{
+      platforms: {
+        ios: {
+          backButtonText: 'Voltar',
+        }
+      }
+    }),
     HttpClientModule,
     HttpModule,
     NgxQRCodeModule
@@ -66,7 +74,8 @@ import { QRScanner } from '@ionic-native/qr-scanner';
     CardPage,
     KeyboardPage,
     BillingSmsPage,
-    BillingIdentificationPage
+    BillingIdentificationPage,
+    ReceiptPage
   ],
   providers: [
     BarcodeScanner,

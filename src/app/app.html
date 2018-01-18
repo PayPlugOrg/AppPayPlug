@@ -8,7 +8,7 @@
 
   <ion-content>
     <ion-list no-lines>
-      <button menuClose ion-item *ngFor="let p of publicPages" (click)="openPage(p)">
+      <button menuClose ion-item *ngFor="let p of publicPages" (click)="openPage(p)" color=buzios>
         <ion-icon [name]="p.icon" item-end></ion-icon>
         {{p.title}}
       </button>
@@ -26,7 +26,7 @@
 
   <ion-content>
     <ion-list no-lines>
-      <button menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)" color=dark>
+      <button menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)" color=buzios>
         <ion-icon [name]="p.icon" item-end></ion-icon>
         {{p.title}}
       </button>

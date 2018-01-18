@@ -13,7 +13,7 @@
 <ion-content padding class="vertical-align-content bg-style">
   <ion-grid>
     <ion-row>
-      <ion-item text-center class=item-content no-lines>
+      <ion-item text-center class=item-content no-lines no-margin no-padding>
         <img src="../assets/imgs/logo-branco.png">
       </ion-item>
     </ion-row>
@@ -23,7 +23,7 @@
         <ion-col>
           <ion-item class="item-content">
             <ion-label floating>Nome</ion-label>
-            <ion-input [(ngModel)]="user.nome" name="username" type="number"></ion-input>
+            <ion-input [(ngModel)]="user.nome" name="username" type="text"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -47,12 +47,12 @@
     <ion-row>
       <ion-col col-6>
         <button ion-button block (click)="register()">
-          Criar uma Conta
+          Criar conta
         </button>
       </ion-col>
       <ion-col col-6>
         <button ion-button block (click)="activation()">
-          Ative sua conta!
+          Ativar conta
         </button>
       </ion-col>
     </ion-row>

@@ -6,6 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { Slides } from 'ionic-angular';
+import { ReceiptPage } from '../receipt/receipt';
 
 /**
  * Generated class for the BillingAuthorizationPage page.
@@ -33,7 +34,7 @@ export class BillingAuthorizationPage {
   private parcela:number = 1;
   private bloqueado: boolean = false;
   private cards: Array<{}> = new Array;
-  private labelSenha: string = "Senha de Liberação";
+  private passwordLabel: string = "Senha de Liberação";
   
   private slideOptions = {
     pager: true
@@ -92,8 +93,6 @@ export class BillingAuthorizationPage {
     this.cards = new Array;
       this.authProvider.getCards(this.identification).then((result) => {
         let i: number = 0;
-
-        this.cards.push
 
         for(i=0; i < Object.keys(result).length ; i++) {
           
@@ -186,18 +185,57 @@ export class BillingAuthorizationPage {
     console.log('Current index is', currentIndex);
   }
 
+  changePasswordLabel() {
+    let currentIndex: number = this.slides.getActiveIndex();
+    let cartao = this.cards[currentIndex];
+    console.log('change password label Current index is', currentIndex);
+    console.log('idCartao', cartao['idCartao']);
+    
+    if(cartao['bandeira'] == "") {
+      this.passwordLabel = 'Senha de Liberação'
+    } else {
+      this.passwordLabel = 'CVV do Cartão';
+    }
+  }
+
   doBilling() {
     var index: number = this.slides.getActiveIndex();
-    var idCartao = this.cards[index];
+    var cartao = this.cards[index];
     console.log(this.showBillingValue);
     var billingValue = this.showBillingValue.replace('.','');
     billingValue = this.showBillingValue.replace(',','');
     console.log(billingValue);
-    this.authProvider.doBilling(idCartao['idCartao'], billingValue, this.password).then((result) => {
-      console.log(result);
-    }, (err) => {
-      console.log(err);
-    });
+    if(this.password == "") {
+      if(cartao['bandeira'] == '') {
+        this.alert('Senha em branco!', 'Informe sua senha de liberação PayPlug para realizar a transação.');
+      } else {
+        this.alert('CVV em branco!', 'Informe o código de verificação do seu cartão para realizar a transação.');
+      }
+    } else {this.authProvider.doBilling(cartao['idCartao'], billingValue, this.password).then((result) => {
+        console.log(result);
+        console.log(result['Message']);
+        if(result['Message'] == 'Ok') {
+          let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:result['Identifier']});
+          receiptModal.present();
+        } else if(result['Message'] == 'usuarios não podem ser os mesmos.'){
+          this.alert('Transação Inválida!', 'Usuários não podem ser os mesmos. Tente novamente.')
+          this.navCtrl.pop();
+        }
 
+      }, (err) => {
+        console.log(err);
+        this.alertProv.presentToast(err);
+      });
+    }
+
+  }
+
+  private alert(title, subTitle) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }

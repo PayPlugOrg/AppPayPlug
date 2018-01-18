@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Modo de Cobrança</ion-title>
+    <ion-title>Modo de <br> Cobrança</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -42,15 +42,15 @@
       </ion-col>
       <ion-col col-4>
         <button ion-button color=primary full large (click)=presentSmsModal()>
-          <ion-icon name=card></ion-icon>
+          <ion-icon name=chatboxes></ion-icon>
         </button>
-        <p>Mensagem</p>
+        <p text-center>SMS</p>
       </ion-col>
       <ion-col col-4>
         <button ion-button color=primary full large (click)="openPage('BillingAuthorizationPage')">
-          <ion-icon name=card></ion-icon>
+          <ion-icon name=contact></ion-icon>
         </button>
-        <p>CPF/CNPJ/Cel</p>
+        <p text-center>CPF, CNPJ, Celular</p>
       </ion-col>
     </ion-row>
   </ion-grid>
