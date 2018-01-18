@@ -22,7 +22,8 @@ import { Slides } from 'ionic-angular';
 export class BillingAuthorizationPage {
   @ViewChild(Slides) slides: Slides;
 
-  private showBillingValue: any;
+  private showBillingValue: string = "";
+  private rawBillingValue: string = "";
   private identification: string = "";
   private name: string = "";
   private numbers: Array<{value:number}>;
@@ -47,6 +48,7 @@ export class BillingAuthorizationPage {
     public alertCtrl: AlertController
   ) {
     this.showBillingValue = navParams.get('billingValue');
+    this.rawBillingValue = navParams.get('rawBillingValue');
     if(navParams.get('openModalIdentification')){
       this.displayIdentificationModal();
     } else  {
@@ -81,7 +83,13 @@ export class BillingAuthorizationPage {
         this.name = data['name'];
         this.password = "";
       }
-      this.cards = new Array;
+      this.getCards();
+    });
+    identificationModal.present();
+  }
+
+  private getCards() {
+    this.cards = new Array;
       this.authProvider.getCards(this.identification).then((result) => {
         let i: number = 0;
 
@@ -119,10 +127,10 @@ export class BillingAuthorizationPage {
         }
         this.cards.push(newCard)
       }, (err) => {
+        console.log("erro: " + err);
+        //this.alertProv.showLoader(err);
         this.alertProv.presentToast(err);
       });
-    });
-    identificationModal.present();
   }
 
   private getUserInfoByCard(identification) {
@@ -130,15 +138,7 @@ export class BillingAuthorizationPage {
       this.name = result['Nome'];
       this.identification = identification;
       this.bloqueado = result['IsBloqueado'];
-    });
-    this.authProvider.getCards(this.identification).then((result) => {
-      let i: number = 0;
-      for(i=0; i < 1 ; i++) {
-        console.log(result[i]);
-      }
-      console.log(result);
-    }, (err) => {
-      console.error(err);
+      this.getCards();
     });
   }
 
@@ -187,11 +187,16 @@ export class BillingAuthorizationPage {
   }
 
   doBilling() {
-
-    this.authProvider.doBilling(this.identification).then((result) => {
-
+    var index: number = this.slides.getActiveIndex();
+    var idCartao = this.cards[index];
+    console.log(this.showBillingValue);
+    var billingValue = this.showBillingValue.replace('.','');
+    billingValue = this.showBillingValue.replace(',','');
+    console.log(billingValue);
+    this.authProvider.doBilling(idCartao['idCartao'], billingValue, this.password).then((result) => {
+      console.log(result);
     }, (err) => {
-
+      console.log(err);
     });
 
   }

@@ -3,29 +3,61 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Entrar</ion-title>
+    <ion-title>
+      Entrar
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding class="vertical-align-content bg-style">
-  <form (submit)="doLogin()">
-    <ion-item class="item-content">
-      <ion-label floating>Nome</ion-label>
-      <ion-input [(ngModel)]="user.nome" name="username" type="text"></ion-input>
-    </ion-item>
-    <ion-item class="item-content">
-      <ion-label floating>Senha</ion-label>
-      <ion-input [(ngModel)]="user.senha" name="password" type="password"></ion-input>
-    </ion-item>
-    <button ion-button block type="submit" color="secondary">
-      Entrar
-    </button>
-  </form>
-  <button ion-button block (click)="register()">
-    Criar uma Conta
-  </button>
-  <button ion-button block (click)="activation()">
-    Ative sua conta!
-  </button>
+  <ion-grid>
+    <ion-row>
+      <ion-item text-center class=item-content no-lines>
+        <img src="../assets/imgs/logo-branco.png">
+      </ion-item>
+    </ion-row>
+    
+    <form (submit)="doLogin()">
+      <ion-row>
+        <ion-col>
+          <ion-item class="item-content">
+            <ion-label floating>Nome</ion-label>
+            <ion-input [(ngModel)]="user.nome" name="username" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item class="item-content">
+            <ion-label floating>Senha</ion-label>
+            <ion-input [(ngModel)]="user.senha" name="password" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button ion-button block type="submit" color="secondary">
+            Entrar
+          </button>
+        </ion-col>
+      </ion-row>
+    </form>
+    
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button block (click)="register()">
+          Criar uma Conta
+        </button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button block (click)="activation()">
+          Ative sua conta!
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  
+ 
 </ion-content>

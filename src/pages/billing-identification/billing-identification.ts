@@ -40,13 +40,14 @@ export class BillingIdentificationPage {
 
   dismiss() {
     var information = {identification:"", success:false,name:"", bloqueado:false};
-    
+    console.log("identification: " + this.identification);
     this.authService.getUserInfo(this.identification).then((result) => {
       information.success = result['Success'];
       information.name = result['Nome'];
       information.bloqueado = result['IsBloqueado'];
       information.identification = this.identification;
     });
+    console.log(information);
     this.viewCtrl.dismiss(information);
   }
 

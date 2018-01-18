@@ -30,7 +30,7 @@ export class BillingPage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     private barcodeScanner: BarcodeScanner,
-    public alertService: AlertServiceProvider
+    public alertProvider: AlertServiceProvider
   ) {
     this.displayKeyboard(this.rawBillingValue);
   }
@@ -59,11 +59,11 @@ export class BillingPage {
 
   scan(page) {
     this.barcodeScanner.scan().then((barcodeData) => {
-      this.alertService.presentToast(barcodeData.text);
+      //this.alertProvider.presentToast(barcodeData.text);
       if(barcodeData.text.length == 16) {
         this.navCtrl.push(page, {openModalIdentification: false, payplugCard:barcodeData.text, billingValue: this.showBillingValue});
       } else {
-
+        this.alertProvider.presentToast('Leitura inválida. Por favor, apresente um Cartão PayPlug!');
       }
     });
   }
@@ -77,7 +77,7 @@ export class BillingPage {
   }
 
   openPage(page) {
-    this.navCtrl.push(page, {openModalIdentification: true, billingValue: this.showBillingValue});
+    this.navCtrl.push(page, {openModalIdentification: true, billingValue: this.showBillingValue, rawBillingValue: this.rawBillingValue});
   }
 
 }

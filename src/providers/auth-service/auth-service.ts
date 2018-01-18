@@ -181,14 +181,21 @@ export class AuthServiceProvider {
     });
   }
 
-  doBilling(idCartao) {
+  doBilling(idCartao, billingValue, password) {
+    console.log(
+      "idCartao: " + idCartao,
+      "billingValue: " + billingValue,
+      "password: " + password
+    );
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      var consulta = apiUrl + '';
+      var consulta = apiUrl + '/Cartao/CobrarComCartao?token=' + localStorage.getItem('token') + '&idCartao=' + idCartao + '&valor=' + billingValue + '&IdUsuarioOrigem=' + localStorage.getItem('identifier') + '&dataFormat=json' + '&senha=' + password;
+      console.log(consulta);
       this.http.post(consulta, null, {headers: headers})
         .subscribe(res => {
+          console.log(res);
           console.log(res.json());
           resolve(res.json());
         }, (err) =>{

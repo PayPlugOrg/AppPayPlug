@@ -34,7 +34,7 @@ export class AlertServiceProvider {
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 3000,
+      duration: 6000,
       position: 'bottom',
       dismissOnPageChange: true
     });
