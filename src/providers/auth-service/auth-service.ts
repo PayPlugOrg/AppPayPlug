@@ -117,6 +117,7 @@ export class AuthServiceProvider {
     }
     this.getUserInfo().then((result) => {
       console.log('[user name] ' + result['Nome']);
+      localStorage.setItem('username',result['Nome']);
       
       for(let o in result) {
         user1[o] = result[o];
@@ -200,6 +201,31 @@ export class AuthServiceProvider {
           resolve(res.json());
         }, (err) =>{
           console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  getReceipt(identifier) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = apiUrl + '/Comprovante/GerarComprovante?token=' + localStorage.getItem('token') + '&Identifier=' + identifier + '&desc=pagamentoviaappionic&dataFormat=json';
+      console.log(consulta);
+
+      this.http.post(consulta, null, {headers: headers})
+        .subscribe(res => {
+          console.log(res.json());
+          resolve(res.json());
+        },(err) => {
+          console.log(err);
+          let alert = this.alertService.alertCtrl.create({
+            title: 'Erro!',
+            subTitle: err,
+            buttons: ['OK']
+          });
+          alert.present();
           reject(err);
         });
     });

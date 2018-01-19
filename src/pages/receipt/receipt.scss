@@ -1,3 +1,20 @@
 page-receipt {
 
+    .card-md, .card-ios {
+        background-color: #FFFF99 !important;
+    }
+
+    #logoPayPlug {
+        width: 57%;
+    }
+
+    hr {
+        border-top:1px dashed #000;
+        /*Rest of stuff here*/
+    }
+
+    .auth-p {
+        font-size: 90%;
+    }
+
 }

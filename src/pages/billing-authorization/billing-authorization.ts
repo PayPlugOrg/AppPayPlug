@@ -211,15 +211,20 @@ export class BillingAuthorizationPage {
       } else {
         this.alert('CVV em branco!', 'Informe o código de verificação do seu cartão para realizar a transação.');
       }
-    } else {this.authProvider.doBilling(cartao['idCartao'], billingValue, this.password).then((result) => {
+    } else {
+      this.authProvider.doBilling(cartao['idCartao'], billingValue, this.password).then((result) => {
         console.log(result);
+        //result['Message'] = 'Ok';
         console.log(result['Message']);
         if(result['Message'] == 'Ok') {
-          let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:result['Identifier']});
+          let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:result['Identifier']}); //result['Identifier'] '5510'
           receiptModal.present();
         } else if(result['Message'] == 'usuarios não podem ser os mesmos.'){
           this.alert('Transação Inválida!', 'Usuários não podem ser os mesmos. Tente novamente.')
           this.navCtrl.pop();
+        } else if(result['Message'] == 'Senha inválida.') {
+          this.alert('Senha Inválida','Verifique sua senha.');
+          this.clearPasswordInput();
         }
 
       }, (err) => {
