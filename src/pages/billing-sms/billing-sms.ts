@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
-import { Directive } from 'ionic3-input-mask';
+//import { Directive } from 'ionic3-input-mask';
 
 /**
  * Generated class for the BillingSmsPage page.

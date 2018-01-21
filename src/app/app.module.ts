@@ -23,10 +23,21 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { MyApp } from './app.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BillingSmsPage } from '../pages/billing-sms/billing-sms';
-import { Directive } from 'ionic3-input-mask';
+//import { Directive } from 'ionic3-input-mask';
 import { BillingIdentificationPage } from '../pages/billing-identification/billing-identification';
 import { QRScanner } from '@ionic-native/qr-scanner';
 import { ReceiptPage } from '../pages/receipt/receipt';
+import { AboutPageModule } from '../pages/about/about.module';
+import { ActivationPageModule } from '../pages/activation/activation.module';
+import { BillingIdentificationPageModule } from '../pages/billing-identification/billing-identification.module';
+import { BillingSmsPageModule } from '../pages/billing-sms/billing-sms.module';
+import { CardPageModule } from '../pages/card/card.module';
+import { KeyboardPageModule } from '../pages/keyboard/keyboard.module';
+import { ReceiptPageModule } from '../pages/receipt/receipt.module';
+import { LoginPageModule } from '../pages/login/login.module';
+import { RegisterPageModule } from '../pages/register/register.module';
+import { TransferPageModule } from '../pages/transfer/transfer.module';
+import { UserPageModule } from '../pages/user/user.module';
 
 //Páginas públicas
 @NgModule({
@@ -34,18 +45,18 @@ import { ReceiptPage } from '../pages/receipt/receipt';
     MyApp,
     HomePage,
     ListPage,
-    LoginPage,
-    RegisterPage,
-    ActivationPage,
-    AboutPage,
-    TransferPage,
-    UserPage, 
-    CardPage,
-    KeyboardPage,
-    BillingSmsPage,
-    ReceiptPage,
-    Directive,
-    BillingIdentificationPage
+    //LoginPage,
+    //RegisterPage,
+    //ActivationPage,
+    //AboutPage,
+    //TransferPage,
+    //UserPage, 
+    //CardPage,
+    //KeyboardPage,
+    //BillingSmsPage,
+    //ReceiptPage,
+    //Directive,
+    //BillingIdentificationPage
   ],
   imports: [
     BrowserModule,
@@ -58,7 +69,18 @@ import { ReceiptPage } from '../pages/receipt/receipt';
     }),
     HttpClientModule,
     HttpModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    AboutPageModule,
+    ActivationPageModule,
+    BillingIdentificationPageModule,
+    BillingSmsPageModule,
+    CardPageModule,
+    KeyboardPageModule,
+    ReceiptPageModule,
+    LoginPageModule,
+    RegisterPageModule,
+    TransferPageModule,
+    UserPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -68,7 +90,7 @@ import { ReceiptPage } from '../pages/receipt/receipt';
     LoginPage,
     RegisterPage,
     ActivationPage,
-    AboutPage,
+    //AboutPage,
     TransferPage,
     UserPage, 
     CardPage,
