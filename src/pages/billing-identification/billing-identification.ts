@@ -51,6 +51,11 @@ export class BillingIdentificationPage {
     this.viewCtrl.dismiss(information);
   }
 
+  cancel() {
+    var information = {success: false, cancel: true};
+    this.viewCtrl.dismiss(information);
+  }
+
   showRadio() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Parcelamento');

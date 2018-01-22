@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the ReceiptPage page.
@@ -70,7 +71,7 @@ export class ReceiptPage {
   }
 
   private dismiss() {
-    this.navCtrl.popToRoot();
+    this.navCtrl.setRoot(HomePage);
   }
 
 }

@@ -78,13 +78,16 @@ export class BillingAuthorizationPage {
         this.identification = data['identification'];
         this.name = "";
         this.password = "";
+        if(data['cancel']) {
+          this.navCtrl.pop();
+        }
       } else {
         this.identification = data['identification'];
         this.bloqueado = data['bloqueado'];
         this.name = data['name'];
         this.password = "";
+        this.getCards();
       }
-      this.getCards();
     });
     identificationModal.present();
   }
