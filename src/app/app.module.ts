@@ -38,12 +38,15 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { RegisterPageModule } from '../pages/register/register.module';
 import { TransferPageModule } from '../pages/transfer/transfer.module';
 import { UserPageModule } from '../pages/user/user.module';
+import { HomePageModule } from '../pages/home/home.module';
+import { CardNewPage } from '../pages/card-new/card-new';
+import { CardNewPageModule } from '../pages/card-new/card-new.module';
 
 //Páginas públicas
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+    //HomePage,
     ListPage,
     //LoginPage,
     //RegisterPage,
@@ -67,6 +70,7 @@ import { UserPageModule } from '../pages/user/user.module';
         }
       }
     }),
+    HomePageModule,
     HttpClientModule,
     HttpModule,
     NgxQRCodeModule,
@@ -80,7 +84,8 @@ import { UserPageModule } from '../pages/user/user.module';
     LoginPageModule,
     RegisterPageModule,
     TransferPageModule,
-    UserPageModule
+    UserPageModule,
+    CardNewPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -97,7 +102,8 @@ import { UserPageModule } from '../pages/user/user.module';
     KeyboardPage,
     BillingSmsPage,
     BillingIdentificationPage,
-    ReceiptPage
+    ReceiptPage,
+    CardNewPage
   ],
   providers: [
     BarcodeScanner,

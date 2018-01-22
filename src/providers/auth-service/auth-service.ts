@@ -11,7 +11,7 @@ import { Header } from 'ionic-angular/components/toolbar/toolbar-header';
   and Angular DI.
 */
 
-let apiUrl = '/api';
+let apiUrl = 'http://aplweb.tsemredes.com.br:83/v1';
 
 @Injectable()
 export class AuthServiceProvider {
@@ -177,6 +177,24 @@ export class AuthServiceProvider {
         .subscribe(res => {
           resolve(res.json());
         }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  newCard(cardData) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = apiUrl + '/Cartao/AdicionarCartao?token=' + '&idUsuario=' + '&Numero=' + '&NomeTitular=' + '&DataValidade='+ '&TipoCartao=' + '&Bandeira=';
+
+      this.http.post(consulta, null, {headers:headers})
+        .subscribe(res => {
+          console.log(res.json());
+          resolve(res.json());
+        }, (err) => {
+          console.error(err);
           reject(err);
         });
     });

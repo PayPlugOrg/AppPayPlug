@@ -7,6 +7,7 @@ import { AlertServiceProvider } from '../../providers/alert-service/alert-servic
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { Slides } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
+import { CardNewPage } from '../card-new/card-new';
 
 /**
  * Generated class for the BillingAuthorizationPage page.
@@ -186,13 +187,18 @@ export class BillingAuthorizationPage {
   newCardModal() {
     let currentIndex = this.slides.getActiveIndex();
     console.log('Current index is', currentIndex);
+    let newCard = this.modalCtrl.create(CardNewPage);
+    newCard.onDidDismiss( data => {
+      console.log(data);
+    });
+    newCard.present();
   }
 
   changePasswordLabel() {
     let currentIndex: number = this.slides.getActiveIndex();
     let cartao = this.cards[currentIndex];
-    console.log('change password label Current index is', currentIndex);
-    console.log('idCartao', cartao['idCartao']);
+    //console.log('change password label Current index is', currentIndex);
+    //console.log('idCartao', cartao['idCartao']);
     
     if(cartao['bandeira'] == "") {
       this.passwordLabel = 'Senha de Liberação'
