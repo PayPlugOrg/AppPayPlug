@@ -17,13 +17,13 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col col-12>1 - Informe a senha de liberação para gerar a chave para esse Pagamento</ion-col>
+      <ion-col text-center col-12>Informe a senha de liberação para gerar a chave para esse Pagamento</ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>
         <ion-item class="item-content">
-          <ion-label stacked>Senha de Liberação</ion-label>
-          <ion-input [(ngModel)]=password type=password  disabled></ion-input>
+          <ion-label class="authorization-label" text-center stacked>Senha de Liberação</ion-label>
+          <ion-input text-center [(ngModel)]=password type=password  disabled></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -36,6 +36,7 @@
       </ion-col>
     </ion-row>
     
+    <!--
     <ion-row>
       <ion-col col-12>2 - Selecione a forma de pagamento</ion-col>
     </ion-row>
@@ -53,12 +54,17 @@
         <p text-center>Cartão</p>
       </ion-col>
     </ion-row>
+    -->
+
     <ion-row>
       <ion-col col-6>
         <button ion-button full color="danger" round navPop>Cancelar</button>
       </ion-col>
       <ion-col col-6>
-        <button ion-button full color="secondary" round (click)=clearPasswordInput()>Limpar</button>
+        <button ion-button full color="primary" round (click)=clearPasswordInput()>Limpar</button>
+      </ion-col>
+      <ion-col col-12>
+        <button ion-button full color="secondary" round (click)=authenticate()>Avançar</button>
       </ion-col>
     </ion-row>
   </ion-grid>

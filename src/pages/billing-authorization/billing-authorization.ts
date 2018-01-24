@@ -27,6 +27,7 @@ export class BillingAuthorizationPage {
   private showBillingValue: string = "";
   private rawBillingValue: string = "";
   private identification: string = "";
+  private billedId: string = "";
   private name: string = "";
   private numbers: Array<{value:number}>;
   private password: string = "";
@@ -72,6 +73,7 @@ export class BillingAuthorizationPage {
   }
 
   private displayIdentificationModal() {
+    this.cards = new Array;
     let identificationModal = this.modalCtrl.create(BillingIdentificationPage, {billingValue: this.showBillingValue});
     identificationModal.onDidDismiss(data => {
       if(data['success'] == false) {
@@ -123,8 +125,9 @@ export class BillingAuthorizationPage {
 
           this.cards.push(card);
         }
+        this.billedId = card.idUsuario;
         var newCard = {
-          mediaUrl : "../assets/imgs/credit-card.png",
+          mediaUrl : "assets/imgs/credit-card.png",
           numero : "",
           tipoCartao : "Novo Cartão"
         }
@@ -150,7 +153,7 @@ export class BillingAuthorizationPage {
     this.numbers.sort(() => Math.random() * 2 - 1);
   }
 
-  private pressedButton(buttonValue: string) {
+  pressedButton(buttonValue: string) {
     this.password = this.password.concat(buttonValue);
   }
 
@@ -187,9 +190,10 @@ export class BillingAuthorizationPage {
   newCardModal() {
     let currentIndex = this.slides.getActiveIndex();
     console.log('Current index is', currentIndex);
-    let newCard = this.modalCtrl.create(CardNewPage);
+    let newCard = this.modalCtrl.create(CardNewPage, {billedId:this.billedId});
     newCard.onDidDismiss( data => {
       console.log(data);
+      this.getCards();
     });
     newCard.present();
   }

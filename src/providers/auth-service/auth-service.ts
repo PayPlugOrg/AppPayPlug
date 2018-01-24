@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AlertServiceProvider } from '../alert-service/alert-service';
-import { Header } from 'ionic-angular/components/toolbar/toolbar-header';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -68,7 +67,7 @@ export class AuthServiceProvider {
     });
   }
 
-  getUserInfo(userInfo = localStorage.getItem('identifier')) {
+  getUserInfo(userInfo = localStorage.getItem('login')) {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
@@ -118,6 +117,7 @@ export class AuthServiceProvider {
     this.getUserInfo().then((result) => {
       console.log('[user name] ' + result['Nome']);
       localStorage.setItem('username',result['Nome']);
+      localStorage.setItem('id',result['Id']);
       
       for(let o in result) {
         user1[o] = result[o];
@@ -171,8 +171,8 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      var consulta = apiUrl + '/Users/GetCartoes?token=' + this.token + '&id=' + identification + '&dataFormat=json';
-
+      var consulta = apiUrl + '/Users/GetCartoes?token=' + localStorage.getItem('token') + '&id=' + identification + '&dataFormat=json';
+      console.log(consulta);
       this.http.post(consulta, null, {headers:headers})
         .subscribe(res => {
           resolve(res.json());
@@ -187,8 +187,8 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      var consulta = apiUrl + '/Cartao/AdicionarCartao?token=' + '&idUsuario=' + '&Numero=' + '&NomeTitular=' + '&DataValidade='+ '&TipoCartao=' + '&Bandeira=';
-
+      var consulta = apiUrl + '/Cartao/AdicionarCartao?token=' + localStorage.getItem('token') + '&idUsuario=' + cardData['billedId'] + '&Numero=' + cardData['cardNumber'] + '&NomeTitular=' + cardData['holder'] + '&DataValidade=' + cardData['valid'] + '-01'+ '&TipoCartao=' + cardData['cardType'] + '&dataFormat=json';
+      console.log(consulta);
       this.http.post(consulta, null, {headers:headers})
         .subscribe(res => {
           console.log(res.json());
@@ -198,6 +198,22 @@ export class AuthServiceProvider {
           reject(err);
         });
     });
+  }
+
+  paymentAuthenticate(password: string) {
+
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      var consulta = apiUrl + '/Users/ValidarSenhaLiberacao?token=' + localStorage.getItem('token') + '&password=' + password + '&dataFormat=json';
+      console.log(consulta);
+      this.http.post(consulta,null,{headers:headers})
+        .subscribe(res => {
+          resolve(res.json());
+        }, (err) => {
+          reject(err);
+        })
+    })
   }
 
   doBilling(idCartao, billingValue, password) {
@@ -210,11 +226,10 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      var consulta = apiUrl + '/Cartao/CobrarComCartao?token=' + localStorage.getItem('token') + '&idCartao=' + idCartao + '&valor=' + billingValue + '&IdUsuarioOrigem=' + localStorage.getItem('identifier') + '&dataFormat=json' + '&senha=' + password;
+      var consulta = apiUrl + '/Cartao/CobrarComCartao?token=' + localStorage.getItem('token') + '&idCartao=' + idCartao + '&valor=' + billingValue + '&IdUsuarioOrigem=' + localStorage.getItem('login') + '&dataFormat=json' + '&senha=' + password;
       console.log(consulta);
       this.http.post(consulta, null, {headers: headers})
         .subscribe(res => {
-          console.log(res);
           console.log(res.json());
           resolve(res.json());
         }, (err) =>{

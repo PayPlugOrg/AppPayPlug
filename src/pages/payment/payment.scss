@@ -13,5 +13,20 @@ page-payment {
     .item-md {
         padding-left: 0px;
     }
+
+    ion-grid {
+        height: 100%;
+        justify-content: center;
+    }
+
+    .authorization-label {
+        font-size: 1.6em;
+        color: white !important;
+    }
+
+    .text-input[disabled] {
+        opacity: 1;
+        font-size: 1.6em;
+    }
     
 }

@@ -41,6 +41,9 @@ import { UserPageModule } from '../pages/user/user.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { CardNewPage } from '../pages/card-new/card-new';
 import { CardNewPageModule } from '../pages/card-new/card-new.module';
+import { CardListPage } from '../pages/card-list/card-list';
+import { CardListPageModule } from '../pages/card-list/card-list.module';
+import { CardProvider } from '../providers/card/card';
 
 //Páginas públicas
 @NgModule({
@@ -85,7 +88,8 @@ import { CardNewPageModule } from '../pages/card-new/card-new.module';
     RegisterPageModule,
     TransferPageModule,
     UserPageModule,
-    CardNewPageModule
+    CardNewPageModule,
+    CardListPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -98,12 +102,14 @@ import { CardNewPageModule } from '../pages/card-new/card-new.module';
     //AboutPage,
     TransferPage,
     UserPage, 
-    CardPage,
     KeyboardPage,
     BillingSmsPage,
     BillingIdentificationPage,
     ReceiptPage,
-    CardNewPage
+    //Cartões
+    CardPage,
+    CardNewPage,
+    CardListPage
   ],
   providers: [
     BarcodeScanner,
@@ -112,7 +118,8 @@ import { CardNewPageModule } from '../pages/card-new/card-new.module';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     AlertServiceProvider,
-    QRScanner
+    QRScanner,
+    CardProvider
   ]
 })
 export class AppModule {}

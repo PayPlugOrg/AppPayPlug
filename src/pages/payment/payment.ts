@@ -4,6 +4,8 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { CardPage } from '../../pages/card/card';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { CardListPage } from '../card-list/card-list';
 
 /**
  * Generated class for the PaymentPage page.
@@ -27,7 +29,8 @@ export class PaymentPage {
     public navParams: NavParams,
     public alertService: AlertServiceProvider,
     private barcodeScanner: BarcodeScanner,
-    public qrScanner: QRScanner
+    public qrScanner: QRScanner,
+    public authService: AuthServiceProvider
   ) {
     this.numbers = [
       {value:0},
@@ -114,6 +117,28 @@ export class PaymentPage {
   clearPasswordInput() {
     this.password = "";
     this.numbers.sort(() => Math.random() * 2 - 1);
+  }
+
+  private authenticate() {
+    this.authService.paymentAuthenticate(this.password).then((result) => {
+      console.log(result);
+      if(result['Success']) {
+        this.navCtrl.push(CardListPage);
+      } else {
+        this.clearPasswordInput();
+        let alert = this.alertService.alertCtrl.create({
+          title:'Falha na autenticação!',
+          subTitle:'Senha incorreta.',
+          buttons:['Ok']
+        });
+        if(result['Message']) {
+          alert.setSubTitle('Sessão inválida.');
+        }
+        alert.present();
+      }
+    },(err) => {
+      console.error(err);
+    })
   }
 
 }

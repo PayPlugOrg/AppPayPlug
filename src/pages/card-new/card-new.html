@@ -35,7 +35,7 @@
         <ion-col col-12>
           <ion-item class="item-content">
             <ion-label>Data de Validade</ion-label>
-            <ion-datetime formControlName="valid" displayFormat="MM/YYYY" name="valid" doneText="Ok" cancelText="Cancelar"></ion-datetime>
+            <ion-datetime formControlName="valid" max="2050-12" displayFormat="MM/YYYY" name="valid" doneText="Ok" cancelText="Cancelar"></ion-datetime>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -44,7 +44,7 @@
         <ion-col col-12>
           <ion-item class="item-content">
             <ion-label floating>Titular do Cartão</ion-label>
-            <ion-input formControlName="holder" type="text"></ion-input>
+            <ion-input class="holder-style" formControlName="holder" type="text"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -54,13 +54,13 @@
           <ion-col col-6>
             <ion-item class="item-content">
               <ion-label>Crédito</ion-label>
-              <ion-radio ngDefaultControl checked (tap)="changeCardType('credito')"></ion-radio>
+              <ion-radio ngDefaultControl checked (tap)="changeCardType(1)"></ion-radio>
             </ion-item>
           </ion-col>
           <ion-col col-6>
             <ion-item class="item-content">
               <ion-label>Débito</ion-label>
-              <ion-radio ngDefaultControl (tap)="changeCardType('debito')"></ion-radio>
+              <ion-radio ngDefaultControl (tap)="changeCardType(2)"></ion-radio>
             </ion-item>
           </ion-col>
         </ion-row>

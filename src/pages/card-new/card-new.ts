@@ -33,12 +33,14 @@ export class CardNewPage {
     this.newCardValidation = this.formBuilder.group({
       cardNumber: ['', Validators.compose([Validators.required])],
       valid: ['', Validators.compose([Validators.required])],
-      holder: ['', Validators.compose([Validators.required])]
+      holder: ['', Validators.compose([Validators.required])],
+      cardType: ['1', Validators.compose([Validators.required])],
+      billedId: [this.navParams.get('billedId'), Validators.compose([Validators.required])]
     });
   }
 
-  changeCardType(type: string) {
-
+  changeCardType(type) {
+    this.newCardValidation.controls['cardType'].setValue(type);
   }
 
   newCard() {
@@ -51,12 +53,29 @@ export class CardNewPage {
         subTitle: 'Por favor, verifique os campos e tente novamente.',
         buttons: ['Ok']
       });
+      alert.present();
     } else {
-      this.alertService.showLoader('Cadastrando novo cartão...');
+      console.log(this.newCardValidation.value);
       this.authService.newCard(this.newCardValidation.value).then((result) => {
         console.log(result);
-        this.alertService.loading.dismiss();
-        this.viewCtrl.dismiss();
+        let alert = this.alertService.alertCtrl.create({
+          buttons: ['Ok']
+        });
+        
+        if(result['success']) {
+          
+          alert.setTitle('Cartão cadastrado!');
+          alert.setSubTitle(result['msg']);
+          alert.present();
+          this.viewCtrl.dismiss();
+          
+        } else {
+
+          alert.setTitle('Falha no cadastro!');
+          alert.setSubTitle(result['msg']);
+          alert.present();
+        }
+        
       },(err) => {
         console.error(err);
         this.alertService.loading.dismiss();

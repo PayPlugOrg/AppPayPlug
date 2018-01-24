@@ -60,7 +60,7 @@
   
       <ion-row>
         <ion-col col-12>
-          <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="payplug" outline (click)=pressedButton(n.value)>
+          <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="payplug" outline (click)="pressedButton(n.value)">
             {{n.value}}
           </button>
         </ion-col>
@@ -68,10 +68,10 @@
   
       <ion-row>
         <ion-col col-6>
-          <button ion-button full color="danger" round (click)=clearPasswordInput()>Limpar</button>
+          <button ion-button full color="danger" round (click)="clearPasswordInput()">Limpar</button>
         </ion-col>
         <ion-col col-6>
-            <button ion-button full color="secondary" round (click)=doBilling()>Concluir</button>
+            <button ion-button full color="secondary" round (click)="doBilling()">Concluir</button>
           </ion-col>
       </ion-row>
     </ion-grid>

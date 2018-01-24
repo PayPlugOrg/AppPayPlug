@@ -30,7 +30,7 @@ export class LoginPage {
     public authService: AuthServiceProvider,
     private alertService: AlertServiceProvider
   ) {
-    this.user.name = localStorage.getItem("identifier");
+    this.user.name = localStorage.getItem("login");
     //Se há token de sessão direciona para o Home do usuário
     if(localStorage.getItem("token")) {
       navCtrl.setRoot(HomePage);
@@ -44,7 +44,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    this.user.name = localStorage.getItem("identifier");
+    this.user.name = localStorage.getItem("login");
     console.log('ionViewDidLoad LoginPage');
   }
 
@@ -55,7 +55,8 @@ export class LoginPage {
       this.data = result;
       if(this.data) {
         localStorage.setItem('token', this.data.Token);
-        localStorage.setItem('identifier', this.user['nome']);
+        localStorage.setItem('login', this.user['nome']);
+        this.authService.getUserData();
         this.navCtrl.setRoot(HomePage);
       }
     }, (err) => {
