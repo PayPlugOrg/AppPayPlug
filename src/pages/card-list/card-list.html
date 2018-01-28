@@ -7,12 +7,56 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>cardList</ion-title>
+    <ion-title>Lista de <br>Cartões</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-grid>
+    <ion-row *ngFor="let card of cards">
+      <ion-col col-12>
+        <button class="large-button btn-text" no-padding ion-button block color=light large (click)="openCard(card)">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-3>
+                <img [src]="card['mediaUrl']">
+              </ion-col>
+              <ion-col class="card-attributes" text-uppercase text-center col-9>
+                {{card['tipoCartao']}} <br>
+                {{card['numero']}} {{card['dataValidade']}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-uppercase  text-center col-12>
+                {{card['nomeTitular']}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!--
+  <div class="card-container"></div>
+  <form card
+    container=".card-container"
+    card-width="500"
+    [attr.messages]="messages"
+    [attr.placeholders]="placeholders"
+    [attr.masks]="masks"
+    formatting="false"
+    debug="true">
+
+    <input type="text" name="number" card-number/>
+    <input type="text" name="first-name" card-name/>
+    <input type="text" name="last-name" card-name/>
+    <input type="text" name="expiry" card-expiry/>
+    <input type="text" name="cvc" card-cvc/>
+  </form>
+  -->
 
 </ion-content>

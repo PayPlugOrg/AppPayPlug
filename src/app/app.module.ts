@@ -43,7 +43,8 @@ import { CardNewPage } from '../pages/card-new/card-new';
 import { CardNewPageModule } from '../pages/card-new/card-new.module';
 import { CardListPage } from '../pages/card-list/card-list';
 import { CardListPageModule } from '../pages/card-list/card-list.module';
-import { CardProvider } from '../providers/card/card';
+import { CardServiceProvider } from '../providers/card/card-service';
+import {CardModule} from 'ngx-card/ngx-card';
 
 //Páginas públicas
 @NgModule({
@@ -89,7 +90,8 @@ import { CardProvider } from '../providers/card/card';
     TransferPageModule,
     UserPageModule,
     CardNewPageModule,
-    CardListPageModule
+    CardListPageModule,
+    CardModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -119,7 +121,7 @@ import { CardProvider } from '../providers/card/card';
     AuthServiceProvider,
     AlertServiceProvider,
     QRScanner,
-    CardProvider
+    CardServiceProvider
   ]
 })
 export class AppModule {}

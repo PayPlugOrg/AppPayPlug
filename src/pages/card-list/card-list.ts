@@ -3,7 +3,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { BillingAuthorizationPageModule } from '../billing-authorization/billing-authorization.module';
 import { BillingAuthorizationPage } from '../billing-authorization/billing-authorization';
-import { CardProvider } from '../../providers/card/card';
+import { CardServiceProvider } from '../../providers/card/card-service';
+import {CardModule} from 'ngx-card/ngx-card';
+import { CardPage } from '../card/card';
+
 
 /**
  * Generated class for the CardListPage page.
@@ -19,20 +22,30 @@ import { CardProvider } from '../../providers/card/card';
 })
 export class CardListPage {
 
-  private cards: Array<{}> = new Array;
+  private cards: any;
+
+  messages: any = {validDate: 'valid\ndate', monthYear: 'mm/yyyy'};
+  placeholders: any = {number: '•••• •••• •••• ••••', name: 'Full Name', expiry: '••/••', cvc: '•••'};
+  masks: any;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public authService: AuthServiceProvider,
-    public cardProvider: CardProvider
+    public cardProvider: CardServiceProvider
+
   ) {
-    this.cards = this.cardProvider.getCards(this.authService.userInfo['CpfCnpj']);
-    console.log(this.cards);
+    this.cardProvider.getCards(this.authService.userInfo['CpfCnpj']).then((result) =>{
+      console.log(result);
+      this.cards = result;
+      
+    });
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CardListPage');
+  openCard(card) {
+    console.log(card);
+    this.navCtrl.push(CardPage, {card: card});
   }
 
 }

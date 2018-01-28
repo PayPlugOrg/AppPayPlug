@@ -26,8 +26,4 @@ export class UserPage {
     this.user = this.authService.getUserData();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserPage');
-  }
-
 }

@@ -8,6 +8,7 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 import { Slides } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { CardNewPage } from '../card-new/card-new';
+import { CardServiceProvider } from '../../providers/card/card-service';
 
 /**
  * Generated class for the BillingAuthorizationPage page.
@@ -35,7 +36,7 @@ export class BillingAuthorizationPage {
   private testRadioResult: any;
   private parcela:number = 1;
   private bloqueado: boolean = false;
-  private cards: Array<{}> = new Array;
+  private cards: any;
   private passwordLabel: string = "Senha de Liberação";
   
   private slideOptions = {
@@ -48,7 +49,8 @@ export class BillingAuthorizationPage {
     public modalCtrl: ModalController,
     public authProvider: AuthServiceProvider,
     public alertProv: AlertServiceProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public cardProvider: CardServiceProvider
   ) {
     this.showBillingValue = navParams.get('billingValue');
     this.rawBillingValue = navParams.get('rawBillingValue');
@@ -96,47 +98,17 @@ export class BillingAuthorizationPage {
   }
 
   private getCards() {
-    this.cards = new Array;
-      this.authProvider.getCards(this.identification).then((result) => {
-        let i: number = 0;
-
-        for(i=0; i < Object.keys(result).length ; i++) {
-          
-          var card = {
-            idCartao: result[i]['Id'],
-            idUsuario: result[i]['IdUsuario'],
-            tipoCartao: result[i]['TipoCartao'],
-            numero: result[i]['Numero'],
-            bandeira: result[i]['Bandeira'],
-            mediaUrl: ''
-          }
-          
-          if(result[i]['Bandeira'] == 'Visa') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/Visa.png';
-          } else if(result[i]['Bandeira'] == 'MasterCard') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/MasterCard.png';
-          } else if(result[i]['Bandeira'] == '') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/PayPlug.png';
-          } else if(result[i]['Bandeira'] == 'Amex') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/Amex.png';
-          } else if(result[i]['Bandeira'] == 'Bitcoin') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/Bitcoin.png';
-          }
-
-          this.cards.push(card);
-        }
-        this.billedId = card.idUsuario;
-        var newCard = {
-          mediaUrl : "assets/imgs/credit-card.png",
-          numero : "",
-          tipoCartao : "Novo Cartão"
-        }
-        this.cards.push(newCard)
-      }, (err) => {
-        console.log("erro: " + err);
-        //this.alertProv.showLoader(err);
-        this.alertProv.presentToast(err);
-      });
+    this.cardProvider.getCards(this.identification).then((result) =>{
+      
+      this.cards = result;
+      this.billedId = this.cards[1]['idUsuario'];
+      var newCard = {
+        mediaUrl : "assets/imgs/credit-card.png",
+        numero : "",
+        tipoCartao : "Novo Cartão"
+      }
+      this.cards.push(newCard);
+    });
   }
 
   private getUserInfoByCard(identification) {
