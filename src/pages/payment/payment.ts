@@ -22,6 +22,7 @@ import { CardListPage } from '../card-list/card-list';
 export class PaymentPage {
 
   private password: string = "";
+  private errorCount: number = 0;
   private numbers: Array<{value:number}>;
   constructor(
     public navCtrl: NavController,
@@ -125,15 +126,35 @@ export class PaymentPage {
       if(result['Success']) {
         this.navCtrl.push(CardListPage);
       } else {
+        
+        this.errorCount = this.errorCount++;
+
         this.clearPasswordInput();
+        let invalidSessionMessage = 'Sessão inválida.';
+        let countErrorMessage = 'Senha incorreta. ' + this.errorCount + ' tentativas erradas de 4';
+
         let alert = this.alertService.alertCtrl.create({
           title:'Falha na autenticação!',
-          subTitle:'Senha incorreta.',
+          subTitle: countErrorMessage,
           buttons:['Ok']
         });
-        if(result['Message']) {
-          alert.setSubTitle('Sessão inválida.');
+
+
+        if(this.errorCount <= 4) {
+
+          alert.setSubTitle('');
+
+          if(result['Message']) {
+            alert.setSubTitle('');
+          }
+          
+        } else {
+          alert.setSubTitle('Você errou sua senha 4 vezes. Todas as informações suas informações serão apagadas do celular.');
+          localStorage.clear();
+          this.authService.logout();
         }
+
+        //Exibe o alerta de erro
         alert.present();
       }
     },(err) => {
