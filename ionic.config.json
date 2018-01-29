@@ -1,6 +1,5 @@
 {
   "name": "PayPlug",
-  "app_id": "463e5c87",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
@@ -10,5 +9,6 @@
       "path": "/api",
       "proxyUrl": "http://aplweb.tsemredes.com.br:83/v1"
     }
-  ]
+  ],
+  "app_id": "463e5c87"
 }

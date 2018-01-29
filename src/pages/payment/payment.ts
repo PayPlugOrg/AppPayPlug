@@ -5,7 +5,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { CardPage } from '../../pages/card/card';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { CardListPage } from '../card-list/card-list';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the PaymentPage page.
@@ -24,6 +24,8 @@ export class PaymentPage {
   private password: string = "";
   private errorCount: number = 0;
   private numbers: Array<{value:number}>;
+  private message: string = "";
+  private label: string = "";
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController, 
@@ -33,6 +35,8 @@ export class PaymentPage {
     public qrScanner: QRScanner,
     public authService: AuthServiceProvider
   ) {
+    this.message = navParams.get('message');
+    this.label = navParams.get('label');
     this.numbers = [
       {value:0},
       {value:1},
@@ -46,13 +50,19 @@ export class PaymentPage {
       {value:9}
     ];
     this.clearPasswordInput();
+
+    //Se o usuário reinicia a tela de pagamento após errar, o aplicativo verifica o histórico de erro.
+    if(localStorage.getItem('password-error-count')) {
+      
+      //Se três minutos se passaram desde a última vez que ele errou, o histórico de erro é apagado
+      if(!this.checkErrorHistory()) { //Diferença em milisegundos
+        this.errorCount = Number(localStorage.getItem('password-error-count'));
+      }
+    }
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PaymentPage');
-  }
-
-  qrscanner() {
+  private qrscanner() {
     // Optionally request the permission early
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
@@ -98,7 +108,7 @@ export class PaymentPage {
       });
   }
 
-  scan() {
+  private scan() {
 
     this.barcodeScanner.scan().then((barcodeData) => {
       this.alertService.presentToast(barcodeData);
@@ -106,60 +116,115 @@ export class PaymentPage {
     
   }
 
-  presentCardModal() {
+  private presentCardModal() {
     let cardModal = this.modalCtrl.create(CardPage);
     cardModal.present();
   }
 
-  pressedButton(buttonValue: string) {
+  private pressedButton(buttonValue: string) {
     this.password = this.password.concat(buttonValue);
   }
 
-  clearPasswordInput() {
+  private clearPasswordInput() {
     this.password = "";
     this.numbers.sort(() => Math.random() * 2 - 1);
   }
 
+  private checkErrorHistory(): boolean {
+    let passwordErrorTime: any = localStorage.getItem('password-error-time');
+    let currentTime = Date.now();
+    
+    if(currentTime - passwordErrorTime > 180000) { //180000
+      localStorage.removeItem('password-error-count');
+      localStorage.removeItem('password-error-time');
+      return true;
+    }
+    return false;
+  }
+
   private authenticate() {
-    this.authService.paymentAuthenticate(this.password).then((result) => {
-      console.log(result);
-      if(result['Success']) {
-        this.navCtrl.push(CardListPage);
-      } else {
-        
-        this.errorCount = this.errorCount++;
 
-        this.clearPasswordInput();
-        let invalidSessionMessage = 'Sessão inválida.';
-        let countErrorMessage = 'Senha incorreta. ' + this.errorCount + ' tentativas erradas de 4';
+    if(this.navParams.get('page') == 'CardListPage') {
+      this.authService.paymentAuthenticate(this.password).then((result) => {
+        //console.log(result);
+        result['Success'] = true; //DEBUG: comentar quando for para produção
+        if(result['Success']) {
+          this.clearPasswordInput();
+          this.navCtrl.push(this.navParams.get('page'));
+        } else {
 
-        let alert = this.alertService.alertCtrl.create({
-          title:'Falha na autenticação!',
-          subTitle: countErrorMessage,
-          buttons:['Ok']
-        });
-
-
-        if(this.errorCount <= 4) {
-
-          alert.setSubTitle('');
-
-          if(result['Message']) {
-            alert.setSubTitle('');
+          //Sem ter reiniciado a tela de pagamento, se três minutos se passaram desde o último erro,
+          //então o histórico é apagado também
+          if(this.checkErrorHistory()) {
+            this.errorCount = 0;
           }
           
-        } else {
-          alert.setSubTitle('Você errou sua senha 4 vezes. Todas as informações suas informações serão apagadas do celular.');
-          localStorage.clear();
-          this.authService.logout();
-        }
+          ++this.errorCount;
 
-        //Exibe o alerta de erro
+          this.clearPasswordInput();
+          
+          let countErrorMessage = 'Senha incorreta. ' + this.errorCount + ' tentativas erradas de 4. Aguarde 3 minutos para apagar o número de tentativas falhas.';
+
+          //Cria um alerta genérico de Falha de autenticação.
+          let alert = this.alertService.alertCtrl.create({
+            title:'Falha na autenticação!',
+            subTitle: '',
+            buttons:['Ok']
+          });
+
+          //Se vier um campo de 'Message', o token expirou e a sessão é inválida. Deve fazer o logout
+          if(result['Message']) {
+            alert.setSubTitle('Sua sessão expirou. Faça login novamente.');
+            alert.present();
+            this.navCtrl.setRoot(LoginPage);
+          }
+
+          //Senão, alerta sobre erro de senha e contagem para exclusão de dados
+          else if(this.errorCount <= 4) {
+            alert.setSubTitle(countErrorMessage);
+            localStorage.setItem('password-error-count', this.errorCount.toString());
+            localStorage.setItem('password-error-time',Date.now().toString());
+          } else {
+            alert.setSubTitle('Você errou sua senha 4 vezes. Todas as informações da sua conta PayPlug foram apagadas do celular.');
+            alert.present();
+            localStorage.clear();
+            this.navCtrl.setRoot(LoginPage);
+          }
+
+          //Exibe o alerta de erro
+          alert.present();
+        }
+      },(err) => {
+        console.error(err);
+      })
+
+    } else if(this.navParams.get('page') == 'CardPage') {
+      let card = this.navParams.get('card');
+      
+      let alert = this.alertService.alertCtrl.create({
+        title: 'Senha incorreta!',
+        subTitle: '',
+        buttons: ['Ok']
+      });
+
+      if(this.password.length < 6 && card['bandeira'] == 'PayPlug') {
+        alert.setSubTitle('A senha liberação PayPlug deve ter 6 dígitos. Verifique e tente novamente.');
         alert.present();
+      } else if(this.password.length < 4 && card['bandeira'] == 'Amex') {
+        alert.setSubTitle('CVV Amex deve ter 4 dígitos. Verifique e tente novamente.');
+        alert.present();
+      } else if(this.password.length < 3) {
+        alert.setSubTitle('CVV do cartão escolhido deve ter 3 dígitos. Verifique e tente novamente.');
+        alert.present();
+      } else {
+        console.log(card['idCartao']);
+        localStorage.setItem('card-' + card['idCartao'],this.password);
+
+        this.navCtrl.push(this.navParams.get('page'), {card:card});
+        this.clearPasswordInput();
       }
-    },(err) => {
-      console.error(err);
-    })
+    }
+    
   }
 
 }

@@ -44,8 +44,17 @@ export class HomePage {
     });
   }
 
-  openPage(page) {
-    this.navCtrl.push(page);
+  private openPage(page) {
+    if(page == 'PaymentPage') {
+      var params  = {
+        message: 'Informe a senha de liberação para ter acesso aos seus cartões',
+        label: 'Senha de Liberação',
+        page: 'CardListPage'
+      }
+      this.navCtrl.push(page, params);
+    } else {
+      this.navCtrl.push(page);
+    }
   }
 
 }

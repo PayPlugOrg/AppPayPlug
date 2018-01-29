@@ -208,7 +208,7 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       var consulta = this.apiUrl + '/Users/ValidarSenhaLiberacao?token=' + localStorage.getItem('token') + '&password=' + password + '&dataFormat=json';
-      console.log(consulta);
+      //console.log(consulta);
       this.http.post(consulta,null,{headers:headers})
         .subscribe(res => {
           resolve(res.json());

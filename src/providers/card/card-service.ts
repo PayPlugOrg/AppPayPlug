@@ -29,7 +29,7 @@ export class CardServiceProvider {
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.authProvider.apiUrl + '/Users/GetCartoes?token=' + localStorage.getItem('token') + '&id=' + identification + '&dataFormat=json';
-      console.log(consulta);
+      //console.log(consulta);
       this.http.post(consulta, null, {headers:headers})
         .subscribe(res => {
           var result = res.json();
@@ -52,10 +52,10 @@ export class CardServiceProvider {
 
             if(card.tipoCartao == 'Debito') {
               card.tipoCartao = card.tipoCartao.replace('e','é');
-              console.log("true: " + card.tipoCartao);
+              //console.log("true: " + card.tipoCartao);
             } else if(result[i]['TipoCartao'] == 'Credito') {
               card.tipoCartao = card.tipoCartao.replace('e','é');
-              console.log("true: " + card.tipoCartao);
+              //console.log("true: " + card.tipoCartao);
             }
             
             if(result[i]['Bandeira'] == 'Visa') {
@@ -64,6 +64,7 @@ export class CardServiceProvider {
               card.mediaUrl = 'assets/imgs/posweb/icon_cards/MasterCard.png';
             } else if(result[i]['Bandeira'] == '') {
               card.mediaUrl = 'assets/imgs/posweb/icon_cards/PayPlug.png';
+              card.bandeira = 'PayPlug';
             } else if(result[i]['Bandeira'] == 'Amex') {
               card.mediaUrl = 'assets/imgs/posweb/icon_cards/Amex.png';
             } else if(result[i]['Bandeira'] == 'Bitcoin') {
@@ -84,6 +85,25 @@ export class CardServiceProvider {
           }
           resolve(this.cards);
         }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  deleteCard(card: any) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = this.authProvider.apiUrl + '/Cartao/RemoverCartao?token=' + localStorage.getItem('token') + '&IdCartao=' + card + '&DataFormat=json';
+      console.log(consulta);
+      
+      this.http.post(consulta, null, {headers:headers})
+        .subscribe(result => {
+          console.log(result.json());
+          resolve(result.json());
+        },(err) =>{
+          console.error('[delete cartao] ' + err);
           reject(err);
         });
     });
