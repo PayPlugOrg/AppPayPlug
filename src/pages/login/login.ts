@@ -20,7 +20,7 @@ import { ActivationPage } from '../activation/activation';
 })
 export class LoginPage {
   loading: any;
-  user = { name: '', senha: ''};
+  user = { nome: '', senha: ''};
   data: any;
   isLoggedIn: boolean = false;
 
@@ -30,7 +30,7 @@ export class LoginPage {
     public authService: AuthServiceProvider,
     private alertService: AlertServiceProvider
   ) {
-    this.user.name = localStorage.getItem("login");
+    this.user['nome'] = localStorage.getItem("login");
     //Se há token de sessão direciona para o Home do usuário
     if(localStorage.getItem("token")) {
       navCtrl.setRoot(HomePage);
@@ -44,7 +44,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    this.user.name = localStorage.getItem("login");
+    this.user.nome = localStorage.getItem("login");
     console.log('ionViewDidLoad LoginPage');
   }
 

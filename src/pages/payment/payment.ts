@@ -116,8 +116,11 @@ export class PaymentPage {
     
   }
 
-  private presentCardModal() {
-    let cardModal = this.modalCtrl.create(CardPage);
+  private presentCardModal(page, param) {
+    let cardModal = this.modalCtrl.create(page, param);
+    cardModal.onDidDismiss(()=>{
+      this.navCtrl.pop({animate: false});
+    })
     cardModal.present();
   }
 
@@ -143,11 +146,12 @@ export class PaymentPage {
   }
 
   private authenticate() {
-
+    
+    //Verifica para qual página direcionar
     if(this.navParams.get('page') == 'CardListPage') {
       this.authService.paymentAuthenticate(this.password).then((result) => {
         //console.log(result);
-        result['Success'] = true; //DEBUG: comentar quando for para produção
+        //result['Success'] = true; //DEBUG: comentar quando for para produção
         if(result['Success']) {
           this.clearPasswordInput();
           this.navCtrl.push(this.navParams.get('page'));
@@ -220,7 +224,9 @@ export class PaymentPage {
         console.log(card['idCartao']);
         localStorage.setItem('card-' + card['idCartao'],this.password);
 
-        this.navCtrl.push(this.navParams.get('page'), {card:card});
+        //this.navCtrl.push(this.navParams.get('page'), {card:card});
+        this.presentCardModal(this.navParams.get('page'),{card:card});
+        
         this.clearPasswordInput();
       }
     }

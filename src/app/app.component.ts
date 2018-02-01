@@ -6,11 +6,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login'
-import { ListPage } from '../pages/list/list';
+import { FAQPage } from '../pages/list/list';
 import { AboutPage } from '../pages/about/about';
 import { TransferPage } from '../pages/transfer/transfer';
 import { UserPage } from '../pages/user/user';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
+import { RegisterPage } from '../pages/register/register';
+import { ActivationPage } from '../pages/activation/activation';
+import { Events } from 'ionic-angular';
+import { MenuController } from 'ionic-angular/components/app/menu-controller';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,7 +24,7 @@ export class MyApp {
 
   rootPage: any = LoginPage;
   loading: any;
-  publicPages: Array<{title: string, component: any, icon: string}>;
+  publicPages: Array<{title: string, component: any, alert?:any, icon: string}>;
   privatePages: Array<{title: string, component: any, icon: string}>;
   nome: any;
 
@@ -30,21 +34,34 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private authService: AuthServiceProvider,
     public loadingCtrl: LoadingController,
-    private alertService: AlertServiceProvider
+    private alertService: AlertServiceProvider,
+    public events: Events,
+    public menu: MenuController
   ) {
+    this.events.subscribe('app:logout', () => {
+      console.log('app:logout');
+      this.nome = "";
+    });
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.publicPages = [
-      { title: 'Home', component: LoginPage, icon:'home' },
+      { title: 'Entrar', component: LoginPage, icon:'home' },
+      { title: 'Registrar-se', component: RegisterPage, icon: 'person-add' },
+      { title: 'Ativar Conta', component: ActivationPage, icon: 'checkbox' },
+      { title: 'Recuperar Senha', component: LoginPage, alert:'password', icon: 'unlock' },
+      { title: 'Termos e Condições', component: LoginPage, alert:'terms', icon: 'document' },
+      { title: 'Perguntas Frequentes', component: FAQPage, icon: 'chatbubbles' },
       { title: 'Sobre', component: AboutPage, icon: 'information-circle' },
-      { title: 'Perguntas Frequentes', component: ListPage, icon: 'chatbubbles' }
+      { title: 'Limpar Cache', component: LoginPage, alert:'clear', icon: 'undo' },
+      { title: 'Sair', component: LoginPage, alert:'logout', icon: 'log-out' }
     ];
     this.privatePages = [
-      { title: 'Home', component: HomePage, icon:'home' },
+      { title: 'Início', component: HomePage, icon:'home' },
+      { title: 'Indicar Usuário', component: HomePage, icon:'home' },
       { title: 'Transferência', component: TransferPage, icon:'swap' },
       { title: 'Minhas Informações', component: UserPage, icon:'contact' },
-      { title: 'Extratos', component: ListPage, icon:'trending-up' }
+      { title: 'Extratos', component: FAQPage, icon:'trending-up' }
     ];
   }
 
@@ -74,10 +91,109 @@ export class MyApp {
     });
   }
 
+  ionOpen() {
+    if(this.alertService.menuIsEnabled('authenticated')){ 
+      let username = localStorage.getItem('username');
+      if(username)
+        this.nome = username.split(' ')[0];
+    }
+  }
+
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    if(page.title == 'Home') {
+
+    console.log(page);
+
+    if(page.alert) {
+      if(page.alert == 'password') {
+        console.log('Entrou no password');
+        let alert = this.alertService.alertCtrl.create({
+          title: 'Recuperar Senha',
+          message:'Desenha recuperar sua senha de liberação? Informe o CPF ou CNPJ para continuar (somente números).',
+          inputs: [
+            {
+              name: 'login',
+              placeholder: 'Login'
+            }
+          ],
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancelar',
+              handler: data => {
+                console.log('Reset cancelado');
+              }
+            },
+            {
+              text: 'Login',
+              handler: data => {
+                console.log(data);
+                this.authService.passwordReset().then((result) => {
+
+                },(err) =>{
+
+                });
+              }
+            }
+          ]
+        });
+        alert.present();
+      } else if(page.alert == 'logout') {
+        console.log('Entrou no logout');
+        let alert = this.alertService.alertCtrl.create({
+          title: 'Sair',
+          message: "Deseja encerrar o aplicativo? Clicando em 'Sair e Apagar' o aplicativo será encerrado e os dados do aplicativo no celular serão apagadas. Clicando em 'Apenas sair', o aplicativo será encerrado e seus dados pemanecerão.",
+          buttons: [
+            {
+              text: 'Sair e Apagar',
+              role: 'cancel',
+              handler: () => {
+                localStorage.clear();
+                this.platform.exitApp();
+              }
+            },
+            {
+              text: 'Apenas sair',
+              handler: () => {
+                this.platform.exitApp();
+              }
+            }
+          ]
+        });
+        alert.present();
+      } else if(page.alert == 'clear') {
+        let alert = this.alertService.alertCtrl.create({
+          title: 'Limpar Cache',
+          message: 'Deseja apagar os dados do aplicativo no celular? Ao confirmar, o aplicativo será reinicializado.',
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancelar',
+              handler: () => {
+                console.log('Limpeza cancelada');
+              }
+            },
+            {
+              text: 'Apagar',
+              handler: () => {
+                localStorage.clear();
+              }
+            }
+          ]
+        });
+        alert.present();
+      } else if(page.alert == 'terms') {
+        console.log('Entrou no terms');
+        let alert = this.alertService.alertCtrl.create({
+          title: 'Termos e Condições',
+          subTitle: 'Ao usar o aplicativo...',
+          buttons: ['Fechar']
+        });
+        alert.present();
+      }
+
+    } else if(page.title == 'Entrar') {
+      this.nav.setRoot(page.component);
+    } else if(page.title == 'Início') {
       this.nav.setRoot(page.component);
     } else {
       this.nav.push(page.component);

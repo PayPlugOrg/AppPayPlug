@@ -13,15 +13,15 @@
 <ion-content padding class="vertical-align-content bg-style">
   <ion-grid>
     <ion-row>
-      <ion-item text-center class=item-content no-lines no-margin no-padding>
-        <img src="assets/imgs/logo-branco.png">
+      <ion-item text-center class=item-content no-lines>
+        <img no-margin no-padding src="assets/imgs/logo-branco.png">
       </ion-item>
     </ion-row>
     
     <form (submit)="doLogin()">
       <ion-row>
         <ion-col>
-          <ion-item class="item-content">
+          <ion-item class="item-content" no-padding>
             <ion-label floating>Login (CPF ou e-mail)</ion-label>
             <ion-input [(ngModel)]="user.nome" name="username" type="text"></ion-input>
           </ion-item>
@@ -29,7 +29,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-item class="item-content">
+          <ion-item class="item-content" no-padding>
             <ion-label floating>Senha</ion-label>
             <ion-input [(ngModel)]="user.senha" name="password" type="password"></ion-input>
           </ion-item>

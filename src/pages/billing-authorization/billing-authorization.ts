@@ -83,6 +83,8 @@ export class BillingAuthorizationPage {
         this.identification = data['identification'];
         this.name = "";
         this.password = "";
+
+        //Verifica se o usuário clicou botão 'Cancelar'
         if(data['cancel']) {
           this.navCtrl.pop();
         }
@@ -101,14 +103,18 @@ export class BillingAuthorizationPage {
     this.cardProvider.getCards(this.identification).then((result) =>{
       
       this.cards = result;
-      this.billedId = this.cards[1]['idUsuario'];
+      this.billedId = this.cards[0]['idUsuario'];
+
       var newCard = {
         mediaUrl : "assets/imgs/credit-card.png",
         numero : "",
         tipoCartao : "Novo Cartão"
       }
       this.cards.push(newCard);
+      
     });
+
+    
   }
 
   private getUserInfoByCard(identification) {
@@ -161,10 +167,10 @@ export class BillingAuthorizationPage {
 
   newCardModal() {
     let currentIndex = this.slides.getActiveIndex();
-    console.log('Current index is', currentIndex);
+    
     let newCard = this.modalCtrl.create(CardNewPage, {billedId:this.billedId});
     newCard.onDidDismiss( data => {
-      console.log(data);
+      
       this.getCards();
     });
     newCard.present();
@@ -176,7 +182,7 @@ export class BillingAuthorizationPage {
     //console.log('change password label Current index is', currentIndex);
     //console.log('idCartao', cartao['idCartao']);
     
-    if(cartao['bandeira'] == "") {
+    if(cartao['bandeira'] == "PayPlug") {
       this.passwordLabel = 'Senha de Liberação'
     } else {
       this.passwordLabel = 'CVV do Cartão';
@@ -186,10 +192,10 @@ export class BillingAuthorizationPage {
   doBilling() {
     var index: number = this.slides.getActiveIndex();
     var cartao = this.cards[index];
-    console.log(this.showBillingValue);
+    
     var billingValue = this.showBillingValue.replace('.','');
     billingValue = this.showBillingValue.replace(',','');
-    console.log(billingValue);
+    
     if(this.password == "") {
       if(cartao['bandeira'] == '') {
         this.alert('Senha em branco!', 'Informe sua senha de liberação PayPlug para realizar a transação.');
@@ -198,11 +204,15 @@ export class BillingAuthorizationPage {
       }
     } else {
       this.authProvider.doBilling(cartao['idCartao'], billingValue, this.password).then((result) => {
-        console.log(result);
+        
         //result['Message'] = 'Ok';
-        console.log(result['Message']);
+        
         if(result['Message'] == 'Ok') {
+          //this.navCtrl.push(ReceiptPage, {identifier:result['Identifier']});
           let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:result['Identifier']}); //result['Identifier'] '5510'
+          receiptModal.onDidDismiss(() => {
+            this.navCtrl.popToRoot();
+          })
           receiptModal.present();
         } else if(result['Message'] == 'usuarios não podem ser os mesmos.'){
           this.alert('Transação Inválida!', 'Usuários não podem ser os mesmos. Tente novamente.')

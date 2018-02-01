@@ -13,7 +13,7 @@ import { ActivationPage } from '../pages/activation/activation';
 import { CardPage } from '../pages/card/card';
 import { HomePage } from '../pages/home/home';
 import { KeyboardPage } from '../pages/keyboard/keyboard';
-import { ListPage } from '../pages/list/list';
+import { FAQPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { TransferPage } from '../pages/transfer/transfer';
@@ -51,7 +51,7 @@ import {CardModule} from 'ngx-card/ngx-card';
   declarations: [
     MyApp,
     //HomePage,
-    ListPage,
+    FAQPage,
     //LoginPage,
     //RegisterPage,
     //ActivationPage,
@@ -97,7 +97,7 @@ import {CardModule} from 'ngx-card/ngx-card';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
+    FAQPage,
     LoginPage,
     RegisterPage,
     ActivationPage,

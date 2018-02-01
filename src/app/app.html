@@ -2,14 +2,14 @@
 <ion-menu id="unauthenticated" [content]="content">
   <ion-header>
       <ion-toolbar>
-        <ion-title>Home</ion-title>
+        <ion-title></ion-title>
       </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list no-lines>
-      <button menuClose ion-item *ngFor="let p of publicPages" (click)="openPage(p)" color=buzios>
-        <ion-icon [name]="p.icon" item-end></ion-icon>
+      <button menuClose ion-item *ngFor="let p of publicPages" (click)="openPage(p)" color=buzios detail-none>
+        <ion-icon [name]="p.icon" item-start></ion-icon>
         {{p.title}}
       </button>
     </ion-list>
@@ -17,17 +17,17 @@
 </ion-menu>
 
 <!--Sidemenu de usuário autenticado no aplicativo -->
-<ion-menu id="authenticated" [content]="content">
+<ion-menu id="authenticated" [content]="content" (ionOpen)="ionOpen()" (ionDrag)="ionOpen()">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Olá, {{nome}}!</ion-title>
+      <ion-title *ngIf="nome">Olá, {{nome}}!</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list no-lines>
-      <button menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)" color=buzios>
-        <ion-icon [name]="p.icon" item-end></ion-icon>
+      <button menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)" color=buzios detail-none>
+        <ion-icon [name]="p.icon" item-start></ion-icon>
         {{p.title}}
       </button>
     </ion-list>

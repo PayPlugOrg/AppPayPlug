@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AlertServiceProvider } from '../alert-service/alert-service';
+import { Events } from 'ionic-angular';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -20,11 +21,12 @@ export class AuthServiceProvider {
   user = {nome:'', nascimento:'', email:'', celular:'', indicacao:'', documento:'', tipo_documento:'CPF'}
   userInfo: any;
 
-  apiUrl = 'http://aplweb.tsemredes.com.br:83/v1'; //'api';//
+  apiUrl = 'api';//'api'; http://aplweb.tsemredes.com.br:83/v1';//
   
   constructor(
     public http: Http,
-    public alertService: AlertServiceProvider
+    public alertService: AlertServiceProvider,
+    public events: Events
   ) {
     console.log('Hello AuthServiceProvider Provider');
   }
@@ -69,13 +71,30 @@ export class AuthServiceProvider {
     });
   }
 
+  passwordReset() {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = this.apiUrl + '/Users/SendLiberationPassword?identifier=' + localStorage.getItem('token') + '&dataFormat=json';
+
+      this.http.post(consulta, null,{headers:headers}).subscribe(res => {
+        console.log(res.json());
+        resolve(res.json());
+      },(err) => {
+        console.log(err);
+        reject(err);
+      });
+    })
+  }
+
   getUserInfo(userInfo = localStorage.getItem('login')) {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       var consulta = this.apiUrl + '/Users/Info?token=' + localStorage.getItem('token') + '&id=' + userInfo + '&dataFormat=json';
-      this.http.post(consulta, null, {headers:headers})
-      .subscribe(res => { 
+      
+      this.http.post(consulta, null, {headers:headers}).subscribe(res => { 
         if(this.tokenExpired(res.json()['Message'])) {
           this.alertService.presentToast('Sua sessão expirou');
           console.log(res.json()['Message']);
@@ -161,9 +180,11 @@ export class AuthServiceProvider {
   }
 
   logout() {
+    this.events.publish('app:logout', '');
     return new Promise((resolve, reject) => {
       //localStorage.clear();
       localStorage.removeItem('token');
+      localStorage.removeItem('username');
       resolve("logout");
     });
   }
@@ -174,7 +195,7 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.apiUrl + '/Users/GetCartoes?token=' + localStorage.getItem('token') + '&id=' + identification + '&dataFormat=json';
-      console.log(consulta);
+      
       this.http.post(consulta, null, {headers:headers})
         .subscribe(res => {
           resolve(res.json());
@@ -190,10 +211,10 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.apiUrl + '/Cartao/AdicionarCartao?token=' + localStorage.getItem('token') + '&idUsuario=' + cardData['billedId'] + '&Numero=' + cardData['cardNumber'] + '&NomeTitular=' + cardData['holder'] + '&DataValidade=' + cardData['valid'] + '-01'+ '&TipoCartao=' + cardData['cardType'] + '&dataFormat=json';
-      console.log(consulta);
+      
       this.http.post(consulta, null, {headers:headers})
         .subscribe(res => {
-          console.log(res.json());
+          
           resolve(res.json());
         }, (err) => {
           console.error(err);
@@ -219,20 +240,16 @@ export class AuthServiceProvider {
   }
 
   doBilling(idCartao, billingValue, password) {
-    console.log(
-      "idCartao: " + idCartao,
-      "billingValue: " + billingValue,
-      "password: " + password
-    );
+    
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.apiUrl + '/Cartao/CobrarComCartao?token=' + localStorage.getItem('token') + '&idCartao=' + idCartao + '&valor=' + billingValue + '&IdUsuarioOrigem=' + localStorage.getItem('login') + '&dataFormat=json' + '&senha=' + password;
-      console.log(consulta);
+      
       this.http.post(consulta, null, {headers: headers})
         .subscribe(res => {
-          console.log(res.json());
+          
           resolve(res.json());
         }, (err) =>{
           console.log(err);
@@ -247,11 +264,10 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.apiUrl + '/Comprovante/GerarComprovante?token=' + localStorage.getItem('token') + '&Identifier=' + identifier + '&desc=pagamentoviaappionic&dataFormat=json';
-      console.log(consulta);
-
+      
       this.http.post(consulta, null, {headers: headers})
         .subscribe(res => {
-          console.log(res.json());
+          
           resolve(res.json());
         },(err) => {
           console.log(err);

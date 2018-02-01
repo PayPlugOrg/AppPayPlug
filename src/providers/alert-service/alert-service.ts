@@ -50,4 +50,8 @@ export class AlertServiceProvider {
     this.menuCtrl.enable(state, name);
   }
 
+  public menuIsEnabled(menuId): boolean {
+    return this.menuCtrl.isEnabled(menuId);
+  }
+
 }

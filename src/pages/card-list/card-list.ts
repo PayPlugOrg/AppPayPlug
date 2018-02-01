@@ -67,7 +67,7 @@ export class CardListPage {
   clearInfoCard(card: any) {
 
     let confirm = this.alertCtrl.create({
-      title: 'Limpar senha do cartão final' + card['idCartao'] + '?',
+      title: 'Limpar senha do cartão final ' + card['idCartao'] + '?',
       message: 'Ao usar esse cartão para uma nova transação, informe sua senha ou CVV novamente',
       buttons: [
         {
@@ -90,7 +90,7 @@ export class CardListPage {
   deleteCard(card: any) {
 
     let confirm = this.alertCtrl.create({
-      title: 'Excluir cartão final' + card['idCartao'] + '?',
+      title: 'Excluir cartão final ' + card['idCartao'] + '?',
       message: 'Seu cartão será excluído do sistema. Para inserir novos cartões vá até Cartões > Novo Cartão no menu lateral',
       buttons: [
         {
