@@ -3,21 +3,32 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Perguntas Frequentes</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+
+  <ion-grid color=buzios>
+    <h3 text-center>Ajuda POS</h3>
+
+    <h4>Importante:</h4>
+    <h4>Mantenha seu cadastro atualizado acesse: </h4>
+    <a href="https://banco.payplug.org/Configuracoes/Preferencias/">banco.payplug.org/</a>
+  </ion-grid>
+
+  
+
+
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+    <ion-item *ngFor="let d of diseases; let i=index" text-wrap (click)="toggleGroup(i)" [ngClass]="{active: isGroupShown(i)}" color=buzios>
+      <h3>
+        {{d.title}}
+        <ion-icon color="success" item-right [name]="isGroupShown(i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      </h3>
+      <div *ngIf="isGroupShown(i)">{{d.description}}</div>
+    </ion-item>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+
+  <p>Pelo site https://www.payplug.org/ voce tem cotrole total de sua conta acesse! </p>
 </ion-content>

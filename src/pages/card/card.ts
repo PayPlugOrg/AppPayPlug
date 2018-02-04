@@ -17,27 +17,21 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 })
 export class CardPage {
 
-  createdCode = null;
-  userName : String;
+  private createdCode = null;
+  private card = {};
 
-  user: any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private authService:AuthServiceProvider,
     private viewCtrl: ViewController
   ) {
-    this.authService.getUserInfo();
-    this.user = this.authService.userInfo;
-    this.createQR(this.user['NumeroCartao']);
-    this.userName = this.user['Nome'];
+    this.card = this.navParams.get('card');
+    let code = Number(this.card['idCartao'].length + this.card['idCartao'] + localStorage.getItem('card-' + this.card['idCartao']));
+    this.createQR(code.toString(16));
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CardPage');
-  }
-
-  createQR(numeroCartao: String) {
+  createQR(numeroCartao: string) {
     console.log("Numero cartao: " + numeroCartao);
     this.createdCode = numeroCartao;
   }

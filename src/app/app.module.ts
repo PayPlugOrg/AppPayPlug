@@ -13,7 +13,7 @@ import { ActivationPage } from '../pages/activation/activation';
 import { CardPage } from '../pages/card/card';
 import { HomePage } from '../pages/home/home';
 import { KeyboardPage } from '../pages/keyboard/keyboard';
-import { ListPage } from '../pages/list/list';
+import { FAQPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { TransferPage } from '../pages/transfer/transfer';
@@ -43,14 +43,15 @@ import { CardNewPage } from '../pages/card-new/card-new';
 import { CardNewPageModule } from '../pages/card-new/card-new.module';
 import { CardListPage } from '../pages/card-list/card-list';
 import { CardListPageModule } from '../pages/card-list/card-list.module';
-import { CardProvider } from '../providers/card/card';
+import { CardServiceProvider } from '../providers/card/card-service';
+import {CardModule} from 'ngx-card/ngx-card';
 
 //Páginas públicas
 @NgModule({
   declarations: [
     MyApp,
     //HomePage,
-    ListPage,
+    FAQPage,
     //LoginPage,
     //RegisterPage,
     //ActivationPage,
@@ -89,13 +90,14 @@ import { CardProvider } from '../providers/card/card';
     TransferPageModule,
     UserPageModule,
     CardNewPageModule,
-    CardListPageModule
+    CardListPageModule,
+    CardModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
+    FAQPage,
     LoginPage,
     RegisterPage,
     ActivationPage,
@@ -119,7 +121,7 @@ import { CardProvider } from '../providers/card/card';
     AuthServiceProvider,
     AlertServiceProvider,
     QRScanner,
-    CardProvider
+    CardServiceProvider
   ]
 })
 export class AppModule {}

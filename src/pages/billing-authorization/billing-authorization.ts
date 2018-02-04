@@ -8,6 +8,7 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 import { Slides } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { CardNewPage } from '../card-new/card-new';
+import { CardServiceProvider } from '../../providers/card/card-service';
 
 /**
  * Generated class for the BillingAuthorizationPage page.
@@ -35,7 +36,7 @@ export class BillingAuthorizationPage {
   private testRadioResult: any;
   private parcela:number = 1;
   private bloqueado: boolean = false;
-  private cards: Array<{}> = new Array;
+  private cards: any;
   private passwordLabel: string = "Senha de Liberação";
   
   private slideOptions = {
@@ -48,7 +49,8 @@ export class BillingAuthorizationPage {
     public modalCtrl: ModalController,
     public authProvider: AuthServiceProvider,
     public alertProv: AlertServiceProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public cardProvider: CardServiceProvider
   ) {
     this.showBillingValue = navParams.get('billingValue');
     this.rawBillingValue = navParams.get('rawBillingValue');
@@ -81,6 +83,8 @@ export class BillingAuthorizationPage {
         this.identification = data['identification'];
         this.name = "";
         this.password = "";
+
+        //Verifica se o usuário clicou botão 'Cancelar'
         if(data['cancel']) {
           this.navCtrl.pop();
         }
@@ -96,47 +100,21 @@ export class BillingAuthorizationPage {
   }
 
   private getCards() {
-    this.cards = new Array;
-      this.authProvider.getCards(this.identification).then((result) => {
-        let i: number = 0;
+    this.cardProvider.getCards(this.identification).then((result) =>{
+      
+      this.cards = result;
+      this.billedId = this.cards[0]['idUsuario'];
 
-        for(i=0; i < Object.keys(result).length ; i++) {
-          
-          var card = {
-            idCartao: result[i]['Id'],
-            idUsuario: result[i]['IdUsuario'],
-            tipoCartao: result[i]['TipoCartao'],
-            numero: result[i]['Numero'],
-            bandeira: result[i]['Bandeira'],
-            mediaUrl: ''
-          }
-          
-          if(result[i]['Bandeira'] == 'Visa') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/Visa.png';
-          } else if(result[i]['Bandeira'] == 'MasterCard') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/MasterCard.png';
-          } else if(result[i]['Bandeira'] == '') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/PayPlug.png';
-          } else if(result[i]['Bandeira'] == 'Amex') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/Amex.png';
-          } else if(result[i]['Bandeira'] == 'Bitcoin') {
-            card.mediaUrl = 'https://banco.payplug.org/Content/img/icon_cards/Bitcoin.png';
-          }
+      var newCard = {
+        mediaUrl : "assets/imgs/credit-card.png",
+        numero : "",
+        tipoCartao : "Novo Cartão"
+      }
+      this.cards.push(newCard);
+      
+    });
 
-          this.cards.push(card);
-        }
-        this.billedId = card.idUsuario;
-        var newCard = {
-          mediaUrl : "assets/imgs/credit-card.png",
-          numero : "",
-          tipoCartao : "Novo Cartão"
-        }
-        this.cards.push(newCard)
-      }, (err) => {
-        console.log("erro: " + err);
-        //this.alertProv.showLoader(err);
-        this.alertProv.presentToast(err);
-      });
+    
   }
 
   private getUserInfoByCard(identification) {
@@ -189,10 +167,10 @@ export class BillingAuthorizationPage {
 
   newCardModal() {
     let currentIndex = this.slides.getActiveIndex();
-    console.log('Current index is', currentIndex);
+    
     let newCard = this.modalCtrl.create(CardNewPage, {billedId:this.billedId});
     newCard.onDidDismiss( data => {
-      console.log(data);
+      
       this.getCards();
     });
     newCard.present();
@@ -204,7 +182,7 @@ export class BillingAuthorizationPage {
     //console.log('change password label Current index is', currentIndex);
     //console.log('idCartao', cartao['idCartao']);
     
-    if(cartao['bandeira'] == "") {
+    if(cartao['bandeira'] == "PayPlug") {
       this.passwordLabel = 'Senha de Liberação'
     } else {
       this.passwordLabel = 'CVV do Cartão';
@@ -214,10 +192,10 @@ export class BillingAuthorizationPage {
   doBilling() {
     var index: number = this.slides.getActiveIndex();
     var cartao = this.cards[index];
-    console.log(this.showBillingValue);
+    
     var billingValue = this.showBillingValue.replace('.','');
     billingValue = this.showBillingValue.replace(',','');
-    console.log(billingValue);
+    
     if(this.password == "") {
       if(cartao['bandeira'] == '') {
         this.alert('Senha em branco!', 'Informe sua senha de liberação PayPlug para realizar a transação.');
@@ -226,11 +204,15 @@ export class BillingAuthorizationPage {
       }
     } else {
       this.authProvider.doBilling(cartao['idCartao'], billingValue, this.password).then((result) => {
-        console.log(result);
+        
         //result['Message'] = 'Ok';
-        console.log(result['Message']);
+        
         if(result['Message'] == 'Ok') {
+          //this.navCtrl.push(ReceiptPage, {identifier:result['Identifier']});
           let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:result['Identifier']}); //result['Identifier'] '5510'
+          receiptModal.onDidDismiss(() => {
+            this.navCtrl.popToRoot();
+          })
           receiptModal.present();
         } else if(result['Message'] == 'usuarios não podem ser os mesmos.'){
           this.alert('Transação Inválida!', 'Usuários não podem ser os mesmos. Tente novamente.')

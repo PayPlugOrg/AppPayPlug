@@ -70,8 +70,8 @@ export class ReceiptPage {
     this.createdCode = numeroCartao;
   }
 
-  private dismiss() {
-    this.navCtrl.setRoot(HomePage);
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 
 }
