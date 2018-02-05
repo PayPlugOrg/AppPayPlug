@@ -46,13 +46,24 @@ export class HomePage {
 
   private openPage(page) {
     if(page == 'PaymentPage') {
-      var params  = {
+      let params  = {
         message: 'Informe a senha de liberação para ter acesso aos seus cartões',
         label: 'Senha de Liberação',
         page: 'CardListPage'
-      }
+      };
       this.navCtrl.push(page, params);
-    } else {
+    } else if(page == 'BillingIdentificationPage') {
+      let params = {
+        operation: 'Transferência'
+      };
+      this.navCtrl.push(page, params);
+    } else if(page == 'BillingPage') {
+      let params = {
+        operation: 'Cobrança'
+      };
+      this.navCtrl.push(page, params);
+    }
+    else {
       this.navCtrl.push(page);
     }
   }

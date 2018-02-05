@@ -48,7 +48,7 @@ export class CardServiceProvider {
               mediaUrl: ''
             }
 
-            console.log(result[i]);
+            //console.log(result[i]);
 
             if(card.tipoCartao == 'Debito') {
               card.tipoCartao = card.tipoCartao.replace('e','é');

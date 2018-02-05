@@ -44,7 +44,7 @@ export class BillingPage {
   }
 
   displayKeyboard(rawBillingValue) {
-    let keyboardModal = this.modalCtrl.create(KeyboardPage, {billingValue: rawBillingValue});
+    let keyboardModal = this.modalCtrl.create(KeyboardPage, {billingValue: rawBillingValue, operation: this.navParams.get('operation')});
     keyboardModal.onDidDismiss(data => {
       if(data){ 
         this.rawBillingValue = data;
@@ -61,7 +61,7 @@ export class BillingPage {
     this.barcodeScanner.scan().then((barcodeData) => {
       //this.alertProvider.presentToast(barcodeData.text);
       if(barcodeData.text.length == 16) {
-        this.navCtrl.push(page, {openModalIdentification: false, payplugCard:barcodeData.text, billingValue: this.showBillingValue});
+        this.navCtrl.push(page, {openModalIdentification: false, payplugCard:barcodeData.text, billingValue: this.showBillingValue, operation: this.navParams.get('operation')});
       } else {
         this.alertProvider.presentToast('Leitura inválida. Por favor, apresente um Cartão PayPlug!');
       }
@@ -77,7 +77,7 @@ export class BillingPage {
   }
 
   openPage(page) {
-    this.navCtrl.push(page, {openModalIdentification: true, billingValue: this.showBillingValue, rawBillingValue: this.rawBillingValue});
+    this.navCtrl.push(page, {openModalIdentification: true, billingValue: this.showBillingValue, rawBillingValue: this.rawBillingValue, operation: this.navParams.get('operation')});
   }
 
 }

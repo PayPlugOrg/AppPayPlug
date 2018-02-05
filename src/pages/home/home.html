@@ -13,26 +13,32 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col col-6>
-        <button ion-button icon-left color=secondary large full (click)="openPage('BillingPage')">
+      <ion-col col-12>
+        <button ion-button icon-left color=secondary text-uppercase large full (click)="openPage('BillingPage')">
             <ion-icon name=cash></ion-icon>Cobrar</button>
       </ion-col>
-      <ion-col col-6>
-        <button ion-button icon-left color=danger large full (click)="openPage('PaymentPage')">
-            <ion-icon name=cash></ion-icon>Pagar</button>
+      <ion-col col-12>
+        <button ion-button icon-left color=secondary text-uppercase large full (click)="openPage('PaymentPage')">
+          <ion-icon name=cash></ion-icon>Pagar</button>
       </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col col-6>
-          <button ion-button icon-left secondary large full>
-            <ion-icon name=trending-up></ion-icon>
-            Extrato
-          </button>
-        </ion-col>
-        <ion-col col-6>
-          <button ion-button icon-left secondary large full>
-              <ion-icon name=pin></ion-icon>Rede</button>
-        </ion-col>
-      </ion-row>
+      <ion-col col-12>
+        <button ion-button icon-left color=secondary text-uppercase large full (click)="openPage('ExtractPage')">
+          <ion-icon name=checkmark-circle></ion-icon>
+          Extrato
+        </button>
+      </ion-col>
+      <ion-col col-12>
+        <button ion-button icon-left color=secondary text-uppercase large full>
+          <ion-icon name=pin></ion-icon>Rede</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button icon-left color=secondary text-uppercase large full (click)="openPage('BillingIdentificationPage')">
+          <ion-icon name=swap></ion-icon>Transferência</button>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

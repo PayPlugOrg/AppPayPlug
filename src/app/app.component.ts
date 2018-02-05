@@ -15,6 +15,7 @@ import { RegisterPage } from '../pages/register/register';
 import { ActivationPage } from '../pages/activation/activation';
 import { Events } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { ExtractPage } from '../pages/extract/extract';
 
 @Component({
   templateUrl: 'app.html'
@@ -61,7 +62,8 @@ export class MyApp {
       { title: 'Indicar Usuário', component: HomePage, icon:'home' },
       { title: 'Transferência', component: TransferPage, icon:'swap' },
       { title: 'Minhas Informações', component: UserPage, icon:'contact' },
-      { title: 'Extratos', component: FAQPage, icon:'trending-up' }
+      { title: 'Extrato', component: ExtractPage, icon:'checkmark-circle' },
+      { title: 'Perguntas Frequentes', component: FAQPage, icon: 'chatbubbles' }
     ];
   }
 

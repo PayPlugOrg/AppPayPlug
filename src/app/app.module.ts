@@ -45,25 +45,14 @@ import { CardListPage } from '../pages/card-list/card-list';
 import { CardListPageModule } from '../pages/card-list/card-list.module';
 import { CardServiceProvider } from '../providers/card/card-service';
 import {CardModule} from 'ngx-card/ngx-card';
+import { ExtractPage } from '../pages/extract/extract';
+import { ExtractPageModule } from '../pages/extract/extract.module';
 
 //Páginas públicas
 @NgModule({
   declarations: [
     MyApp,
-    //HomePage,
     FAQPage,
-    //LoginPage,
-    //RegisterPage,
-    //ActivationPage,
-    //AboutPage,
-    //TransferPage,
-    //UserPage, 
-    //CardPage,
-    //KeyboardPage,
-    //BillingSmsPage,
-    //ReceiptPage,
-    //Directive,
-    //BillingIdentificationPage
   ],
   imports: [
     BrowserModule,
@@ -91,7 +80,8 @@ import {CardModule} from 'ngx-card/ngx-card';
     UserPageModule,
     CardNewPageModule,
     CardListPageModule,
-    CardModule
+    CardModule,
+    ExtractPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -108,10 +98,10 @@ import {CardModule} from 'ngx-card/ngx-card';
     BillingSmsPage,
     BillingIdentificationPage,
     ReceiptPage,
-    //Cartões
     CardPage,
     CardNewPage,
-    CardListPage
+    CardListPage,
+    ExtractPage
   ],
   providers: [
     BarcodeScanner,

@@ -94,7 +94,8 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
       var consulta = this.apiUrl + '/Users/Info?token=' + localStorage.getItem('token') + '&id=' + userInfo + '&dataFormat=json';
       
-      this.http.post(consulta, null, {headers:headers}).subscribe(res => { 
+      this.http.post(consulta, null, {headers:headers}).subscribe(res => {
+        console.log(res.json());
         if(this.tokenExpired(res.json()['Message'])) {
           this.alertService.presentToast('Sua sessão expirou');
           console.log(res.json()['Message']);
@@ -250,6 +251,25 @@ export class AuthServiceProvider {
       this.http.post(consulta, null, {headers: headers})
         .subscribe(res => {
           
+          resolve(res.json());
+        }, (err) =>{
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  doTransfer(idTo, value, password) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = this.apiUrl + '/Transactions/Save?token=' + localStorage.getItem('token') + '&idFrom=' + localStorage.getItem('login') + '&idTo=' + idTo + '&idType=3' + '&value=' + value + '&liberationPassword=' + password + '&dataFormat=json';
+      console.log(consulta);
+
+      this.http.post(consulta, null, {headers: headers})
+        .subscribe(res => {
+          console.log(res.json());
           resolve(res.json());
         }, (err) =>{
           console.log(err);

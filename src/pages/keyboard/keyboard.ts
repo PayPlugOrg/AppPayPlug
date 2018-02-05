@@ -21,12 +21,14 @@ export class KeyboardPage {
   numbers: Array<{value:any, icon:string}>;
   showBillingValue:String = "";
   rawBillingValue:String = "";
+  operation: string = "";
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl:ViewController
   ) {
+    this.operation = this.navParams.get('operation');
     this.showBillingValue = this.formatter.apply(navParams.get('billingValue'));
     if(this.showBillingValue == "")
       this.showBillingValue = "0,00"
