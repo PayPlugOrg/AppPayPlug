@@ -29,7 +29,7 @@ export class HomePage {
       this.alertService.enableMenu(false, 'authenticated');
     } else {
       this.alertService.enableMenu(true, 'authenticated');
-      this.alertService.enableMenu(false, 'anauthenticated');
+      this.alertService.enableMenu(false, 'unauthenticated');
       this.isLoggedIn = true;
     }
   }
@@ -41,6 +41,9 @@ export class HomePage {
       this.saldo = result['SaldoTotal'];
     },(err) => {
       console.log(err);
+      if(err == 'Authentication failed.') {
+        this.navCtrl.setRoot(LoginPage);
+      }
     });
   }
 

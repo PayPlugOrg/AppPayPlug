@@ -18,7 +18,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ActivationPage {
 
-  user = {documento:'', codigo:'', senha:''};
   activationForm: FormGroup;
   submitAttempt: boolean = false;
 
@@ -32,7 +31,7 @@ export class ActivationPage {
     this.authService.getSessionToken();
 
     this.activationForm = this.formBuilder.group({
-      documento: ['', Validators.compose([Validators.maxLength(11), Validators.minLength(11), Validators.pattern('[0-9]+'), Validators.required])],
+      document: ['', Validators.compose([Validators.maxLength(11), Validators.minLength(11), Validators.pattern('[0-9]+'), Validators.required])],
       codigo: ['', Validators.compose([Validators.maxLength(8), Validators.minLength(8), Validators.required])],
       senha: ['', Validators.compose([Validators.maxLength(6), Validators.minLength(6), Validators.pattern('[0-9]+'), Validators.required])]
     });

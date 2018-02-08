@@ -4,24 +4,60 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border>
 
   <ion-navbar>
-    <ion-title>Extrato de <br> Transações</ion-title>
+    <ion-title>Extrato de
+      <br> Transações</ion-title>
   </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="operationType" color="secondary">
+      <ion-segment-button value="finalized">
+        Finalizado
+      </ion-segment-button>
+      <ion-segment-button value="pending">
+        Pendente
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 
 </ion-header>
 
 
 <ion-content padding>
 
-  <ion-segment>
-    <ion-segment-button value="new">
-      Pendentes
-    </ion-segment-button>
-    <ion-segment-button value="hot">
-      Finalizadas
-    </ion-segment-button>
-  </ion-segment>
+  <div *ngIf="operations" [ngSwitch]="operationType">
+    <ion-list *ngSwitchCase="'finalized'">
+      <ion-row *ngFor="let operation of operations">
+        <button no-padding detail-none ion-item *ngIf="operation.Status == 'Finalizado'" color="buzios" (click)="openDetail(operation)">
+          <h6>Data: {{operation.TransactionDate}}</h6>
+          <h6>Operação: {{operation.Operation}}</h6>
+          <h6>Usuário: {{operation.IdTo}}</h6>
+          <h6>Valor: {{operation.Value}}</h6>
+          <h6>Situação: {{operation.Status}}</h6>
+          <h6>Identificador: {{operation.Identifier}}</h6>
+        </button>
+      </ion-row>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'pending'">
+      <ion-row *ngFor="let operation of operations">
+        <ion-item *ngIf="operation.Status == 'Pendente'" color="buzios">
+          <h5>{{operation.IdFrom}}</h5>
+          <h5>{{operation.IdTo}}</h5>
+        </ion-item>
+      </ion-row>
+    </ion-list>
+
+  </div>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <p class="p-footer" no-margin>*Sujeito a alterações</p>
+    <p class="p-footer" color-light no-margin>**Para detalhamento, consulte www.payplug.com</p>
+  </ion-toolbar>
+</ion-footer>

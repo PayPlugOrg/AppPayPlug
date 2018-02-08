@@ -12,13 +12,13 @@
         <ion-grid>
           <ion-row>
             <ion-col col-6>
-              <ion-item class="item-content">
+              <ion-item no-padding color="buzios">
                 <ion-label>Física</ion-label>
                 <ion-radio ngDefaultControl checked (tap)="changeLabel('CPF')"></ion-radio>
               </ion-item>
             </ion-col>
             <ion-col col-6>
-              <ion-item class="item-content">
+              <ion-item no-padding color="buzios">
                 <ion-label>Jurídica</ion-label>
                 <ion-radio ngDefaultControl (tap)="changeLabel('CNPJ')"></ion-radio>
               </ion-item>
@@ -26,36 +26,60 @@
           </ion-row>
         </ion-grid>
       </ion-list>
-      <ion-item class="item-content">
+
+      <ion-item no-padding color="buzios">
         <ion-label floating>Nome Completo</ion-label>
-        <ion-input name="nome" type="text" formControlName=nome></ion-input>
+        <ion-input name="username" type="text" formControlName=name [class.invalid]="!registerForm.controls.name.valid && ( registerForm.controls.name.dirty || submitAttempt)"></ion-input>
       </ion-item>
-      <ion-item class="item-content">
+      <ion-item no-lines color="buzios" *ngIf="!registerForm.controls.name.valid  && (registerForm.controls.name.dirty || submitAttempt)">
+        <p text-center>Informe sua data de nascimento.</p>
+      </ion-item>
+
+      <ion-item no-padding color="buzios">
         <ion-label floating>{{user.tipo_documento}}</ion-label>
-        <ion-input name="documento" type="text" formControlName=documento></ion-input>
+        <ion-input name="document" type="text" formControlName="document" [class.invalid]="!registerForm.controls.document.valid && ( registerForm.controls.document.dirty || submitAttempt)"></ion-input>
       </ion-item>
-      <ion-item class="item-content">
+      <ion-item no-lines color="buzios" *ngIf="!registerForm.controls.document.valid  && (registerForm.controls.document.dirty || submitAttempt)">
+        <p text-center>O documento de identificação é obrigatório.</p>
+      </ion-item>
+
+      <ion-item no-padding color="buzios">
         <ion-label floating>Celular</ion-label>
-        <ion-input name="celular" type="text" formControlName=celular></ion-input>
+        <ion-input name="cellphone" type="text" formControlName="cellphone" [class.invalid]="!registerForm.controls.cellphone.valid && ( registerForm.controls.cellphone.dirty || submitAttempt)"></ion-input>
       </ion-item>
-      <ion-item class="item-content">
+      <ion-item no-lines color="buzios" *ngIf="!registerForm.controls.cellphone.valid  && (registerForm.controls.cellphone.dirty || submitAttempt)">
+        <p text-center>Veririque se esse é um número válido.</p>
+      </ion-item>
+
+      <ion-item no-padding color="buzios">
         <ion-label floating>E-mail</ion-label>
-        <ion-input name="email" type="text" formControlName=email></ion-input>
+        <ion-input name="email" type="text" formControlName="email" [class.invalid]="!registerForm.controls.email.valid && ( registerForm.controls.email.dirty || submitAttempt)"></ion-input>
+      </ion-item>
+      <ion-item no-lines color="buzios" *ngIf="!registerForm.controls.email.valid  && (registerForm.controls.email.dirty || submitAttempt)">
+        <p text-center>Verifique seu e-mail.</p>
       </ion-item>
       
-      <ion-item class="item-content">
+      <ion-item no-padding color="buzios">
         <ion-label>Data de Nascimento</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" name="nascimento" [(ngModel)]="user.nascimento" doneText="Ok" cancelText="Cancelar" formControlName=nascimento></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY" name="nascimento" doneText="Ok" cancelText="Cancelar" formControlName="born"></ion-datetime>
       </ion-item>
-      <ion-item no-lines class="item-content">
+      <ion-item no-lines color="buzios" *ngIf="!registerForm.controls.born.valid  && (registerForm.controls.born.dirty || submitAttempt)">
+        <p text-center>Informe sua data de nascimento.</p>
+      </ion-item>
+
+      <ion-item no-lines no-padding color="buzios">
         <ion-label>Foi indicado?</ion-label>
         <ion-checkbox (click)="viewType = !viewType"></ion-checkbox>
       </ion-item>
-      <ion-item class="item-content" *ngIf="viewType">
+
+      <ion-item no-padding color="buzios" *ngIf="viewType">
         <ion-label floating >Indicação</ion-label>
-        <ion-input [(ngModel)]="user.indicacao" name="indicacao" type="text" formControlName=indicacao></ion-input>
+        <ion-input name="indication" type="text" formControlName=indication [class.invalid]="!registerForm.controls.indication.valid && ( registerForm.controls.indication.dirty || submitAttempt)"></ion-input>
       </ion-item>
-      <button ion-button block type="submit">
+      <ion-item no-lines color="buzios" *ngIf="!registerForm.controls.indication.valid && (registerForm.controls.indication.dirty || submitAttempt)">
+        <p text-center>Verifique seu e-mail.</p>
+      </ion-item>
+      <button margin-top ion-button block type="submit">
         Continuar
       </button>
     </form>

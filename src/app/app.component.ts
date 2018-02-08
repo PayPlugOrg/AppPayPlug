@@ -26,7 +26,7 @@ export class MyApp {
   rootPage: any = LoginPage;
   loading: any;
   publicPages: Array<{title: string, component: any, alert?:any, icon: string}>;
-  privatePages: Array<{title: string, component: any, icon: string}>;
+  privatePages: Array<{title: string, component: any, alert?:any, icon: string}>;
   nome: any;
 
   constructor(
@@ -59,8 +59,10 @@ export class MyApp {
     ];
     this.privatePages = [
       { title: 'Início', component: HomePage, icon:'home' },
-      { title: 'Indicar Usuário', component: HomePage, icon:'home' },
+      { title: 'Indicar Usuário', component: HomePage, icon:'person-add' },
       { title: 'Transferência', component: TransferPage, icon:'swap' },
+      { title: 'Sobre', component: AboutPage, icon: 'information-circle' },
+      { title: 'Recuperar Senha', component: LoginPage, alert:'password', icon: 'unlock' },
       { title: 'Minhas Informações', component: UserPage, icon:'contact' },
       { title: 'Extrato', component: ExtractPage, icon:'checkmark-circle' },
       { title: 'Perguntas Frequentes', component: FAQPage, icon: 'chatbubbles' }
@@ -110,11 +112,11 @@ export class MyApp {
         console.log('Entrou no password');
         let alert = this.alertService.alertCtrl.create({
           title: 'Recuperar Senha',
-          message:'Desenha recuperar sua senha de liberação? Informe o CPF ou CNPJ para continuar (somente números).',
+          message:'Deseja recuperar sua senha de liberação? Informe seu e-mail cadastrado para continuar.',
           inputs: [
             {
-              name: 'login',
-              placeholder: 'Login'
+              name: 'email',
+              placeholder: 'E-mail'
             }
           ],
           buttons: [
@@ -126,13 +128,23 @@ export class MyApp {
               }
             },
             {
-              text: 'Login',
+              text: 'Recuperar',
               handler: data => {
-                console.log(data);
-                this.authService.passwordReset().then((result) => {
-
+                this.authService.passwordReset(data).then((result) => {
+                  let alert2 = this.alertService.alertCtrl.create({
+                    title: 'E-mail enviado!',
+                    subTitle: 'Uma nova senha foi gerada automaticamente e enviada para ' + data.email + '.',
+                    buttons: ['Ok']
+                  });
+                  if(result['Success']) {
+                    alert2.present();
+                  } else {
+                    alert2.setTitle('Falha na recuperação!');
+                    alert2.setSubTitle("Entre em contato com o suporte para mais informações. Abra a tela 'Sobre' para ter acesso aos contatos.");
+                    alert2.present();
+                  }
                 },(err) =>{
-
+                  console.error(err);
                 });
               }
             }

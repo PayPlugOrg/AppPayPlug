@@ -29,7 +29,7 @@
           Extrato
         </button>
       </ion-col>
-      <ion-col col-12>
+      <ion-col *ngIf="map" col-12>
         <button ion-button icon-left color=secondary text-uppercase large full>
           <ion-icon name=pin></ion-icon>Rede</button>
       </ion-col>

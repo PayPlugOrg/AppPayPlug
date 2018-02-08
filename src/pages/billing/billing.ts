@@ -59,7 +59,7 @@ export class BillingPage {
 
   scan(page) {
     this.barcodeScanner.scan().then((barcodeData) => {
-      //this.alertProvider.presentToast(barcodeData.text);
+      this.alertProvider.presentToast(barcodeData.text);
       if(barcodeData.text.length == 16) {
         this.navCtrl.push(page, {openModalIdentification: false, payplugCard:barcodeData.text, billingValue: this.showBillingValue, operation: this.navParams.get('operation')});
       } else {

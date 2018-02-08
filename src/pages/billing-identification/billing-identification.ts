@@ -6,6 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import StringMask from 'string-mask';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { KeyboardPage } from '../keyboard/keyboard';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the BillingIdentificationPage page.
@@ -85,6 +86,11 @@ export class BillingIdentificationPage {
       this.information.bloqueado = result['IsBloqueado'];
       this.information.identification = this.identification;
       console.log(this.information);
+    },(err) => {
+      console.log(err);
+      if(err == 'Authentication failed.') {
+        this.navCtrl.setRoot(LoginPage);
+      }
     });
   }
 

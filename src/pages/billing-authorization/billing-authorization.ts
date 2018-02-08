@@ -9,6 +9,7 @@ import { Slides } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { CardNewPage } from '../card-new/card-new';
 import { CardServiceProvider } from '../../providers/card/card-service';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the BillingAuthorizationPage page.
@@ -143,6 +144,11 @@ export class BillingAuthorizationPage {
       this.information.identification = identification;
       this.information.bloqueado = result['IsBloqueado'];
       this.getCards();
+    },(err) => {
+      console.log(err);
+      if(err == 'Authentication failed.') {
+        this.navCtrl.setRoot(LoginPage);
+      }
     });
   }
 
@@ -214,8 +220,9 @@ export class BillingAuthorizationPage {
     var billingValue = this.showBillingValue.replace('.','');
     billingValue = this.showBillingValue.replace(',','');
 
-    if(this.password == "") {
-      this.alert('Senha em branco!', 'Informe sua senha de liberação PayPlug para realizar a transação.');
+    if(this.password.length < 6) {
+      this.alert('Senha pequena demais!', 'Informe sua senha de liberação PayPlug para realizar a transação. Ela deverá ter 6 dígitos.');
+      this.clearPasswordInput();
     } else {
       this.authProvider.doTransfer(this.information.identification,billingValue,this.password).then((result) => {
         console.log(result);
@@ -228,7 +235,15 @@ export class BillingAuthorizationPage {
         } else if(result['Message'] == 'Check the value of field liberationPassword') {
           this.alert('Senha Inválida','Verifique sua senha.');
           this.clearPasswordInput();
-        }
+        } else if(result['Message'] == '[TO] invalid user.') {
+          this.alert('Usuário Inválido','Usuário destino da trânsferência é Terminal de Venda. Não é possível realizar a transferência.');
+          this.clearPasswordInput();
+          this.navCtrl.pop();
+        } else if(result['Message'] == 'Operação não realizada! Para Vendas use a tela de Cobrança.') {
+          this.alert('Usuário Inválido','Usuário origem da trânsferência é Terminal de Venda. Não é possível realizar a transferência.');
+          this.clearPasswordInput();
+          this.navCtrl.pop();
+        } 
       },(err) => {
         console.error(err);
       })

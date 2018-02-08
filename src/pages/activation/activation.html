@@ -17,30 +17,30 @@
 
   <form (submit)="doActivation()" [formGroup]="activationForm">
     
-    <ion-item class="item-content">
+    <ion-item color="buzios">
       <ion-label floating>CPF</ion-label>
-      <ion-input name="documento" type="tel" formControlName="documento" [class.invalid]="!activationForm.controls.documento.valid && ( activationForm.controls.documento.dirty || submitAttempt)"></ion-input>
+      <ion-input name="document" type="tel" formControlName="document" [class.invalid]="!activationForm.controls.document.valid && ( activationForm.controls.document.dirty || submitAttempt)"></ion-input>
     </ion-item>
 
-    <ion-item no-lines class="item-content" *ngIf="!activationForm.controls.documento.valid  && (activationForm.controls.documento.dirty || submitAttempt)">
+    <ion-item no-lines color="buzios" *ngIf="!activationForm.controls.document.valid  && (activationForm.controls.document.dirty || submitAttempt)">
       <p text-center>Informe corretamente seu CPF.</p>
     </ion-item>
 
-    <ion-item class="item-content">
+    <ion-item color="buzios">
       <ion-label floating>Código de Ativação</ion-label>
       <ion-input name="codigo" type="text" formControlName="codigo" [class.invalid]="!activationForm.controls.codigo.valid && ( activationForm.controls.codigo.dirty || submitAttempt)"></ion-input>
     </ion-item>
 
-    <ion-item no-lines class="item-content" *ngIf="!activationForm.controls.codigo.valid  && (activationForm.controls.codigo.dirty || submitAttempt)">
+    <ion-item no-lines color="buzios" *ngIf="!activationForm.controls.codigo.valid  && (activationForm.controls.codigo.dirty || submitAttempt)">
       <p text-center>O código de ativação tem 8 caracteres.</p>
     </ion-item>
 
-    <ion-item class="item-content">
+    <ion-item color="buzios">
       <ion-label floating>Nova senha</ion-label>
       <ion-input name="senha" type="tel" pattern="[0-9]*" inputmode="numeric" min="1111" max="9999" style="-webkit-text-security: disc;" formControlName="senha" [class.invalid]="!activationForm.controls.senha.valid && ( activationForm.controls.senha.dirty || submitAttempt)"></ion-input>
     </ion-item>
 
-    <ion-item no-lines class="item-content" *ngIf="!activationForm.controls.senha.valid  && (activationForm.controls.senha.dirty || submitAttempt)">
+    <ion-item no-lines color="buzios" *ngIf="!activationForm.controls.senha.valid  && (activationForm.controls.senha.dirty || submitAttempt)">
       <p text-center>A senha deve conter 6 dígitos numéricos.</p>
     </ion-item>
 

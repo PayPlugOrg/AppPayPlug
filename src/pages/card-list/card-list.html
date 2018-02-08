@@ -18,41 +18,41 @@
   <ion-grid>
     <ion-row *ngFor="let card of cards">
       <ion-col col-12>
-          <ion-card>
-              <button class="large-button btn-text" no-padding no-margin ion-button block color=light large (click)="openCard(card)">
-                <ion-grid>
-                <ion-row>
-                  <ion-col col-3>
-                    <img [src]="card['mediaUrl']">
-                  </ion-col>
-                  <ion-col class="card-attributes" text-uppercase text-center col-9>
-                    {{card['tipoCartao']}} <br>
-                    {{card['numero']}} {{card['dataValidade']}}
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col text-uppercase  text-center col-12>
-                    {{card['nomeTitular']}}
-                  </ion-col>
-                </ion-row>
-                </ion-grid>
-              </button>
-          
-              <ion-grid no-padding>
-                <ion-row no-padding>
-                  <ion-col col-6 no-padding>
-                    <button clear icon-left full ion-button item-start no-margin (click)="clearInfoCard(card)">
-                      <ion-icon name=undo></ion-icon>
-                    </button>
-                  </ion-col>
-                  <ion-col col-6 no-padding>
-                    <button clear icon-left full ion-button item-end no-margin color="danger" (click)="deleteCard(card)">
-                      <ion-icon name=trash></ion-icon>
-                    </button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-card>
+        <ion-card>
+          <button class="large-button btn-text" no-padding no-margin ion-button block color=light large (click)="openCard(card)">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-3>
+                  <img [src]="card['mediaUrl']">
+                </ion-col>
+                <ion-col class="card-attributes" text-uppercase text-center col-9>
+                  {{card['tipoCartao']}}
+                  <br> {{card['numero']}} {{card['dataValidade']}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col text-uppercase text-center col-12>
+                  {{card['nomeTitular']}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </button>
+
+          <ion-grid no-padding>
+            <ion-row no-padding>
+              <ion-col col-6 no-padding>
+                <button clear icon-left full ion-button item-start no-margin (click)="clearInfoCard(card)">
+                  <ion-icon name=undo></ion-icon>
+                </button>
+              </ion-col>
+              <ion-col col-6 no-padding>
+                <button clear icon-left full ion-button item-end no-margin color="danger" (click)="deleteCard(card)">
+                  <ion-icon name=trash></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

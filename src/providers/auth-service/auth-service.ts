@@ -71,13 +71,13 @@ export class AuthServiceProvider {
     });
   }
 
-  passwordReset() {
+  passwordReset(data) {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      var consulta = this.apiUrl + '/Users/SendLiberationPassword?identifier=' + localStorage.getItem('token') + '&dataFormat=json';
-
+      var consulta = this.apiUrl + '/Users/SendLiberationPassword?identifier=' + data.email + '&dataFormat=json';
+      console.log(consulta)
       this.http.post(consulta, null,{headers:headers}).subscribe(res => {
         console.log(res.json());
         resolve(res.json());
@@ -95,16 +95,14 @@ export class AuthServiceProvider {
       var consulta = this.apiUrl + '/Users/Info?token=' + localStorage.getItem('token') + '&id=' + userInfo + '&dataFormat=json';
       
       this.http.post(consulta, null, {headers:headers}).subscribe(res => {
-        console.log(res.json());
         if(this.tokenExpired(res.json()['Message'])) {
           this.alertService.presentToast('Sua sessão expirou');
-          console.log(res.json()['Message']);
+          reject(res.json()['Message']);
         } else {
           this.userInfo = res.json();
           resolve(res.json());
         }
       },(err) => {
-        console.error(err);
         reject(err);
       });
     });
@@ -152,10 +150,10 @@ export class AuthServiceProvider {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-
-      var consulta = this.apiUrl + '/Users/Save?token=' + this.token + '&fullName=' + user['nome'] + '&cpfCnpj=' + user['documento'] + '&EmpresaCnpj=' + '&cellphone=' + user['celular'] + '&email=' + user['email'] + '&coin=1&dataNascimento=' + user['nascimento'] + '&cpfCnpjIndicacao=' + '&dataFormat=json';
+      console.log(user);
+      var consulta = this.apiUrl + '/Users/Save?token=' + this.token + '&fullName=' + user['name'] + '&cpfCnpj=' + user['document'] + '&EmpresaCnpj=' + '&cellphone=' + user['cellphone'] + '&email=' + user['email'] + '&coin=1&dataNascimento=' + user['born'] + '&cpfCnpjIndicacao=' + '&dataFormat=json';
       if(operacao == 'ativacao') {
-        consulta = this.apiUrl + '/Users/AtivarUsuario?token=' + this.token + '&identifier=' + user['documento'] + '&codigo=' + user['codigo'] + '&senha=' + user['senha'] + '&dataFormat=json';
+        consulta = this.apiUrl + '/Users/AtivarUsuario?token=' + this.token + '&identifier=' + user['document'] + '&codigo=' + user['codigo'] + '&senha=' + user['senha'] + '&dataFormat=json';
       }
       console.log(consulta);
 
@@ -275,6 +273,24 @@ export class AuthServiceProvider {
           console.log(err);
           reject(err);
         });
+    });
+  }
+
+  getLatestOperations(number) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      var consulta = this.apiUrl + '/Users/LatestOperations?token=' + localStorage.getItem('token') + '&estadoTransacao=1,2,3,7' + '&qtdRegistros=' + number + '&dataFormat=json';
+      console.log(consulta);
+
+      this.http.post(consulta, null, {headers:headers}).subscribe(res => {
+        console.log(res.json());
+        resolve(res.json());
+      },(err) => {
+        console.log(err);
+        reject(err);
+      })
     });
   }
 
