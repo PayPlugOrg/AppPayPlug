@@ -37,7 +37,7 @@ export class LoginPage {
       this.alertService.enableMenu(true, 'authenticated');
       this.alertService.enableMenu(false, 'unauthenticated');
     } else {
-      this.alertService.enableMenu(true, 'anauthenticated');
+      this.alertService.enableMenu(true, 'unauthenticated');
       this.alertService.enableMenu(false, 'authenticated');
       this.isLoggedIn = true;
     }
