@@ -1,23 +1,16 @@
-<!--
-  Generated template for the ExtractPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header no-border>
 
   <ion-navbar>
-    <ion-title>Extrato de
-      <br> Transações</ion-title>
+    <ion-title>Movimentações</ion-title>
   </ion-navbar>
 
   <ion-toolbar>
     <ion-segment [(ngModel)]="operationType" color="secondary">
       <ion-segment-button value="finalized">
-        Finalizado
+        Finalizadas
       </ion-segment-button>
       <ion-segment-button value="pending">
-        Pendente
+        Pendentes
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -34,7 +27,8 @@
         <button no-padding detail-none ion-item *ngIf="operation.Status == 'Finalizado'" color="buzios" (click)="openDetail(operation)">
           <h6>Data: {{operation.TransactionDate}}</h6>
           <h6>Operação: {{operation.Operation}}</h6>
-          <h6>Usuário: {{operation.IdTo}}</h6>
+          <h6>De: {{operation.IdFrom}}</h6>
+          <h6>Para: {{operation.IdTo}}</h6>
           <h6>Valor: {{operation.Value}}</h6>
           <h6>Situação: {{operation.Status}}</h6>
           <h6>Identificador: {{operation.Identifier}}</h6>

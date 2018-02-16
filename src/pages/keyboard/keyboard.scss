@@ -2,6 +2,8 @@ page-keyboard {
 
     .botao-numero {
         width: 31.75%;
+        height: 21%;
+        font-size: 200%;
     }
 
     h1 {
@@ -12,6 +14,10 @@ page-keyboard {
     ion-grid {
         height: 100%;
         justify-content: center;
+    }
+
+    .keyboard-row {
+        height: 55%;
     }
 
 }

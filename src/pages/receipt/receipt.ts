@@ -22,19 +22,19 @@ export class ReceiptPage {
   private identifier: any;
   createdCode = null;
   receipt = {
-    Authentication:'',
-    ClientCard:'',
-    ClientCardFlag:'',
-    ClientCardType:'',
-    ClientName:'',
-    CurrencyValueReal:'',
-    CurrencyValueUser:'',
-    Description:'',
-    Situation:'',
-    Store:'',
-    SymbolCurrencyReal:'',
-    SymbolCurrencyUser:'',
-    TransactionDate:''
+    Authentication: '',
+    ClientCard: '',
+    ClientCardFlag: '',
+    ClientCardType: '',
+    ClientName: '',
+    CurrencyValueReal: '',
+    CurrencyValueUser: '',
+    Description: '',
+    Situation: '',
+    Store: '',
+    SymbolCurrencyReal: '',
+    SymbolCurrencyUser: '',
+    TransactionDate: ''
   }
 
   constructor(
@@ -45,24 +45,22 @@ export class ReceiptPage {
     public alertProvider: AlertServiceProvider
   ) {
     this.identifier = navParams.get('identifier');
-    this.authService.getReceipt(this.identifier).then((result) => {
-      console.log(result);
-      if(result['Success'] == false) {
-          let alert = '';
-      } else {
-        for(let o in result) {
-          this.receipt[o] = result[o];
-        }
-        console.log(this.receipt);
-        this.createQR(result['Authentication']);
-      }
-    },(err) => {
-      console.log(err);
-    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ReceiptPage');
+  ionViewWillEnter() {
+    this.authService.getReceipt(this.identifier).then((result) => {
+      if (result['Success'] == false) {
+        let alert = '';
+      } else {
+        for (let o in result) {
+          this.receipt[o] = result[o];
+        }
+        this.createQR(result['Authentication']);
+      }
+      this.alertProvider.loading.dismiss();
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   createQR(numeroCartao: String) {

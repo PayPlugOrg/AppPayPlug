@@ -56,7 +56,8 @@ export class ExtractPage {
       message: `
           <h6>Data: ` + operation.TransactionDate + `</h6>
           <h6>Operação: ` + operation.Operation + `</h6>
-          <h6>Usuário: ` + operation.IdTo + `</h6>
+          <h6>De: ` + operation.IdFrom + `</h6>
+          <h6>Para: ` + operation.IdTo + `</h6>
           <h6>Valor: ` + operation.Value + `</h6>
           <h6>Situação: ` + operation.Status + `</h6>
           <h6>Identificador: ` + operation.Identifier + `</h6>
@@ -73,6 +74,7 @@ export class ExtractPage {
           handler: () => {
             let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:operation.Identifier}); 
             receiptModal.present();
+            this.alertProvider.showLoader('Preparando recibo...');
             console.log('Comprovante clicked');
           }
         }

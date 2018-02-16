@@ -28,6 +28,7 @@ export class CardPage {
   ) {
     this.card = this.navParams.get('card');
     let code = Number(this.card['idCartao'].length + this.card['idCartao'] + localStorage.getItem('card-' + this.card['idCartao']));
+    console.log(code);
     this.createQR(code.toString(16));
   }
 

@@ -7,14 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    
+
     <ion-buttons end>
       <button ion-button (click)="dismiss()">
         <span ion-text color="payplug" showWhen="ios">Cancelar</span>
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
     </ion-buttons>
-     
+
     <ion-title>Cartão</ion-title>
   </ion-navbar>
 
@@ -28,16 +28,16 @@
     <ion-row>
 
       <ion-col col-12>
-          <button text-capitalize icon-left ion-button block color="secondary" large outline>
-              <ion-icon name=camera></ion-icon>
-            Ler código de barras
-          </button>
+        <button text-capitalize icon-left ion-button block color="secondary" large outline>
+          <ion-icon name=camera></ion-icon>
+          Ler código de barras
+        </button>
       </ion-col>
       <ion-col col-12>
-          <button text-capitalize icon-left ion-button block color="secondary" large outline>
-              <ion-icon name=copy></ion-icon>
-            Inserir código de barras
-          </button>
+        <button text-capitalize icon-left ion-button block color="secondary" large outline>
+          <ion-icon name=copy></ion-icon>
+          Inserir código de barras
+        </button>
       </ion-col>
 
     </ion-row>
@@ -47,12 +47,12 @@
         <img [src]="card['mediaUrl']">
       </ion-col>
       <ion-col text-uppercase text-center col-9>
-        {{card['tipoCartao']}} <br>
-        {{card['numero']}} {{card['dataValidade']}}
+        {{card['tipoCartao']}}
+        <br> {{card['numero']}} {{card['dataValidade']}}
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col text-uppercase  text-center col-12>
+      <ion-col text-uppercase text-center col-12>
         {{card['nomeTitular']}}
       </ion-col>
     </ion-row>
@@ -60,14 +60,14 @@
     <ion-card *ngIf="createdCode">
       <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
       <ion-card-content>
-        
-        <p text-center>{{ createdCode }}</p>
-       
+
+        <!-- <p text-center>{{ createdCode }}</p> -->
+
       </ion-card-content>
     </ion-card>
 
   </ion-grid>
 
-  
+
 
 </ion-content>

@@ -27,7 +27,7 @@
         <h1>R$ {{showBillingValue}}</h1>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row class="keyboard-row">
       <ion-col col-12>
         <button class="botao-numero" no-lines ion-button *ngFor="let n of numbers" color="payplug" outline (click)=pressedButton(n.value)>
             <ion-icon [name]="n.icon" item-start></ion-icon>
