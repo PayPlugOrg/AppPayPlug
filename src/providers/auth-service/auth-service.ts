@@ -21,7 +21,7 @@ export class AuthServiceProvider {
   user = {nome:'', nascimento:'', email:'', celular:'', indicacao:'', documento:'', tipo_documento:'CPF'}
   userInfo: any;
 
-  apiUrl = 'http://aplweb.tsemredes.com.br:84/v1';//'api'; http://aplweb.tsemredes.com.br:84/v1';//
+  apiUrl = 'api';//'api'; http://aplweb.tsemredes.com.br:84/v1';//
   
   constructor(
     public http: Http,
