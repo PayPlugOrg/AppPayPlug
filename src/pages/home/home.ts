@@ -13,7 +13,8 @@ export class HomePage {
 
   user: {};
   nome: any;
-  saldo: any;
+  saldoTotal: any;
+  saldoSaque: any;
   loading: any;
   isLoggedIn: boolean = false;
 
@@ -38,7 +39,8 @@ export class HomePage {
     this.authService.getUserInfo().then((result) => {
       this.user = result;
       this.nome = result['Nome'];
-      this.saldo = result['SaldoTotal'];
+      this.saldoTotal = result['SaldoTotal'];
+      this.saldoSaque = result['SaldoDisponivelSaque'];
     },(err) => {
       console.log(err);
       if(err == 'Authentication failed.') {
