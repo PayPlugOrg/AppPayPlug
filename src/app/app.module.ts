@@ -52,6 +52,7 @@ import { ExtractPageModule } from '../pages/extract/extract.module';
 @NgModule({
   declarations: [
     MyApp,
+    FAQPage,
   ],
   imports: [
     BrowserModule,
