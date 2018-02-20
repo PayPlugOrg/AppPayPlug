@@ -42,8 +42,8 @@ export class BillingPage {
     console.log('ionViewDidLoad BillingPage');
   }
 
-  createQR(numeroCartao: String) {
-    this.createdCode = numeroCartao;
+  createQR(data: String) {
+    this.createdCode = data;
   }
 
   displayKeyboard(rawBillingValue) {
@@ -52,7 +52,7 @@ export class BillingPage {
       if(data){ 
         this.rawBillingValue = data;
         this.showBillingValue = this.formatter.apply(data);
-        this.createQR(data);
+        this.createQR("https://www.payplug.org:88/Lkn/Ctnr?o=" + localStorage.getItem('cpf') + "&d=+usuario+&v=" + data);
       } else {
         this.navCtrl.pop();
       }

@@ -60,7 +60,7 @@ export class MyApp {
     ];
     this.privatePages = [
       { title: 'Início', component: HomePage, icon: 'home' },
-      { title: 'Indicar Usuário', component: HomePage, icon: 'person-add' },
+      { title: 'Indicar Usuário', component: RegisterPage, icon: 'person-add' },
       { title: 'Transferência', component: BillingIdentificationPage, icon: 'swap' },
       { title: 'Sobre', component: AboutPage, icon: 'information-circle' },
       { title: 'Recuperar Senha', component: LoginPage, alert: 'password', icon: 'unlock' },
@@ -212,6 +212,11 @@ export class MyApp {
       this.nav.setRoot(page.component);
     } else if (page.title == 'Início') {
       this.nav.setRoot(page.component);
+    } else if(page.title == 'Indicar Usuário') {
+      let params = {
+        title: page.title,
+      };
+      this.nav.push(page.component, params);
     } else {
       this.nav.push(page.component);
     }

@@ -22,6 +22,8 @@ export class RegisterPage {
   private user = {name:'', born:'', email:'', cellphone:'', indication:'', document:'', tipo_documento:'CPF'}
   private registerForm: FormGroup;
   submitAttempt: boolean = false;
+  private title = "Registre-se";
+  public checked : boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -40,6 +42,12 @@ export class RegisterPage {
       document: ['', Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(14), Validators.pattern('[0-9]+')])]
       //tipo_documento: ['', Validators.compose([Validators.required])]
     });
+    if(navParams.get('title')) {
+      var cpf = localStorage.getItem('cpf');
+      this.title = navParams.get('title');
+      this.registerForm.controls['indication'].setValue(cpf);
+      this.checked = true;
+    }
   }
 
   ionViewDidLoad() {

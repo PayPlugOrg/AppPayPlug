@@ -21,7 +21,9 @@ export class AuthServiceProvider {
   user = {nome:'', nascimento:'', email:'', celular:'', indicacao:'', documento:'', tipo_documento:'CPF'}
   userInfo: any;
 
-  apiUrl = 'http://aplweb.tsemredes.com.br:84/v1';//'api'; http://aplweb.tsemredes.com.br:84/v1';//
+  dev: boolean = true;
+
+  apiUrl = 'api';//'api'; http://aplweb.tsemredes.com.br:84/v1';//
   
   constructor(
     public http: Http,
@@ -57,8 +59,10 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
+      var password = this.dev ? "1234" : "890098";
+
       //Requisição do Token de sessão para inserção do usuário
-      this.http.post(this.apiUrl + '/Tokens/New?email=camaradecomercio@payplug.com.br&dataFormat=json&password=1234&duration=5', null, {headers: headers})
+      this.http.post(this.apiUrl + '/Tokens/New?email=camaradecomercio@payplug.com.br&dataFormat=json&password=' + password + '&duration=5', null, {headers: headers})
       .subscribe(res => {
         if(res.json().Success) {
           this.token = res.json().Token;
@@ -138,6 +142,7 @@ export class AuthServiceProvider {
       console.log('[user name] ' + result['Nome']);
       localStorage.setItem('username',result['Nome']);
       localStorage.setItem('id',result['Id']);
+      localStorage.setItem('cpf',result['CpfCnpj']);
       
       for(let o in result) {
         user1[o] = result[o];
