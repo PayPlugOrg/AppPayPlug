@@ -43,7 +43,7 @@ export class CardListPage {
   }
 
   openCard(card) {
-    //console.log(card);
+    console.log(card);
     var params  = {
       message: 'Informe a senha de liberação do cartão Principal para realizar o pagamento com o cartão PayPlug.',
       label: 'Senha de Liberação',

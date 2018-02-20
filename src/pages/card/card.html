@@ -25,22 +25,7 @@
 
   <ion-grid>
 
-    <ion-row>
-
-      <ion-col col-12>
-        <button text-capitalize icon-left ion-button block color="secondary" large outline (click)="scan()">
-          <ion-icon name=camera></ion-icon>
-          Ler código de barras
-        </button>
-      </ion-col>
-      <ion-col col-12>
-        <button text-capitalize icon-left ion-button block color="secondary" large outline>
-          <ion-icon name=copy></ion-icon>
-          Inserir código de barras
-        </button>
-      </ion-col>
-
-    </ion-row>
+    
 
     <ion-row>
       <ion-col col-3>
@@ -65,6 +50,23 @@
 
       </ion-card-content>
     </ion-card>
+
+    <ion-row>
+
+      <ion-col col-12>
+        <button text-capitalize icon-left ion-button block color="secondary" large outline (click)="scan()">
+          <ion-icon name=camera></ion-icon>
+          Pagar com QRCode
+        </button>
+      </ion-col>
+      <ion-col col-12>
+        <button text-capitalize icon-left ion-button block color="secondary" large outline>
+          <ion-icon name=copy></ion-icon>
+          Pagar boleto bancário
+        </button>
+      </ion-col>
+
+    </ion-row>
 
   </ion-grid>
 

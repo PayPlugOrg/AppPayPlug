@@ -52,7 +52,11 @@ export class BillingPage {
       if(data){ 
         this.rawBillingValue = data;
         this.showBillingValue = this.formatter.apply(data);
-        this.createQR("https://www.payplug.org:88/Lkn/Ctnr?o=" + localStorage.getItem('cpf') + "&d=+usuario+&v=" + data);
+        var origem = localStorage.getItem('cpf').replace(/\./gi,'');
+        origem = origem.replace('-','');
+        console.log(this.showBillingValue + " " + origem);
+        this.showBillingValue = this.showBillingValue.replace(',','');
+        this.createQR("https://www.payplug.org:88/Lkn/Ctnr?o=" + origem + "&d=&v=" + this.showBillingValue);
       } else {
         this.navCtrl.pop();
       }
