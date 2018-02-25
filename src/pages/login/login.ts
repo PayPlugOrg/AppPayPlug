@@ -45,7 +45,6 @@ export class LoginPage {
 
   ionViewDidLoad() {
     this.user.nome = localStorage.getItem("login");
-    console.log('ionViewDidLoad LoginPage');
   }
 
   doLogin() {

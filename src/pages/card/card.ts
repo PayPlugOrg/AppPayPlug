@@ -23,16 +23,15 @@ export class CardPage {
   private card = {};
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
-    private authService:AuthServiceProvider,
+    private authService: AuthServiceProvider,
     private viewCtrl: ViewController,
     private barcodeScanner: BarcodeScanner,
     private alertService: AlertServiceProvider
   ) {
     this.card = this.navParams.get('card');
     let code = Number(this.card['idCartao'].length + this.card['idCartao'] + localStorage.getItem('card-' + this.card['idCartao']));
-    console.log(code);
     this.createQR(code.toString(16));
   }
 
@@ -43,9 +42,26 @@ export class CardPage {
 
   scan() {
     this.barcodeScanner.scan().then((barcodeData) => {
-      this.alertService.presentToast(barcodeData.text);
-    },(err) => {
-      console.error(err);
+      var re = barcodeData.text.match(/(https:\/\/www\.payplug\.org:88\/Lkn\/Ctnr\?o=)|([0-9])+|&d=&v=|([0-9])+/gi); //https://www.payplug.org:88/Lkn/Ctnr?o=" + origem + "&d=&v=" + value
+
+      if (re.length == 4) {
+        var source = re[1];
+        var value = re[3];
+        
+        this.alertService.presentToast(barcodeData.text + re);
+        this.authService.doBilling(this.card['idCartao'],value,localStorage.getItem('card-' + this.card['idCartao']), source).then((result) => {
+          console.log(result);
+        },(err) => {
+          console.error(err);
+        });
+      } else {
+        var alert = this.alertService.alertCtrl.create({
+          title: 'QR Code Inválido',
+          subTitle: 'Informe um QR Code válido para realizar o Pagamento'
+        });
+        alert.present();
+      }
+    }, (err) => {
       this.alertService.presentToast(err);
     })
   }

@@ -150,7 +150,6 @@ export class PaymentPage {
     //Verifica para qual página direcionar
     if(this.navParams.get('page') == 'CardListPage') {
       this.authService.paymentAuthenticate(this.password).then((result) => {
-        //console.log(result);
         //result['Success'] = true; //DEBUG: comentar quando for para produção
         if(result['Success']) {
           this.clearPasswordInput();
@@ -221,7 +220,6 @@ export class PaymentPage {
         alert.setSubTitle('CVV do cartão escolhido deve ter 3 dígitos. Verifique e tente novamente.');
         alert.present();
       } else {
-        console.log(card['idCartao']);
         localStorage.setItem('card-' + card['idCartao'],this.password);
 
         //this.navCtrl.push(this.navParams.get('page'), {card:card});

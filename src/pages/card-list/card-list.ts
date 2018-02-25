@@ -35,15 +35,13 @@ export class CardListPage {
     public cardProvider: CardServiceProvider,
     public alertCtrl: AlertController
   ) {
-    this.cardProvider.getCards(this.authService.userInfo['CpfCnpj']).then((result) =>{
-      //console.log(result);
+    this.cardProvider.getCards(localStorage.getItem('cpf')).then((result) =>{
       this.cards = result;
     });
     
   }
 
   openCard(card) {
-    console.log(card);
     var params  = {
       message: 'Informe a senha de liberação do cartão Principal para realizar o pagamento com o cartão PayPlug.',
       label: 'Senha de Liberação',
@@ -73,7 +71,7 @@ export class CardListPage {
         {
           text: 'Cancela',
           handler: () => {
-            console.log('Disagree clicked');
+            
           }
         },
         {
@@ -96,16 +94,15 @@ export class CardListPage {
         {
           text: 'Cancela',
           handler: () => {
-            console.log('Disagree clicked');
+            
           }
         },
         {
           text: 'Confirma',
           handler: () => {
             localStorage.removeItem('card-'+card['idCartao']);
-            console.log(card);
+            
             this.cardProvider.deleteCard(card['idCartao']).then((result) =>{
-              console.log(result);
               if(result['Success']) {
                 let alert = this.authService.alertService.alertCtrl.create({
                   title:'Cartão excluído!',
@@ -114,7 +111,6 @@ export class CardListPage {
                 })
                 alert.present();
                 this.cardProvider.getCards(this.authService.userInfo['CpfCnpj']).then((result) =>{
-                  //console.log(result);
                   this.cards = result;
                 });
               }

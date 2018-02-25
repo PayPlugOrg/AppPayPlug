@@ -19,7 +19,6 @@ export class TransferPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TransferPage');
   }
 
 }

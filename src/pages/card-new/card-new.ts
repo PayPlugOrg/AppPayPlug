@@ -55,9 +55,7 @@ export class CardNewPage {
       });
       alert.present();
     } else {
-      console.log(this.newCardValidation.value);
       this.authService.newCard(this.newCardValidation.value).then((result) => {
-        console.log(result);
         let alert = this.alertService.alertCtrl.create({
           buttons: ['Ok']
         });

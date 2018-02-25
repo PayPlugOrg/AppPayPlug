@@ -4,6 +4,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { HomePage } from '../home/home';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 /**
  * Generated class for the ReceiptPage page.
@@ -42,7 +43,8 @@ export class ReceiptPage {
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public authService: AuthServiceProvider,
-    public alertProvider: AlertServiceProvider
+    public alertProvider: AlertServiceProvider,
+    private socialSharing: SocialSharing
   ) {
     this.identifier = navParams.get('identifier');
   }
@@ -59,17 +61,20 @@ export class ReceiptPage {
       }
       this.alertProvider.loading.dismiss();
     }, (err) => {
-      console.log(err);
+      this.alertProvider.presentToast(err);
     });
   }
 
   createQR(numeroCartao: String) {
-    console.log("Numero cartao: " + numeroCartao);
     this.createdCode = numeroCartao;
   }
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  send(share) {
+    
   }
 
 }

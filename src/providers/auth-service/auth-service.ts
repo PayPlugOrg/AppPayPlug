@@ -30,7 +30,6 @@ export class AuthServiceProvider {
     public alertService: AlertServiceProvider,
     public events: Events
   ) {
-    console.log('Hello AuthServiceProvider Provider');
   }
 
   login(user) {
@@ -38,8 +37,7 @@ export class AuthServiceProvider {
     return new Promise((resolve, reject) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        //console.log(user['nome']);
-        //console.log(user['senha']);
+        
         this.http.post(this.apiUrl+'/Tokens/New?email=' + user['nome'] + '&dataFormat=json&password=' + user['senha']+'&duration=200', null, {headers: headers})
           .subscribe(res => {
             if(res.json()) {
@@ -48,7 +46,6 @@ export class AuthServiceProvider {
               reject("Erro ao fazer login. Usuário não encontrado ou senha incorreta");
             }
           }, (err) => {
-            console.log(err);
             reject(err);
           });
     });
@@ -81,12 +78,12 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.apiUrl + '/Users/SendLiberationPassword?identifier=' + data.email + '&dataFormat=json';
-      console.log(consulta)
+      
       this.http.post(consulta, null,{headers:headers}).subscribe(res => {
-        console.log(res.json());
+        
         resolve(res.json());
       },(err) => {
-        console.log(err);
+        
         reject(err);
       });
     })
@@ -139,7 +136,7 @@ export class AuthServiceProvider {
       IsBloqueado: false
     }
     this.getUserInfo().then((result) => {
-      console.log('[user name] ' + result['Nome']);
+      
       localStorage.setItem('username',result['Nome']);
       localStorage.setItem('id',result['Id']);
       localStorage.setItem('cpf',result['CpfCnpj']);
@@ -155,17 +152,17 @@ export class AuthServiceProvider {
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      console.log(user);
+      
       var consulta = this.apiUrl + '/Users/Save?token=' + this.token + '&fullName=' + user['name'] + '&cpfCnpj=' + user['document'] + '&EmpresaCnpj=' + '&cellphone=' + user['cellphone'] + '&email=' + user['email'] + '&coin=1&dataNascimento=' + user['born'] + '&cpfCnpjIndicacao=' + '&dataFormat=json';
       if(operacao == 'ativacao') {
         consulta = this.apiUrl + '/Users/AtivarUsuario?token=' + this.token + '&identifier=' + user['document'] + '&codigo=' + user['codigo'] + '&senha=' + user['senha'] + '&dataFormat=json';
       }
-      console.log(consulta);
+      
 
       //Requisição de inserção do novo usuário
       this.http.post(consulta, null, {headers:headers})
         .subscribe(res => {
-          console.log(res.json());
+          
           if(res.json().Id && res.json().Codigo && operacao == 'criacao') {
             resolve("Usuário criado com sucesso!");
           } else if(res.json().Success == false && operacao == 'criacao') {
@@ -233,7 +230,7 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       var consulta = this.apiUrl + '/Users/ValidarSenhaLiberacao?token=' + localStorage.getItem('token') + '&password=' + password + '&dataFormat=json';
-      //console.log(consulta);
+      
       this.http.post(consulta,null,{headers:headers})
         .subscribe(res => {
           resolve(res.json());
@@ -243,20 +240,22 @@ export class AuthServiceProvider {
     })
   }
 
-  doBilling(idCartao, billingValue, password) {
+  doBilling(idCartao, billingValue, password, source?) {
     
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
+      if(!source)
+        source = localStorage.getItem('login');
 
-      var consulta = this.apiUrl + '/Cartao/CobrarComCartao?token=' + localStorage.getItem('token') + '&idCartao=' + idCartao + '&valor=' + billingValue + '&IdUsuarioOrigem=' + localStorage.getItem('login') + '&dataFormat=json' + '&senha=' + password;
+      var consulta = this.apiUrl + '/Cartao/CobrarComCartao?token=' + localStorage.getItem('token') + '&idCartao=' + idCartao + '&valor=' + billingValue + '&IdUsuarioOrigem=' + source + '&dataFormat=json' + '&senha=' + password;
       
       this.http.post(consulta, null, {headers: headers})
         .subscribe(res => {
           
           resolve(res.json());
         }, (err) =>{
-          console.log(err);
+          
           reject(err);
         });
     });
@@ -268,14 +267,14 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.apiUrl + '/Transactions/Save?token=' + localStorage.getItem('token') + '&idFrom=' + localStorage.getItem('login') + '&idTo=' + idTo + '&idType=3' + '&value=' + value + '&liberationPassword=' + password + '&dataFormat=json';
-      console.log(consulta);
+      
 
       this.http.post(consulta, null, {headers: headers})
         .subscribe(res => {
-          console.log(res.json());
+          
           resolve(res.json());
         }, (err) =>{
-          console.log(err);
+          
           reject(err);
         });
     });
@@ -287,13 +286,13 @@ export class AuthServiceProvider {
       headers.append('Content-Type', 'application/json');
 
       var consulta = this.apiUrl + '/Users/LatestOperations?token=' + localStorage.getItem('token') + '&estadoTransacao=1,2,3,7' + '&qtdRegistros=' + number + '&dataFormat=json';
-      console.log(consulta);
+      
 
       this.http.post(consulta, null, {headers:headers}).subscribe(res => {
-        console.log(res.json());
+        
         resolve(res.json());
       },(err) => {
-        console.log(err);
+        
         reject(err);
       })
     });
@@ -311,7 +310,7 @@ export class AuthServiceProvider {
           
           resolve(res.json());
         },(err) => {
-          console.log(err);
+          
           let alert = this.alertService.alertCtrl.create({
             title: 'Erro!',
             subTitle: err,

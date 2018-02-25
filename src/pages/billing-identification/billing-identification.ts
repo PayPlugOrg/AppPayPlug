@@ -27,14 +27,14 @@ export class BillingIdentificationPage {
   private parcela: number = 1;
   private testRadioOpen: boolean;
   private testRadioResult: any;
-  private rawBillingValue:string = "";
-  private formatter = new StringMask('#.##0,00', {reverse: true});
+  private rawBillingValue: string = "";
+  private formatter = new StringMask('#.##0,00', { reverse: true });
   public is: boolean = false;
-  public information = {identification:"", success:false,name:"", bloqueado:false};
+  public information = { identification: "", success: false, name: "", bloqueado: false };
   public operation: string = "";
-  
+
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private viewCtrl: ViewController,
     private alertCtrl: AlertController,
@@ -43,17 +43,17 @@ export class BillingIdentificationPage {
   ) {
     this.showBillingValue = navParams.get('billingValue');
     this.operation = this.navParams.get('operation');
-    
-    if(this.navParams.get('operation') == 'Transferência') {
+
+    if (this.navParams.get('operation') == 'Transferência') {
       this.is = true;
       this.displayKeyboard(this.rawBillingValue);
     }
   }
 
   displayKeyboard(rawBillingValue) {
-    let keyboardModal = this.modalCtrl.create(KeyboardPage, {billingValue: rawBillingValue, operation: this.navParams.get('operation')});
+    let keyboardModal = this.modalCtrl.create(KeyboardPage, { billingValue: rawBillingValue, operation: this.navParams.get('operation') });
     keyboardModal.onDidDismiss(data => {
-      if(data){ 
+      if (data) {
         this.rawBillingValue = data;
         this.showBillingValue = this.formatter.apply(data);
       } else {
@@ -64,38 +64,51 @@ export class BillingIdentificationPage {
   }
 
   async transferAuthorization(page) {
-    await this.getUserInfo();
-    this.navCtrl.push(page, {billingValue: this.showBillingValue, rawBillingValue: this.rawBillingValue, userInfo: this.information, operation: this.navParams.get('operation')});
+    if (this.identification) {
+      await this.getUserInfo();
+      this.navCtrl.push(page, { billingValue: this.showBillingValue, rawBillingValue: this.rawBillingValue, userInfo: this.information, operation: this.navParams.get('operation') });
+    } else {
+      var alert = this.alertCtrl.create({
+        title: 'Identificação',
+        subTitle: 'Campo de identificação é obrigatório',
+        buttons: ['Ok']
+      });
+      alert.present();
+    }
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BillingIdentificationPage');
   }
 
   async dismiss() {
-    await this.getUserInfo();
-    console.log(this.information);
-    this.viewCtrl.dismiss(this.information);
+    if (this.identification) {
+      await this.getUserInfo();
+      this.viewCtrl.dismiss(this.information);
+    } else {
+      var alert = this.alertCtrl.create({
+        title: 'Identificação',
+        subTitle: 'Campo de identificação é obrigatório',
+        buttons: ['Ok']
+      });
+      alert.present();
+    }
   }
 
   async getUserInfo() {
-    console.log("identification: " + this.identification);
     return await this.authService.getUserInfo(this.identification).then((result) => {
       this.information.success = result['Success'];
       this.information.name = result['Nome'];
       this.information.bloqueado = result['IsBloqueado'];
       this.information.identification = this.identification;
-      console.log(this.information);
-    },(err) => {
-      console.log(err);
-      if(err == 'Authentication failed.') {
+    }, (err) => {
+      if (err == 'Authentication failed.') {
         this.navCtrl.setRoot(LoginPage);
       }
     });
   }
 
   cancel() {
-    var information = {success: false, cancel: true};
+    var information = { success: false, cancel: true };
     this.viewCtrl.dismiss(information);
   }
 
@@ -114,7 +127,7 @@ export class BillingIdentificationPage {
       checked: true
     });
     let i;
-    for(i=2 ; i < 10 ; i++) {
+    for (i = 2; i < 10; i++) {
       alert.addInput({
         type: 'radio',
         label: i,

@@ -19,7 +19,6 @@ export class PaymentCardSelectorPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PaymentCardSelectorPage');
   }
 
 }

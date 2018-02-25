@@ -41,7 +41,6 @@ export class MyApp {
     public menu: MenuController
   ) {
     this.events.subscribe('app:logout', () => {
-      console.log('app:logout');
       this.nome = "";
     });
     this.initializeApp();
@@ -124,7 +123,7 @@ export class MyApp {
               text: 'Cancelar',
               role: 'cancelar',
               handler: data => {
-                console.log('Reset cancelado');
+                
               }
             },
             {
@@ -182,7 +181,7 @@ export class MyApp {
               text: 'Cancelar',
               role: 'cancelar',
               handler: () => {
-                console.log('Limpeza cancelada');
+                
               }
             },
             {

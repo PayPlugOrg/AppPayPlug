@@ -39,7 +39,6 @@ export class BillingPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BillingPage');
   }
 
   createQR(data: String) {
@@ -54,11 +53,11 @@ export class BillingPage {
         this.showBillingValue = this.formatter.apply(data);
         var origem = localStorage.getItem('cpf').replace(/\./gi,'');
         origem = origem.replace('-','');
-        console.log(this.showBillingValue + " " + origem);
-        this.showBillingValue = this.showBillingValue.replace(',','');
-        this.createQR("https://www.payplug.org:88/Lkn/Ctnr?o=" + origem + "&d=&v=" + this.showBillingValue);
+        var value = this.showBillingValue.replace(/\./gi,'');
+        value = value.replace(/,/gi,'');
+        this.createQR("https://www.payplug.org:88/Lkn/Ctnr?o=" + origem + "&d=&v=" + value);
       } else {
-        this.navCtrl.pop();
+        this.navCtrl.pop({animate:false});
       }
     });
     keyboardModal.present();
@@ -72,19 +71,15 @@ export class BillingPage {
         this.navCtrl.push(page, {openModalIdentification: false, payplugCard:barcodeData.text, billingValue: this.showBillingValue, operation: this.navParams.get('operation')});
       } else if (barcodeData.text) {
         let cardInformation = parseInt(barcodeData.text, 16).toString();
-        console.log(cardInformation);
         let idLength = Number(cardInformation.substr(0,1));
         let cardId = cardInformation.substr(1,idLength);
         let passwordLength = cardInformation.length - (idLength + 1);
         let password = cardInformation.substr((idLength + 1), passwordLength);
-        console.log("cardId: " + cardId);
-        console.log("password: " + password);
         
         let billingValue = this.showBillingValue.replace('.','');
         billingValue = this.showBillingValue.replace(',','');
 
         this.authService.doBilling(cardId,billingValue,password).then((result) => {
-          console.log(result);
           let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:result['Identifier']}); //result['Identifier'] '5510'
           receiptModal.onDidDismiss(() => {
             this.navCtrl.popToRoot();

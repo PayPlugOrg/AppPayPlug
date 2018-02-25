@@ -2,13 +2,17 @@ page-keyboard {
 
     .botao-numero {
         width: 31.75%;
-        height: 21%;
-        font-size: 200%;
+        font-size: 140%;
     }
 
     h1 {
         text-align:center;
         font-size:3em;
+    }
+
+    .button-outline-md {
+        height: 21%;
+        font-size: 200%
     }
 
     ion-grid {

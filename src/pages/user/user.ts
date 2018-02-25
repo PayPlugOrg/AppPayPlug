@@ -29,7 +29,6 @@ export class UserPage {
     public formBuilder: FormBuilder
   ) {
     this.user = this.authService.getUserData();
-    console.log(this.user);
     this.updateForm = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-ZA-zÀ-ú ]+')])],
       born: ['', Validators.compose([Validators.required])],
@@ -47,7 +46,6 @@ export class UserPage {
    this.updateForm.controls['email'].setValue(this.user['Email']);
    this.updateForm.controls['cellphone'].setValue(this.user['Celular']);
    this.updateForm.controls['address'].setValue(this.user['Endereco']);
-   console.log(this.updateForm.value);
   }
 
   updateData() {

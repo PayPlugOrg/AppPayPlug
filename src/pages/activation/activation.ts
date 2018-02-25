@@ -53,7 +53,6 @@ export class ActivationPage {
     } else {
       this.alertService.showLoader('Ativando usuário...');
       this.authService.register(this.activationForm.value, 'ativacao').then((result) => {
-        console.log(result);
         this.alertService.loading.dismiss();
         this.alertService.presentToast(result);
         this.navCtrl.popToRoot();

@@ -47,6 +47,7 @@ import { CardServiceProvider } from '../providers/card/card-service';
 import {CardModule} from 'ngx-card/ngx-card';
 import { ExtractPage } from '../pages/extract/extract';
 import { ExtractPageModule } from '../pages/extract/extract.module';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 //Páginas públicas
 @NgModule({
@@ -111,7 +112,8 @@ import { ExtractPageModule } from '../pages/extract/extract.module';
     AuthServiceProvider,
     AlertServiceProvider,
     QRScanner,
-    CardServiceProvider
+    CardServiceProvider,
+    SocialSharing
   ]
 })
 export class AppModule {}

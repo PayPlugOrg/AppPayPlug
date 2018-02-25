@@ -21,7 +21,6 @@ export class AlertServiceProvider {
     private menuCtrl: MenuController,
     public alertCtrl: AlertController
   ) {
-    console.log('Hello AlertServiceProvider Provider');
   }
 
   showLoader(message) {
@@ -40,7 +39,6 @@ export class AlertServiceProvider {
     });
 
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
     });
 
     toast.present();

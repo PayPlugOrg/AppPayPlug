@@ -32,22 +32,18 @@ export class ExtractPage {
   }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter ExtractPage');
     this.getOperations();
   }
 
   getOperations() {
     this.authService.getLatestOperations(this.numberOperations).then((result) => {
-      console.log(result);
       this.operations = result;
-      console.log(this.operations[0]['IdFrom']);
     }, (err) => {
-      console.log(err);
+      this.alertProvider.presentToast(err);
     });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ExtractPage');
   }
 
   openDetail(operation) {
@@ -66,7 +62,7 @@ export class ExtractPage {
         {
           text: 'Fechar',
           handler: () => {
-            console.log('Fechar clicked');
+            
           }
         },
         {
@@ -75,7 +71,6 @@ export class ExtractPage {
             let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:operation.Identifier}); 
             receiptModal.present();
             this.alertProvider.showLoader('Preparando recibo...');
-            console.log('Comprovante clicked');
           }
         }
       ]

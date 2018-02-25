@@ -28,7 +28,6 @@ export class BillingSmsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BillingSmsPage');
   }
 
   dismiss() {

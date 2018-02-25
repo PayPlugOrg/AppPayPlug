@@ -29,25 +29,25 @@ export class BillingAuthorizationPage {
   private showBillingValue: string = "";
   private rawBillingValue: string = "";
   private identification: string = "";
-  public information = {identification:"", success:false,name:"", bloqueado:false};
+  public information = { identification: "", success: false, name: "", bloqueado: false };
   private billedId: string = "";
   private name: string = "";
-  private numbers: Array<{value:number}>;
+  private numbers: Array<{ value: number }>;
   private password: string = "";
   private testRadioOpen: boolean;
   private testRadioResult: any;
-  private parcela:number = 1;
+  private parcela: number = 1;
   private bloqueado: boolean = false;
   private cards: any;
   private passwordLabel: string = "Senha de Liberação";
   public operation: string = " ";
-  
+
   private slideOptions = {
     pager: true
   }
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public authProvider: AuthServiceProvider,
@@ -56,36 +56,36 @@ export class BillingAuthorizationPage {
     public cardProvider: CardServiceProvider
   ) {
     this.numbers = [
-      {value:0},
-      {value:1},
-      {value:2},
-      {value:3},
-      {value:4},
-      {value:5},
-      {value:6},
-      {value:7},
-      {value:8},
-      {value:9}
+      { value: 0 },
+      { value: 1 },
+      { value: 2 },
+      { value: 3 },
+      { value: 4 },
+      { value: 5 },
+      { value: 6 },
+      { value: 7 },
+      { value: 8 },
+      { value: 9 }
     ];
-    
+
     this.showBillingValue = navParams.get('billingValue');
     this.rawBillingValue = navParams.get('rawBillingValue');
 
     //Verifica se procedimento de cobrança vem com a entrada manual da identificação do usuário
-    if(navParams.get('openModalIdentification')){
+    if (navParams.get('openModalIdentification')) {
       this.displayIdentificationModal();
       this.operation = this.navParams.get('operation');
-    } 
+    }
     //Ou se vem da captura de informação do cartão
-    else if(navParams.get('payplugCard')) {
+    else if (navParams.get('payplugCard')) {
       this.getUserInfoByCard(navParams.get('payplugCard'));
     }
     this.clearPasswordInput();
   }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
-    if(this.navParams.get('userInfo')) {
+    
+    if (this.navParams.get('userInfo')) {
       this.information = this.navParams.get('userInfo');
       this.operation = this.navParams.get('operation');
       //this.getCards();
@@ -94,22 +94,22 @@ export class BillingAuthorizationPage {
 
   private displayIdentificationModal() {
     this.cards = new Array;
-    let identificationModal = this.modalCtrl.create(BillingIdentificationPage, {billingValue: this.showBillingValue, operation: this.navParams.get('operation')});
+    let identificationModal = this.modalCtrl.create(BillingIdentificationPage, { billingValue: this.showBillingValue, operation: this.navParams.get('operation') });
     identificationModal.onDidDismiss(data => {
-      if(data['success'] == false) {
-        this.alertProv.presentToast('Nenhum usuário encontrado com ' + data['identification']);
-        this.identification = data['identification'];
-        this.information.name = "";
-        this.password = "";
-
+      if (data['success'] == false) {
         //Verifica se o usuário clicou botão 'Cancelar'
-        if(data['cancel']) {
-          this.navCtrl.pop();
+        if (data['cancel']) {
+          this.navCtrl.pop({ animate: false });
+        } else {
+
+          this.alertProv.presentToast('Nenhum usuário encontrado com ' + data['identification']);
+          this.identification = data['identification'];
+          this.information.name = "";
+          this.password = "";
+
         }
       } else {
         this.information = data;
-        console.log('Information');
-        console.log(this.information);
         this.identification = data['identification'];
         this.bloqueado = data['bloqueado'];
         this.name = data['name'];
@@ -121,32 +121,31 @@ export class BillingAuthorizationPage {
   }
 
   private getCards() {
-    this.cardProvider.getCards(this.information.identification).then((result) =>{
-      
+    this.cardProvider.getCards(this.information.identification).then((result) => {
+
       this.cards = result;
       this.billedId = this.cards[0]['idUsuario'];
 
       var newCard = {
-        mediaUrl : "assets/imgs/credit-card.png",
-        numero : "",
-        tipoCartao : "Novo Cartão"
+        mediaUrl: "assets/imgs/credit-card.png",
+        numero: "",
+        tipoCartao: "Novo Cartão"
       }
       this.cards.push(newCard);
-      
+
     });
 
-    
+
   }
 
   private getUserInfoByCard(identification) {
-    this.authProvider.getUserInfo(identification).then((result) =>{
+    this.authProvider.getUserInfo(identification).then((result) => {
       this.information.name = result['Nome'];
       this.information.identification = identification;
       this.information.bloqueado = result['IsBloqueado'];
       this.getCards();
-    },(err) => {
-      console.log(err);
-      if(err == 'Authentication failed.') {
+    }, (err) => {
+      if (err == 'Authentication failed.') {
         this.navCtrl.setRoot(LoginPage);
       }
     });
@@ -172,7 +171,7 @@ export class BillingAuthorizationPage {
       checked: true
     });
     let i;
-    for(i=2 ; i < 10 ; i++) {
+    for (i = 2; i < 10; i++) {
       alert.addInput({
         type: 'radio',
         label: i,
@@ -193,10 +192,10 @@ export class BillingAuthorizationPage {
 
   newCardModal() {
     let currentIndex = this.slides.getActiveIndex();
-    
-    let newCard = this.modalCtrl.create(CardNewPage, {billedId:this.billedId});
-    newCard.onDidDismiss( data => {
-      
+
+    let newCard = this.modalCtrl.create(CardNewPage, { billedId: this.billedId });
+    newCard.onDidDismiss(data => {
+
       this.getCards();
     });
     newCard.present();
@@ -205,10 +204,8 @@ export class BillingAuthorizationPage {
   changePasswordLabel() {
     let currentIndex: number = this.slides.getActiveIndex();
     let cartao = this.cards[currentIndex];
-    //console.log('change password label Current index is', currentIndex);
-    //console.log('idCartao', cartao['idCartao']);
-    
-    if(cartao['bandeira'] == "PayPlug") {
+
+    if (cartao['bandeira'] == "PayPlug") {
       this.passwordLabel = 'Senha de Liberação'
     } else {
       this.passwordLabel = 'CVV do Cartão';
@@ -216,35 +213,33 @@ export class BillingAuthorizationPage {
   }
 
   doTransfer() {
-    console.log('Transfer');
-    var billingValue = this.showBillingValue.replace('.','');
-    billingValue = this.showBillingValue.replace(',','');
+    var billingValue = this.showBillingValue.replace('.', '');
+    billingValue = this.showBillingValue.replace(',', '');
 
-    if(this.password.length < 6) {
+    if (this.password.length < 6) {
       this.alert('Senha pequena demais!', 'Informe sua senha de liberação PayPlug para realizar a transação. Ela deverá ter 6 dígitos.');
       this.clearPasswordInput();
     } else {
-      this.authProvider.doTransfer(this.information.identification,billingValue,this.password).then((result) => {
-        console.log(result);
-        if(result['Success']) {
+      this.authProvider.doTransfer(this.information.identification, billingValue, this.password).then((result) => {
+        if (result['Success']) {
           this.alert('Transferência realizada com Sucesso!', 'Sua transferência foi realizada. Para verificar mais informações, vá até a tela de Extrato.')
           this.navCtrl.pop();
-        } else if(result['Message'] == '[FROM] and [TO] user cannot be the same.'){
+        } else if (result['Message'] == '[FROM] and [TO] user cannot be the same.') {
           this.alert('Transação Inválida!', 'Usuários não podem ser os mesmos. Tente novamente.')
           this.navCtrl.pop();
-        } else if(result['Message'] == 'Check the value of field liberationPassword') {
-          this.alert('Senha Inválida','Verifique sua senha.');
+        } else if (result['Message'] == 'Check the value of field liberationPassword') {
+          this.alert('Senha Inválida', 'Verifique sua senha.');
           this.clearPasswordInput();
-        } else if(result['Message'] == '[TO] invalid user.') {
-          this.alert('Usuário Inválido','Usuário destino da trânsferência é Terminal de Venda. Não é possível realizar a transferência.');
-          this.clearPasswordInput();
-          this.navCtrl.pop();
-        } else if(result['Message'] == 'Operação não realizada! Para Vendas use a tela de Cobrança.') {
-          this.alert('Usuário Inválido','Usuário origem da trânsferência é Terminal de Venda. Não é possível realizar a transferência.');
+        } else if (result['Message'] == '[TO] invalid user.') {
+          this.alert('Usuário Inválido', 'Usuário destino da trânsferência é Terminal de Venda. Não é possível realizar a transferência.');
           this.clearPasswordInput();
           this.navCtrl.pop();
-        } 
-      },(err) => {
+        } else if (result['Message'] == 'Operação não realizada! Para Vendas use a tela de Cobrança.') {
+          this.alert('Usuário Inválido', 'Usuário origem da trânsferência é Terminal de Venda. Não é possível realizar a transferência.');
+          this.clearPasswordInput();
+          this.navCtrl.pop();
+        }
+      }, (err) => {
         console.error(err);
       })
     }
@@ -253,38 +248,38 @@ export class BillingAuthorizationPage {
   doBilling() {
     var index: number = this.slides.getActiveIndex();
     var cartao = this.cards[index];
-    
-    var billingValue = this.showBillingValue.replace('.','');
-    billingValue = this.showBillingValue.replace(',','');
-    
-    if(this.password == "") {
-      if(cartao['bandeira'] == '') {
+
+    var billingValue = this.showBillingValue.replace('.', '');
+    billingValue = this.showBillingValue.replace(',', '');
+
+    if (this.password == "") {
+      if (cartao['bandeira'] == '') {
         this.alert('Senha em branco!', 'Informe sua senha de liberação PayPlug para realizar a transação.');
       } else {
         this.alert('CVV em branco!', 'Informe o código de verificação do seu cartão para realizar a transação.');
       }
     } else {
       this.authProvider.doBilling(cartao['idCartao'], billingValue, this.password).then((result) => {
-        
+
         //result['Message'] = 'Ok';
-        
-        if(result['Message'] == 'Ok') {
+
+        if (result['Message'] == 'Ok') {
           //this.navCtrl.push(ReceiptPage, {identifier:result['Identifier']});
-          let receiptModal = this.modalCtrl.create(ReceiptPage, {identifier:result['Identifier']}); //result['Identifier'] '5510'
+          this.alertProv.showLoader('Preparando recibo...');
+          let receiptModal = this.modalCtrl.create(ReceiptPage, { identifier: result['Identifier'] }); //result['Identifier'] '5510'
           receiptModal.onDidDismiss(() => {
             this.navCtrl.popToRoot();
           })
           receiptModal.present();
-        } else if(result['Message'] == 'usuarios não podem ser os mesmos.'){
+        } else if (result['Message'] == 'usuarios não podem ser os mesmos.') {
           this.alert('Transação Inválida!', 'Usuários não podem ser os mesmos. Tente novamente.')
           this.navCtrl.pop();
-        } else if(result['Message'] == 'Senha inválida.') {
-          this.alert('Senha Inválida','Verifique sua senha.');
+        } else if (result['Message'] == 'Senha inválida.') {
+          this.alert('Senha Inválida', 'Verifique sua senha.');
           this.clearPasswordInput();
         }
 
       }, (err) => {
-        console.log(err);
         this.alertProv.presentToast(err);
       });
     }

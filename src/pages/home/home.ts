@@ -42,7 +42,6 @@ export class HomePage {
       this.saldoTotal = result['SaldoTotal'];
       this.saldoSaque = result['SaldoDisponivelSaque'];
     },(err) => {
-      console.log(err);
       if(err == 'Authentication failed.') {
         this.navCtrl.setRoot(LoginPage);
       }
