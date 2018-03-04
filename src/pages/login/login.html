@@ -17,7 +17,7 @@
         <img no-margin no-padding src="assets/imgs/logo-branco.png">
       </ion-item>
     </ion-row>
-    
+
     <form (submit)="doLogin()">
       <ion-row>
         <ion-col>
@@ -43,7 +43,21 @@
         </ion-col>
       </ion-row>
     </form>
-    
+
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button block icon-right (click)="loginFacebook()">
+          Entrar com
+          <ion-icon name="logo-facebook"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button block icon-right (click)="loginGoogle()" color=danger>
+            Entrar com
+          <ion-icon name="logo-google"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col col-6>
         <button ion-button block (click)="register()">
@@ -57,7 +71,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  
-  
- 
+
+
+
 </ion-content>

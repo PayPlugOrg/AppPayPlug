@@ -6,6 +6,7 @@ import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
 import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 import { ActivationPage } from '../activation/activation';
+import { Facebook } from '@ionic-native/facebook';
 /**
  * Generated class for the LoginPage page.
  *
@@ -23,16 +24,29 @@ export class LoginPage {
   user = { nome: '', senha: ''};
   data: any;
   isLoggedIn: boolean = false;
+  users: any;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public authService: AuthServiceProvider,
-    private alertService: AlertServiceProvider
+    private alertService: AlertServiceProvider,
+    private fb: Facebook
   ) {
     this.user['nome'] = localStorage.getItem("login");
+
+    fb.getLoginStatus()
+    .then(res => {
+      console.log(res.status);
+      if(res.status === "connect") {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log(e));
     //Se há token de sessão direciona para o Home do usuário
-    if(localStorage.getItem("token")) {
+    if(localStorage.getItem("token") || localStorage.getItem("fbToken")) {
       navCtrl.setRoot(HomePage);
       this.alertService.enableMenu(true, 'authenticated');
       this.alertService.enableMenu(false, 'unauthenticated');
@@ -41,6 +55,31 @@ export class LoginPage {
       this.alertService.enableMenu(false, 'authenticated');
       this.isLoggedIn = true;
     }
+  }
+
+  loginFacebook() {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+    .then(res => {
+      if(res.status === "connected") {
+        this.isLoggedIn = true;
+        this.getUserDetail(res.authResponse.userID);
+        localStorage.setItem("fbToken", res.authResponse.accessToken);
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log('Error logging into Facebook', e));
+  }
+
+  getUserDetail(userid) {
+    this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
+      .then(res => {
+        console.log(res);
+        this.users = res;
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   ionViewDidLoad() {

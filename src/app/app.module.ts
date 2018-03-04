@@ -48,6 +48,7 @@ import {CardModule} from 'ngx-card/ngx-card';
 import { ExtractPage } from '../pages/extract/extract';
 import { ExtractPageModule } from '../pages/extract/extract.module';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Facebook } from '@ionic-native/facebook';
 
 //Páginas públicas
 @NgModule({
@@ -113,7 +114,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     AlertServiceProvider,
     QRScanner,
     CardServiceProvider,
-    SocialSharing
+    SocialSharing,
+    Facebook
   ]
 })
 export class AppModule {}
