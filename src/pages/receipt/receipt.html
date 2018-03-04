@@ -27,22 +27,22 @@
     </button>
     <ion-fab-list side="right">
       <button ion-fab>
-        <ion-icon name="chatboxes" (click)="send(sms)"></ion-icon>
+        <ion-icon name="chatboxes" (click)="send('sms')"></ion-icon>
       </button>
       <button ion-fab>
-        <ion-icon name="logo-whatsapp" (click)="send(wpp)"></ion-icon>
+        <ion-icon name="logo-whatsapp" (click)="send('wpp')"></ion-icon>
       </button>
       <button ion-fab>
-        <ion-icon name="logo-facebook" (click)="send(face)"></ion-icon>
+        <ion-icon name="logo-facebook" (click)="send('face')"></ion-icon>
       </button>
       <button ion-fab>
-        <ion-icon name="mail" (click)="send(mail)"></ion-icon>
+        <ion-icon name="mail" (click)="send('mail')"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>
 
-  <ion-card *ngIf="createdCode">
-    <ion-card-content>
+  <ion-card id="my-node" *ngIf="createdCode" class="fab-spacement">
+    <ion-card-content >
       <ion-grid>
         <ion-row>
           <ion-col col-2></ion-col>

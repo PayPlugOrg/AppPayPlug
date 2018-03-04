@@ -23,7 +23,7 @@ export class AuthServiceProvider {
 
   dev: boolean = true;
 
-  apiUrl = 'http://aplweb.tsemredes.com.br:84/v1';//'api'; http://aplweb.tsemredes.com.br:84/v1';//
+  apiUrl = 'api';//'api'; http://aplweb.tsemredes.com.br:84/v1';//
   
   constructor(
     public http: Http,
