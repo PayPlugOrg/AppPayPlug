@@ -78,21 +78,14 @@ export class ReceiptPage {
 
     if (share == 'sms') {
       console.log(share);
-      this.socialSharing.share();
+      this.socialSharing.share(`Transacao PayPlug \n Autenticacao: ` +
+        this.receipt.Authentication + `\nUsuario: `
+        + this.receipt.ClientName + `\nValor: `
+        + this.receipt.CurrencyValueUser + `\nData: `
+        + this.receipt.TransactionDate
+      );
       //this.socialSharing.shareViaSMS("PAYPLUG Test", "");
-      // var node = document.getElementById('my-node');
 
-      // domtoimage.toPng(node)
-      //   .then(function (dataUrl) {
-      //     var img = new Image();
-      //     console.log(dataUrl);
-      //     img.src = dataUrl;
-      //     document.body.appendChild(img);
-      //     this.socialSharing.share(img);
-      //   })
-      //   .catch(function (error) {
-      //     console.error('oops, something went wrong!', error);
-      //   });
 
     } else if (share == 'wpp') {
       console.log(share);
@@ -117,14 +110,29 @@ export class ReceiptPage {
         // Sharing via email is not possible
       });
     } else if (share == 'face') {
-      console.log(share);
-      this.socialSharing.canShareVia('com.facebook.facebook').then((res) => {
-        console.log(res);
-        this.socialSharing.shareViaFacebook("PAYPLUG Test");
-      }).catch((err) => {
-        console.error(err);
+      // console.log(share);
+      // this.socialSharing.canShareVia('com.facebook.facebook').then((res) => {
+      //   console.log(res);
+      //   this.socialSharing.shareViaFacebook("PAYPLUG Test");
+      // }).catch((err) => {
+      //   console.error(err);
 
-      });
+      // });
+
+      var node = document.getElementById('my-node');
+      var img: any;
+      domtoimage.toPng(node)
+        .then(function (dataUrl) {
+          img = new Image();
+          console.log(dataUrl);
+          img.src = dataUrl;
+          document.body.appendChild(img);
+        })
+        .catch(function (error) {
+          console.error('oops, something went wrong!', error);
+        });
+        console.log(img.src);
+        this.socialSharing.share(img.src);
     }
   }
 

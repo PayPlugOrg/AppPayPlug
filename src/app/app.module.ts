@@ -49,6 +49,7 @@ import { ExtractPage } from '../pages/extract/extract';
 import { ExtractPageModule } from '../pages/extract/extract.module';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 //Páginas públicas
 @NgModule({
@@ -115,7 +116,8 @@ import { Facebook } from '@ionic-native/facebook';
     QRScanner,
     CardServiceProvider,
     SocialSharing,
-    Facebook
+    Facebook,
+    GooglePlus
   ]
 })
 export class AppModule {}

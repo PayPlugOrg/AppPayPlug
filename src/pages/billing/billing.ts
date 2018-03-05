@@ -7,6 +7,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { BillingSmsPage } from '../billing-sms/billing-sms';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { ReceiptPage } from '../receipt/receipt';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 /**
  * Generated class for the BillingPage page.
@@ -26,6 +27,7 @@ export class BillingPage {
   private showBillingValue:string = "";
   private rawBillingValue:string = "";
   private createdCode = null;
+  private linkShare: string = "";
 
   constructor(
     public navCtrl: NavController, 
@@ -33,7 +35,8 @@ export class BillingPage {
     public modalCtrl: ModalController,
     private barcodeScanner: BarcodeScanner,
     public alertProvider: AlertServiceProvider,
-    public authService: AuthServiceProvider
+    public authService: AuthServiceProvider,
+    private socialSharing: SocialSharing
   ) {
     this.displayKeyboard(this.rawBillingValue);
   }
@@ -55,7 +58,8 @@ export class BillingPage {
         origem = origem.replace('-','');
         var value = this.showBillingValue.replace(/\./gi,'');
         value = value.replace(/,/gi,'');
-        this.createQR("https://www.payplug.org:88/Lkn/Ctnr?o=" + origem + "&d=&v=" + value);
+        this.linkShare = "https://www.payplug.org:88/Lkn/Ctnr?o=" + origem + "&d=&v=" + value;
+        this.createQR(this.linkShare);
       } else {
         this.navCtrl.pop({animate:false});
       }
@@ -94,11 +98,7 @@ export class BillingPage {
   }
 
   presentSmsModal() {
-    let smsModal = this.modalCtrl.create(BillingSmsPage);
-    smsModal.onDidDismiss(data => {
-      console.log("Celular: " + data);
-    });
-    smsModal.present();
+    this.socialSharing.share(this.linkShare);
   }
 
   openPage(page) {

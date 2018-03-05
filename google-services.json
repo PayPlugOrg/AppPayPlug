@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "814430890645",
+    "project_id": "apppayplug-197012"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814430890645:android:764d2cb7da3280eb",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814430890645-tlo6dqbuc42ukv2nst6mdrmnr55i0lao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "3134eafb996006af70092428ceb30291436157e9"
+          }
+        },
+        {
+          "client_id": "814430890645-m55auro7uaon8an3b28aelpf64vmh48c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNIDxLKkwgh_xUI3fjOrqZWBrtqKRJ2TI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -24,7 +24,9 @@ export class HomePage {
     private alertService: AlertServiceProvider
   ) {
     //Se não há token de sessão direciona para o Login
-    if(!localStorage.getItem("token")) {
+    if (!localStorage.getItem("token") && !localStorage.getItem("fbToken") && !localStorage.getItem("gToken")) {
+      console.log(localStorage.getItem("fbToken") + ' ' + localStorage.getItem("token"));
+
       navCtrl.setRoot(LoginPage);
       this.alertService.enableMenu(true, 'unauthenticated');
       this.alertService.enableMenu(false, 'authenticated');
@@ -36,32 +38,34 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.authService.getUserInfo().then((result) => {
-      this.user = result;
-      this.nome = result['Nome'];
-      this.saldoTotal = result['SaldoTotal'];
-      this.saldoSaque = result['SaldoDisponivelSaque'];
-    },(err) => {
-      if(err == 'Authentication failed.') {
-        this.navCtrl.setRoot(LoginPage);
-      }
-    });
+    if (localStorage.getItem("token")) {
+      this.authService.getUserInfo().then((result) => {
+        this.user = result;
+        this.nome = result['Nome'];
+        this.saldoTotal = result['SaldoTotal'];
+        this.saldoSaque = result['SaldoDisponivelSaque'];
+      }, (err) => {
+        if (err == 'Authentication failed.') {
+          this.navCtrl.setRoot(LoginPage);
+        }
+      });
+    }
   }
 
   private openPage(page) {
-    if(page == 'PaymentPage') {
-      let params  = {
+    if (page == 'PaymentPage') {
+      let params = {
         message: 'Informe a senha de liberação para ter acesso aos seus cartões',
         label: 'Senha de Liberação',
         page: 'CardListPage'
       };
       this.navCtrl.push(page, params);
-    } else if(page == 'BillingIdentificationPage') {
+    } else if (page == 'BillingIdentificationPage') {
       let params = {
         operation: 'Transferência'
       };
       this.navCtrl.push(page, params);
-    } else if(page == 'BillingPage') {
+    } else if (page == 'BillingPage') {
       let params = {
         operation: 'Cobrança'
       };
