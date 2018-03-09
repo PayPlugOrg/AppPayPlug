@@ -40,14 +40,14 @@ export class LoginPage {
 
     fb.getLoginStatus()
       .then(res => {
-        console.log(res.status);
+        console.log("status " + res.status);
         if (res.status === "connect") {
           this.isLoggedIn = true;
         } else {
           this.isLoggedIn = false;
         }
       })
-      .catch(e => console.log(e));
+      .catch(e => console.log("err fb: " + e));
     //Se há token de sessão direciona para o Home do usuário
     if (localStorage.getItem("token") || localStorage.getItem("fbToken") || localStorage.getItem("gToken")) {
       navCtrl.setRoot(HomePage);

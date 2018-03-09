@@ -84,7 +84,7 @@ export class BillingAuthorizationPage {
   }
 
   ionViewWillEnter() {
-    
+
     if (this.navParams.get('userInfo')) {
       this.information = this.navParams.get('userInfo');
       this.operation = this.navParams.get('operation');
@@ -251,6 +251,7 @@ export class BillingAuthorizationPage {
 
     var billingValue = this.showBillingValue.replace('.', '');
     billingValue = this.showBillingValue.replace(',', '');
+    var internet: boolean = true;
 
     if (this.password == "") {
       if (cartao['bandeira'] == '') {
@@ -258,7 +259,7 @@ export class BillingAuthorizationPage {
       } else {
         this.alert('CVV em branco!', 'Informe o código de verificação do seu cartão para realizar a transação.');
       }
-    } else {
+    } else if (internet) {
       this.authProvider.doBilling(cartao['idCartao'], billingValue, this.password).then((result) => {
 
         //result['Message'] = 'Ok';
@@ -282,6 +283,30 @@ export class BillingAuthorizationPage {
       }, (err) => {
         this.alertProv.presentToast(err);
       });
+    } else {
+      if (billingValue.length == 7) {
+        var message = "C";
+        var time = new Date();
+        var min = time.getMinutes().toString();
+        if (min == '0') {
+          min = '01'
+        } else {
+          if (min.length == 1) {
+            min = "0".concat(min);
+          }
+        }
+        message = message.concat(min);
+        message = message.concat(cartao['idCartao'].length);
+        message = message.concat(cartao['idCartao']);
+
+        var pad = "0000000"
+        var ans = pad.substring(0, pad.length - billingValue.length) + billingValue;
+
+        message = message.concat(ans);
+        
+        message = message.concat(ans);
+        console.log(message);
+      }
     }
 
   }
