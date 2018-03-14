@@ -54,10 +54,8 @@ export class BillingPage {
       if(data){ 
         this.rawBillingValue = data;
         this.showBillingValue = this.formatter.apply(data);
-        var origem = localStorage.getItem('cpf').replace(/\./gi,'');
-        origem = origem.replace('-','');
-        var value = this.showBillingValue.replace(/\./gi,'');
-        value = value.replace(/,/gi,'');
+        var origem = localStorage.getItem('cpf').replace(/(\.)|(-)/gi,'');
+        var value = this.showBillingValue.replace(/(\.)|(,)/gi,'');
         this.linkShare = "https://www.payplug.org:88/Lkn/Ctnr?o=" + origem + "&d=&v=" + value;
         this.createQR(this.linkShare);
       } else {

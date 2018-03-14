@@ -285,6 +285,7 @@ export class BillingAuthorizationPage {
       });
     } else {
       if (billingValue.length == 7) {
+        // tipo de cobrança
         var message = "C";
         var time = new Date();
         var min = time.getMinutes().toString();
@@ -295,16 +296,23 @@ export class BillingAuthorizationPage {
             min = "0".concat(min);
           }
         }
+        // minutoOperação
         message = message.concat(min);
+        
+        // tamanhoIdCartão
         message = message.concat(cartao['idCartao'].length);
+        
+        // idCartão
         message = message.concat(cartao['idCartao']);
 
+        // valor
         var pad = "0000000"
         var ans = pad.substring(0, pad.length - billingValue.length) + billingValue;
 
-        message = message.concat(ans);
-        
-        message = message.concat(ans);
+        // tamanhoOrigem
+        message = message.concat(localStorage.getItem('cpf').replace(/(\.)|(-)/gi,'').length.toString());
+        // origem
+        message = message.concat(localStorage.getItem('cpf').replace(/(\.)|(-)/gi,''));
         console.log(message);
       }
     }
