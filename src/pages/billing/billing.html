@@ -16,8 +16,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-2></ion-col>
-      <ion-col col-8>
+      <ion-col col-8 offset-2>
         <ion-card *ngIf="createdCode">
           <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
           <!--<ion-card-content>
@@ -25,7 +24,6 @@
           </ion-card-content>-->
         </ion-card>
       </ion-col>
-      <ion-col col-2></ion-col>
     </ion-row>
     <ion-row class="button-icons">
       <ion-col col-4>
