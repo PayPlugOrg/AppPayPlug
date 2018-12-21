@@ -5,6 +5,7 @@ import { AlertServiceProvider } from '../alert-service/alert-service';
 import { Events } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { ENV } from '@environment';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -25,7 +26,8 @@ export class AuthServiceProvider {
 
   dev: boolean = true;
 
-  apiUrl = 'api';//'api'; http://177.52.170.238:84/v1';
+  //apiUrl = 'http://177.52.170.238:84/v1';//'api'; http://177.52.170.238:84/v1';
+  apiUrl = ENV.API_ENDPOINT;
 
   constructor(
     public http: Http,
@@ -203,7 +205,7 @@ export class AuthServiceProvider {
           .then(res => {
             console.log(res + ' saiu google');
           })
-          .catch(err => { 
+          .catch(err => {
             this.googlePlus.trySilentLogin().then(res => {
               console.log(res)
             }).catch(err => console.error(err));

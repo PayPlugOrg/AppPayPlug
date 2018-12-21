@@ -15,7 +15,13 @@
     "typeRoots": [
       "../node_modules/@types"
     ],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@environment": [
+        "config/config.prod"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts"

@@ -1,14 +1,14 @@
 {
   "name": "PayPlug",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
   },
+  "type": "ionic-angular",
   "proxies": [
     {
       "path": "/api",
       "proxyUrl": "http://177.52.170.238:83/v1"
     }
   ],
-  "app_id": "463e5c87"
+  "id": "463e5c87"
 }
